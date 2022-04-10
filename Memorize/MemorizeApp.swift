@@ -9,9 +9,12 @@ import SwiftUI
 
 @main
 struct MemorizeApp: App {
+    @State var isLoggedIn: Bool = false
+    
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            if !isLoggedIn { LoginView(isLoggedIn: self.$isLoggedIn) }
+            else { HomeView(isLoggedIn: self.$isLoggedIn) }
         }
     }
 }
