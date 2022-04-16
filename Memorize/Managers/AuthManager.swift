@@ -29,6 +29,10 @@ final class AuthManager {
         return URL(string: string)
     }
     
+    var userID: String {
+        return "default_user"
+    }
+    
     var isSignedIn: Bool {
         return accessToken != nil
     }

@@ -34,7 +34,7 @@ final class APICaller {
         print("FINISH PROFILE GETTING AND SETTING")
         print(myProfile?.display_name)
         
-        getTopArtists { [weak self] result in
+        getTopArtists(timeFrame: 1)  { [weak self] result in
             DispatchQueue.main.async {
                 switch result {
                 case .success(let artists):
@@ -50,7 +50,7 @@ final class APICaller {
             }
         }
         
-        getTopTracks { [weak self] result in
+        getTopTracks(timeFrame: 1) { [weak self] result in
             DispatchQueue.main.async {
                 switch result {
                 case .success(let tracks):
@@ -81,42 +81,42 @@ final class APICaller {
 //            }
 //        }
         
-        print("FINISH ARTISTS GETTING AND SETTING")
-        print(myTopArtists?.total)
-
-//        getTopTracks { result in
-//            switch result {
-//            case .success(let tracks):
-//                self.myTopTracks = tracks
-//                if tracks.items.count > 0 {
-//                    self.trackList = tracks.items
-//                    for trackItem in self.trackList {
-//                        print(trackItem.name)
-//                    }
-//                    print(self.trackList.count)
-//                } else {
-//                    self.trackList = [Track]()
-//                }
-//                break
-//            case .failure(let error):
-//                print(error)
-//            }
+//        print("FINISH ARTISTS GETTING AND SETTING")
+//        print(myTopArtists?.total ?? <#default value#>)
+//
+////        getTopTracks { result in
+////            switch result {
+////            case .success(let tracks):
+////                self.myTopTracks = tracks
+////                if tracks.items.count > 0 {
+////                    self.trackList = tracks.items
+////                    for trackItem in self.trackList {
+////                        print(trackItem.name)
+////                    }
+////                    print(self.trackList.count)
+////                } else {
+////                    self.trackList = [Track]()
+////                }
+////                break
+////            case .failure(let error):
+////                print(error)
+////            }
+////        }
+//
+//        print("FINISH TRACKS GETTING AND SETTING")
+//        print(myTopTracks?.href)
+//
+//        print("MY TRACKS:")
+//        print("NUMBER OF TRACKS: \(self.trackList.count)")
+//        trackList.forEach {
+//            print($0.name)
 //        }
-        
-        print("FINISH TRACKS GETTING AND SETTING")
-        print(myTopTracks?.href)
-        
-        print("MY TRACKS:")
-        print("NUMBER OF TRACKS: \(self.trackList.count)")
-        trackList.forEach {
-            print($0.name)
-        }
-        
-        print("MY ARTISTS:")
-        print("NUMBER OF TRACKS: \(self.artistList.count)")
-        artistList.forEach {
-            print($0.name)
-        }
+//
+//        print("MY ARTISTS:")
+//        print("NUMBER OF TRACKS: \(self.artistList.count)")
+//        artistList.forEach {
+//            print($0.name)
+//        }
     }
     
     /// Spotify User ID
@@ -139,8 +139,16 @@ final class APICaller {
         case failedToGetData
     }
     
-    public func getTopArtists(completion: @escaping (Result<TopArtists, Error>) -> Void) {
-        createRequest(with: URL(string: Constants.baseAPIURL + "/me/top/artists"), type: .GET) { baseRequest in
+    public func getTopArtists(timeFrame: Int, completion: @escaping (Result<TopArtists, Error>) -> Void) {
+        var timeAddendum: String = "?time_range=medium_term"
+        if (timeFrame == 0) {
+            timeAddendum = "?time_range=short_term"
+        } else if (timeFrame == 1) {
+            timeAddendum = "?time_range=medium_term"
+        } else {
+            timeAddendum = "?time_range=long_term"
+        }
+        createRequest(with: URL(string: Constants.baseAPIURL + "/me/top/artists" + timeAddendum), type: .GET) { baseRequest in
             let task = URLSession.shared.dataTask(with: baseRequest) { data, _, error in
                 guard let data = data, error == nil else {
                     completion(.failure(APIError.failedToGetData))
@@ -158,8 +166,16 @@ final class APICaller {
         }
     }
     
-    public func getTopTracks(completion: @escaping (Result<TopTracks, Error>) -> Void) {
-        createRequest(with: URL(string: Constants.baseAPIURL + "/me/top/tracks"), type: .GET) { baseRequest in
+    public func getTopTracks(timeFrame: Int, completion: @escaping (Result<TopTracks, Error>) -> Void) {
+        var timeAddendum: String = "?time_range=medium_term"
+        if (timeFrame == 0) {
+            timeAddendum = "?time_range=short_term"
+        } else if (timeFrame == 1) {
+            timeAddendum = "?time_range=medium_term"
+        } else {
+            timeAddendum = "?time_range=long_term"
+        }
+        createRequest(with: URL(string: Constants.baseAPIURL + "/me/top/tracks" + timeAddendum), type: .GET) { baseRequest in
             let task = URLSession.shared.dataTask(with: baseRequest) { data, _, error in
                 guard let data = data, error == nil else {
                     completion(.failure(APIError.failedToGetData))

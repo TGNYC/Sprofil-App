@@ -13,22 +13,43 @@ struct HomeView: View {
     var tracks = APICaller.shared.trackList
     
     var body: some View {
-        VStack {
-            Text("UserID: \(APICaller.shared.userID ?? "nil")")
-            Text("Top Tracks (out of \(tracks.count)):")
-//            ForEach(0 ..< APICaller.shared.myTopTracks!.items.count, id: \.self) { value in
-//                Text(String(value))
-//            }
-            
-//            ForEach((1...10), id: \.self) {
-//                Text("Track \($0): \(tracks[0].name)")
-////                    Text("\($0)…")
-//            }
-            Button("Log Out") {
-                self.isLoggedIn = false
-            }
-            
+        TabView {
+            Text("The First Tab")
+                .badge(10)
+                .tabItem {
+                    Image(systemName: "1.square.fill")
+                    Text("First")
+                }
+            SearchView()
+                .tabItem {
+                    Image(systemName: "magnifyingglass")
+                    Text("Search")
+                }
+            SettingsView()
+                .tabItem {
+                    Image(systemName: "gear")
+                    Text("Settings")
+                }
         }
+        .font(.headline)
+        
+//
+//        VStack {
+//            Text("UserID: \(APICaller.shared.userID ?? "nil")")
+//            Text("Top Tracks (out of \(tracks.count)):")
+////            ForEach(0 ..< APICaller.shared.myTopTracks!.items.count, id: \.self) { value in
+////                Text(String(value))
+////            }
+//
+////            ForEach((1...10), id: \.54 self) {
+////                Text("Track \($0): \(tracks[0].name)")
+//////                    Text("\($0)…")
+////            }
+//            Button("Log Out") {
+//                self.isLoggedIn = false
+//            }
+//
+//        }
     }
 }
 //

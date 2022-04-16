@@ -1,0 +1,53 @@
+//
+//  SearchView.swift
+//  Sprofil (iOS)
+//
+//  Created by Ben Shi on 3/11/22.
+//
+
+import SwiftUI
+
+struct SearchView: View {
+    @StateObject var firebase = FirebaseAPI()
+    @State var text = ""
+    var body: some View {
+        if firebase.loading {
+            LoadingView()
+        }
+        else {
+        NavigationView {
+            List {
+                ForEach(firebase.GetNameList().filter { $0.contains(text) || text == "" }, id: \.self) { item in
+                    NavigationLink(destination: OtherProfileView(profName: item)) {
+                    HStack(alignment: .top, spacing: 12) {
+                        Image("Drake")
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
+                            .frame(width: 44, height: 44)
+                            .background(Color("Background"))
+                            .mask(Circle())
+                    VStack {
+                        Text(item).bold()
+                        Text("Description")
+                            .font(.footnote)
+                            .foregroundColor(.secondary)
+                    }
+                    }
+                    .padding(.vertical, 4)
+                    .listRowSeparator(.hidden)
+                    }
+                }
+            }
+            .searchable(text: $text, placement: .navigationBarDrawer(displayMode: .always), prompt: Text("TheEpicWizard17"))
+            .navigationTitle("Search")
+            .navigationBarTitleDisplayMode(.inline)
+        }
+        }
+    }
+}
+
+struct SearchView_Previews: PreviewProvider {
+    static var previews: some View {
+        SearchView()
+    }
+}
