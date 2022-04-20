@@ -69,6 +69,9 @@ struct OtherProfTitleView: View {
                         .bold())
                 .foregroundColor(.white)
                 .padding(.top, 8)
+            Text(firebase.GetOtherBio(userID: firebase.GetUserID(profName: profName)))
+                .font(.system(size: 12))
+                .foregroundColor(.white)
             HStack {
             Button(action: {
                 firebase.AddFriend(profName: profName)

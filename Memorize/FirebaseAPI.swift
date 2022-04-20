@@ -143,6 +143,32 @@ class FirebaseAPI: ObservableObject {
         return UserSnapshot?.childSnapshot(forPath: "Bio").value as? String ?? "NULL"
     }
     
+    func GetOtherBio(userID: String) -> String {
+        return AllUserSnapshot?.childSnapshot(forPath: userID).childSnapshot(forPath: "Bio").value as? String ?? "NULL"
+    }
+    
+    func GetProfTitle() -> String {
+        let titles: [String] = ["nerd", "fanatic", "king/queen", "scholar", "missionary", "worshipper"]
+        let topGenres: [String] = GetTopGenres()
+        return topGenres[0] + " " + titles[Int.random(in: 0...(titles.count-1))]
+    }
+    
+    func GetTopGenres() -> [String] {
+        var result: [String] = []
+        for obj in UserSnapshot?.childSnapshot(forPath: "FavoriteGenre").children.allObjects as? [DataSnapshot] ?? [] {
+            result.append(obj.childSnapshot(forPath: "genre").value as? String ?? "NULL")
+        }
+        return result
+    }
+    
+    func GetTopGenresScores() -> [Int] {
+        var result: [Int] = []
+        for obj in UserSnapshot?.childSnapshot(forPath: "FavoriteGenre").children.allObjects as? [DataSnapshot] ?? [] {
+            result.append(obj.childSnapshot(forPath: "score").value as? Int ?? -1)
+        }
+        return result
+    }
+    
     func EditBio(newBio: String) {
         ref.child("Users").child(String(SPOTIFY_ID)).updateChildValues(["Bio" : newBio])
     }
