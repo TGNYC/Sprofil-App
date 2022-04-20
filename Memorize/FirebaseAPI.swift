@@ -261,12 +261,11 @@ class FirebaseAPI: ObservableObject {
         result.append(artistsInfo)
         var albumInfo: [String] = []
         // For the Album: [Album Name, AlbumImgURL, ReleaseDate, NumTracks, LinkToSpot]
-        for obj in trackSnapshot.childSnapshot(forPath: "album").children.allObjects as? [DataSnapshot] ?? [] {
-            albumInfo.append(obj.childSnapshot(forPath: "images/0/url").value as? String ?? "NULL")
-            albumInfo.append(obj.childSnapshot(forPath: "release_date").value as? String ?? "NULL")
-            albumInfo.append(obj.childSnapshot(forPath: "total_tracks").value as? String ?? "NULL")
-            albumInfo.append(obj.childSnapshot(forPath: "external_urls/spotify").value as? String ?? "NULL")
-        }
+        albumInfo.append(trackSnapshot.childSnapshot(forPath: "album/name").value as? String ?? "NULL")
+        albumInfo.append(trackSnapshot.childSnapshot(forPath: "album/images/0/url").value as? String ?? "NULL")
+        albumInfo.append(trackSnapshot.childSnapshot(forPath: "album/release_date").value as? String ?? "NULL")
+        albumInfo.append(String(trackSnapshot.childSnapshot(forPath: "album/total_tracks").value as? Int ?? -1))
+        albumInfo.append(trackSnapshot.childSnapshot(forPath: "album/external_urls/spotify").value as? String ?? "NULL")
         result.append(albumInfo)
         var albumArtists: [[String]] = []
         for obj in trackSnapshot.childSnapshot(forPath: "album/artists").children.allObjects as? [DataSnapshot] ?? [] {
@@ -274,7 +273,7 @@ class FirebaseAPI: ObservableObject {
         }
         result.append(albumArtists)
         result.append(trackSnapshot.childSnapshot(forPath: "album/images/0/url").value as? String ?? "NULL")
-        result.append(SecToString(seconds: trackSnapshot.childSnapshot(forPath: "duration_ms").value as? Int ?? 0))
+        result.append(SecToString(milliSeconds: trackSnapshot.childSnapshot(forPath: "duration_ms").value as? Int ?? 0))
         result.append(BoolToString(bool:trackSnapshot.childSnapshot(forPath: "explicit").value as? Bool ?? false))
         result.append(trackSnapshot.childSnapshot(forPath: "external_urls/spotify").value as? String ?? "NULL")
         result.append(String(trackSnapshot.childSnapshot(forPath: "popularity").value as? Int ?? -1))
@@ -283,10 +282,11 @@ class FirebaseAPI: ObservableObject {
         return result
     }
     
-    func SecToString(seconds: Int) -> String {
+    func SecToString(milliSeconds: Int) -> String {
+        let seconds = milliSeconds / 60
         let min = seconds / 60
-        let seconds = seconds % 60
-        return String(min) + ":" + String(seconds)
+        let leftover = seconds % 60
+        return String(min) + ":" + String(leftover)
     }
     
     func BoolToString(bool: Bool) -> String {

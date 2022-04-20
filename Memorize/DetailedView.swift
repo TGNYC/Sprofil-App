@@ -99,6 +99,7 @@ struct DetailedTrackView: View {
                     .padding()
                 Link("Spotify Profile", destination: URL(string: linkToSpot)!)
                     .padding()
+                Group {
                 Text("From Album: " + albumInfo[0])
                     .font(.system(size: 20)
                             .bold())
@@ -117,8 +118,9 @@ struct DetailedTrackView: View {
                     .padding()
                 Text("Num Tracks: " + albumInfo[3])
                     .padding()
-//                Link("Link To Album", destination: URL(string: albumInfo[4])!)
-//                    .padding()
+                Link("Spotify Profile", destination: URL(string: linkToSpot)!)
+                    .padding()
+                }
             }
         }
 }

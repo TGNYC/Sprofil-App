@@ -24,6 +24,7 @@ struct TopTrackInfo: Identifiable {
     var id: String { trackName }
     
     init(info: [Any]) {
+        print(info)
         self.trackName = info[0] as? String ?? "NULL"
         self.artistsInfo = info[1] as? [[String]] ?? []
         self.albumInfo = info[2] as? [String] ?? []
@@ -38,6 +39,7 @@ struct TopTrackInfo: Identifiable {
     }
     
     mutating func FillValues(info: [Any]) {
+        print(info)
         self.trackName = info[0] as? String ?? "NULL"
         self.artistsInfo = info[1] as? [[String]] ?? []
         self.albumInfo = info[2] as? [String] ?? []

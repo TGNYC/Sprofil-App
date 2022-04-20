@@ -31,7 +31,7 @@ struct SearchView: View {
                                 .mask(Circle())
                                 VStack {
                                     Text(item).bold()
-                                    Text("Description")
+                                    Text(firebase.GetOtherBio(userID: firebase.GetUserID(profName: item)))
                                         .font(.footnote)
                                         .foregroundColor(.secondary)
                                 }

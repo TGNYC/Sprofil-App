@@ -29,6 +29,11 @@ struct HomeView: View {
                     Image(systemName: "gear")
                     Text("Settings")
                 }
+            ExploreView()
+                .tabItem {
+                    Image(systemName: "dot.radiowaves.up.forward")
+                    Text("Explore")
+                }
         }
         .font(.headline)
         
