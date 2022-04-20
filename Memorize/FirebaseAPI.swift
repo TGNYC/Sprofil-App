@@ -10,7 +10,7 @@ import UIKit
 import Firebase
 import os
 
-// Describing the possible errors that could be thrown
+// Describing the possible erors that could be thrown
 enum FirebaseErrors: Error {
     case ParameterOutOfRange
     case CannotRetrieveData
@@ -20,7 +20,7 @@ class FirebaseAPI: ObservableObject {
     @Published var ref : DatabaseReference!
     @Published var loading = true
     // NEED TO FIGURE OUT HOW TO GET THE SPOTIFY ID:
-    var SPOTIFY_ID = /*AuthManager.shared.userID ??*/ "p,gupta" // switched to user id
+    var SPOTIFY_ID = AuthManager.shared.userID ?? "p,gupta" // switched to user id
     var UserSnapshot: DataSnapshot?
     var AllUserSnapshot: DataSnapshot?
     var UsernameSnapshot: DataSnapshot?
