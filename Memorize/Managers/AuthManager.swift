@@ -138,8 +138,8 @@ final class AuthManager {
                             trackTuples[trackItem.id] = [trackItem.name, trackItem.album.images[0].url]
                             albumTuples[trackItem.album.id] = [trackItem.album.name, trackItem.album.images[0].url]
                         }
-                        FirebaseAPI2.UploadGeneralTuple(child: "trackTuplesMedium", artistInfo: trackTuples, user_id: myProfileID)
-                        FirebaseAPI2.UploadGeneralTuple(child: "albumTuplesMedium", artistInfo: albumTuples, user_id: myProfileID)
+//                        FirebaseAPI2.UploadGeneralTuple(child: "trackTuplesMedium", artistInfo: trackTuples, user_id: myProfileID)
+//                        FirebaseAPI2.UploadGeneralTuple(child: "albumTuplesMedium", artistInfo: albumTuples, user_id: myProfileID)
 //                        FirebaseAPI2.UploadTrackInfoTuple(artistInfo: trackTuples, user_id: myProfileID)
 //                        FirebaseAPI2.UploadAlbumInfoTuple(artistInfo: albumTuples, user_id: myProfileID)
                         print("UPLOADED TRACK INFO")
@@ -168,8 +168,8 @@ final class AuthManager {
                             trackTuples[trackItem.id] = [trackItem.name, trackItem.album.images[0].url]
                             albumTuples[trackItem.album.id] = [trackItem.album.name, trackItem.album.images[0].url]
                         }
-                        FirebaseAPI2.UploadGeneralTuple(child: "trackTuplesShort", artistInfo: trackTuples, user_id: myProfileID)
-                        FirebaseAPI2.UploadGeneralTuple(child: "albumTuplesShort", artistInfo: albumTuples, user_id: myProfileID)
+//                        FirebaseAPI2.UploadGeneralTuple(child: "trackTuplesShort", artistInfo: trackTuples, user_id: myProfileID)
+//                        FirebaseAPI2.UploadGeneralTuple(child: "albumTuplesShort", artistInfo: albumTuples, user_id: myProfileID)
 //                        FirebaseAPI2.UploadTrackInfoTuple(artistInfo: trackTuples, user_id: myProfileID)
 //                        FirebaseAPI2.UploadAlbumInfoTuple(artistInfo: albumTuples, user_id: myProfileID)
                         print("UPLOADED TRACK INFO")
@@ -198,8 +198,8 @@ final class AuthManager {
                             trackTuples[trackItem.id] = [trackItem.name, trackItem.album.images[0].url]
                             albumTuples[trackItem.album.id] = [trackItem.album.name, trackItem.album.images[0].url]
                         }
-                        FirebaseAPI2.UploadGeneralTuple(child: "trackTuplesLong", artistInfo: trackTuples, user_id: myProfileID)
-                        FirebaseAPI2.UploadGeneralTuple(child: "albumTuplesLong", artistInfo: albumTuples, user_id: myProfileID)
+//                        FirebaseAPI2.UploadGeneralTuple(child: "trackTuplesLong", artistInfo: trackTuples, user_id: myProfileID)
+//                        FirebaseAPI2.UploadGeneralTuple(child: "albumTuplesLong", artistInfo: albumTuples, user_id: myProfileID)
 //                        FirebaseAPI2.UploadTrackInfoTuple(artistInfo: trackTuples, user_id: myProfileID)
 //                        FirebaseAPI2.UploadAlbumInfoTuple(artistInfo: albumTuples, user_id: myProfileID)
                         print("UPLOADED TRACK INFO")
@@ -238,7 +238,7 @@ final class AuthManager {
 //                            artistImages[artistItem.name] = artistItem.images?[0].url
                             artistTuples[artistItem.id] = [artistItem.name, artistItem.images?[0].url ?? "no url"]
                         }
-                        FirebaseAPI2.UploadGeneralTuple(child: "artistTuplesMedium", artistInfo: artistTuples, user_id: myProfileID)
+//                        FirebaseAPI2.UploadGeneralTuple(child: "artistTuplesMedium", artistInfo: artistTuples, user_id: myProfileID)
 //                        FirebaseAPI2.UploadArtistInfoTuple(artistInfo: artistTuples, user_id: myProfileID)
 //                        FirebaseAPI2.UploadArtistInfo(stringArray: artistList, imageArray: artistImages, user_id: "p_gupta")
                         print("UPLOADED ARTIST INFO")
@@ -275,7 +275,7 @@ final class AuthManager {
 //                            artistImages[artistItem.name] = artistItem.images?[0].url
                             artistTuples[artistItem.id] = [artistItem.name, artistItem.images?[0].url ?? "no url"]
                         }
-                        FirebaseAPI2.UploadGeneralTuple(child: "artistTuplesShort", artistInfo: artistTuples, user_id: myProfileID)
+//                        FirebaseAPI2.UploadGeneralTuple(child: "artistTuplesShort", artistInfo: artistTuples, user_id: myProfileID)
 //                        FirebaseAPI2.UploadArtistInfoTuple(artistInfo: artistTuples, user_id: myProfileID)
 //                        FirebaseAPI2.UploadArtistInfo(stringArray: artistList, imageArray: artistImages, user_id: "p_gupta")
                         print("UPLOADED ARTIST INFO")
@@ -312,7 +312,7 @@ final class AuthManager {
 //                            artistImages[artistItem.name] = artistItem.images?[0].url
                             artistTuples[artistItem.id] = [artistItem.name, artistItem.images?[0].url ?? "no url"]
                         }
-                        FirebaseAPI2.UploadGeneralTuple(child: "artistTuplesLong", artistInfo: artistTuples, user_id: myProfileID)
+//                        FirebaseAPI2.UploadGeneralTuple(child: "artistTuplesLong", artistInfo: artistTuples, user_id: myProfileID)
 //                        FirebaseAPI2.UploadArtistInfoTuple(artistInfo: artistTuples, user_id: myProfileID)
 //                        FirebaseAPI2.UploadArtistInfo(stringArray: artistList, imageArray: artistImages, user_id: "p_gupta")
                         print("UPLOADED ARTIST INFO")
