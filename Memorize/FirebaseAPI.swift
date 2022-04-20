@@ -399,7 +399,7 @@ class FirebaseAPI: ObservableObject {
     
     func GetOtherTopArtistInfo(userID: String) -> [[String]] {
         var result: [DataSnapshot] = []
-        for obj in AllUserSnapshot?.childSnapshot(forPath: String(userID) + "/FavoriteArtistData/items").children.allObjects as? [DataSnapshot] ?? [] {
+        for obj in AllUserSnapshot?.childSnapshot(forPath: userID).childSnapshot(forPath: "FavoriteArtistData/items").children.allObjects as? [DataSnapshot] ?? [] {
             result.append(obj)
         }
         

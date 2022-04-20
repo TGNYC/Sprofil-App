@@ -40,7 +40,7 @@ struct DetailedArtistView: View {
             .font(.system(size: 20)
                     .bold())
             .padding(.top, 8)
-        Text("Genres: " + topGenres[0] + ", " + topGenres[1])
+//        Text("Genres: " + topGenres[0] + ", " + topGenres[1])
             .padding()
         Text("Followers: " + followers)
             .padding()
