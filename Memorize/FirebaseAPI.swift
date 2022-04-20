@@ -136,7 +136,12 @@ class FirebaseAPI: ObservableObject {
     }
     
     func EditIsPrivateStatus(onOff: Bool) {
-        ref.child("Users").child(String(SPOTIFY_ID)).updateChildValues(["IsPrivate" : onOff])
+        if onOff {
+            ref.child("Users").child(String(SPOTIFY_ID)).updateChildValues(["IsPrivate" : "True"])
+        }
+        else {
+            ref.child("Users").child(String(SPOTIFY_ID)).updateChildValues(["IsPrivate" : "False"])
+        }
     }
     
     func GetBio() -> String {
@@ -151,6 +156,20 @@ class FirebaseAPI: ObservableObject {
         let titles: [String] = ["nerd", "fanatic", "king/queen", "scholar", "missionary", "worshipper"]
         let topGenres: [String] = GetTopGenres()
         return topGenres[0] + " " + titles[Int.random(in: 0...(titles.count-1))]
+    }
+    
+    func GetOtherProfTitle(userID: String) -> String {
+        let titles: [String] = ["nerd", "fanatic", "king/queen", "scholar", "missionary", "worshipper"]
+        let topGenres: [String] = GetOtherTopGenres(userID: userID)
+        return topGenres[0] + " " + titles[Int.random(in: 0...(titles.count-1))]
+    }
+    
+    func GetOtherTopGenres(userID: String) -> [String] {
+        var result: [String] = []
+        for obj in AllUserSnapshot?.childSnapshot(forPath: userID).childSnapshot(forPath: "FavoriteGenre").children.allObjects as? [DataSnapshot] ?? [] {
+            result.append(obj.childSnapshot(forPath: "genre").value as? String ?? "NULL")
+        }
+        return result
     }
     
     func GetTopGenres() -> [String] {
@@ -188,12 +207,13 @@ class FirebaseAPI: ObservableObject {
         for obj in UsernameSnapshot?.children.allObjects as? [DataSnapshot] ?? [] {
             result.append(obj.key as String)
         }
-        var counter = 0
         for obj in result {
             if IsUserPrivate(profName: obj) {
-                result.remove(at: counter)
+                let firstIndex = result.firstIndex(of: obj) ?? -1
+                if firstIndex != -1 {
+                result.remove(at: firstIndex)
+                }
             }
-            counter += 1
         }
         return result
     }
