@@ -63,6 +63,8 @@
 		CBC6106828105C7C00C62129 /* RefreshableScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBC6106728105C7C00C62129 /* RefreshableScrollView.swift */; };
 		CBC6106A28105CD100C62129 /* DetailedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBC6106928105CD100C62129 /* DetailedView.swift */; };
 		CBC6106C28105CEB00C62129 /* ExploreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBC6106B28105CEB00C62129 /* ExploreView.swift */; };
+		CBC6106F281063A900C62129 /* BetterSafariView in Frameworks */ = {isa = PBXBuildFile; productRef = CBC6106E281063A900C62129 /* BetterSafariView */; };
+		CBC61071281063C600C62129 /* OAuthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBC61070281063C600C62129 /* OAuthView.swift */; };
 		CBCEC4A727F8C1BE00078C3D /* MemorizeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBCEC4A627F8C1BE00078C3D /* MemorizeApp.swift */; };
 		CBCEC4A927F8C1BE00078C3D /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBCEC4A827F8C1BE00078C3D /* LoginView.swift */; };
 		CBCEC4AB27F8C1C100078C3D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CBCEC4AA27F8C1C100078C3D /* Assets.xcassets */; };
@@ -99,6 +101,7 @@
 		CBC6106728105C7C00C62129 /* RefreshableScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshableScrollView.swift; sourceTree = "<group>"; };
 		CBC6106928105CD100C62129 /* DetailedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailedView.swift; sourceTree = "<group>"; };
 		CBC6106B28105CEB00C62129 /* ExploreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreView.swift; sourceTree = "<group>"; };
+		CBC61070281063C600C62129 /* OAuthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OAuthView.swift; sourceTree = "<group>"; };
 		CBCEC4A327F8C1BE00078C3D /* Memorize.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Memorize.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CBCEC4A627F8C1BE00078C3D /* MemorizeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemorizeApp.swift; sourceTree = "<group>"; };
 		CBCEC4A827F8C1BE00078C3D /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
@@ -118,6 +121,7 @@
 				CBB533B128089D610081FF6C /* FirebaseAppCheck in Frameworks */,
 				CBB533B528089D610081FF6C /* FirebaseAuth in Frameworks */,
 				CBB533E128089D610081FF6C /* FirebaseStorageSwift-Beta in Frameworks */,
+				CBC6106F281063A900C62129 /* BetterSafariView in Frameworks */,
 				CBB533AD28089D610081FF6C /* FirebaseAnalyticsSwift-Beta in Frameworks */,
 				CBB533DB28089D610081FF6C /* FirebaseRemoteConfigSwift-Beta in Frameworks */,
 				CBB533D328089D610081FF6C /* FirebaseMLModelDownloader in Frameworks */,
@@ -216,6 +220,7 @@
 				CBCEC4A627F8C1BE00078C3D /* MemorizeApp.swift */,
 				CBCEC4A827F8C1BE00078C3D /* LoginView.swift */,
 				CBEE220027FA697C0023E56A /* AuthView.swift */,
+				CBC61070281063C600C62129 /* OAuthView.swift */,
 				CBB5338D27FB6E770081FF6C /* HomeView.swift */,
 				CBB533EE2808CC5C0081FF6C /* Subviews */,
 				CBCEC4AA27F8C1C100078C3D /* Assets.xcassets */,
@@ -279,6 +284,7 @@
 				CBB533DC28089D610081FF6C /* FirebaseStorage */,
 				CBB533DE28089D610081FF6C /* FirebaseStorageCombine-Community */,
 				CBB533E028089D610081FF6C /* FirebaseStorageSwift-Beta */,
+				CBC6106E281063A900C62129 /* BetterSafariView */,
 			);
 			productName = Memorize;
 			productReference = CBCEC4A327F8C1BE00078C3D /* Memorize.app */;
@@ -310,6 +316,7 @@
 			mainGroup = CBCEC49A27F8C1BE00078C3D;
 			packageReferences = (
 				CBB533A928089D600081FF6C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				CBC6106D281063A900C62129 /* XCRemoteSwiftPackageReference "BetterSafariView" */,
 			);
 			productRefGroup = CBCEC4A427F8C1BE00078C3D /* Products */;
 			projectDirPath = "";
@@ -365,6 +372,7 @@
 				CBB5338A27FB5C720081FF6C /* AuthResponse.swift in Sources */,
 				CBB533A327FB71250081FF6C /* UserProfile.swift in Sources */,
 				CBB533F22808CC970081FF6C /* TopAlbumsView.swift in Sources */,
+				CBC61071281063C600C62129 /* OAuthView.swift in Sources */,
 				CBB5339D27FB71250081FF6C /* Artist.swift in Sources */,
 				CBEE220127FA697C0023E56A /* AuthView.swift in Sources */,
 				CBB533A227FB71250081FF6C /* TopArtists.swift in Sources */,
@@ -580,6 +588,14 @@
 				minimumVersion = 8.0.0;
 			};
 		};
+		CBC6106D281063A900C62129 /* XCRemoteSwiftPackageReference "BetterSafariView" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/stleamist/BetterSafariView.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.4.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -722,6 +738,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = CBB533A928089D600081FF6C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = "FirebaseStorageSwift-Beta";
+		};
+		CBC6106E281063A900C62129 /* BetterSafariView */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CBC6106D281063A900C62129 /* XCRemoteSwiftPackageReference "BetterSafariView" */;
+			productName = BetterSafariView;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

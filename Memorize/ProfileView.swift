@@ -15,7 +15,7 @@ struct ProfileView: View {
     @State var id = 0
     @State var showFriends: Bool = false
     let gradient = Gradient(colors: [.orange, .purple])
-    let userID = AuthManager.shared.userID ?? "p,gupta"
+    let userID = AuthManager.shared.userID ?? "test_values"
     
     var body: some View {
         if firebase.loading {
@@ -80,9 +80,9 @@ struct ProfTitleView: View {
                 .foregroundColor(.white)
                 .padding(.top, 8)
             Text(firebase.GetBio())
-                .font(.system(size: 10))
+                .font(.system(size: 12))
                 .foregroundColor(.white)
-                .padding()
+//                .padding()
         }
     }
 }

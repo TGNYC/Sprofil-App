@@ -114,73 +114,104 @@ final class AuthManager {
                 self?.onRefreshBlocks.removeAll()
                 self?.cacheToken(result: result)
                 
-                print("START FIREBASE UPLOAD??????")
-                
-                
-//                APICaller.shared.getCurrentUserProfile { profile_result in
-//                    switch profile_result {
-//                    case .success(let profile):
-//                        print("USER ID: \(profile.id)")
-//                        UserDefaults.standard.setValue(profile.id, forKey: "user_id")
-//                        break
-//                    case .failure(let error):
-//                        print(error.localizedDescription)
-//                    }
-//                }
-                // get top tracks
                 
                 var myProfileID : String = "no_id"
                 
-                var track_req = URLRequest(url: URL(string: "https://api.spotify.com/v1/me/top/tracks")!)
-                track_req.setValue("Bearer \(AuthManager.shared.accessToken!)", forHTTPHeaderField: "Authorization")
-                track_req.httpMethod = "GET"
-                track_req.timeoutInterval = 30 // seconds
+                // get top tracks from last six months
+                
+                var track_req_medium = URLRequest(url: URL(string: "https://api.spotify.com/v1/me/top/tracks?time_range=medium_term")!)
+                track_req_medium.setValue("Bearer \(AuthManager.shared.accessToken!)", forHTTPHeaderField: "Authorization")
+                track_req_medium.httpMethod = "GET"
+                track_req_medium.timeoutInterval = 30 // seconds
                 var track_string = "no value"
-                var trackList: [String] = [String]()
-                var trackImages: [String: String] = [String: String]()
                 var trackTuples: [String: [String]] = [String: [String]]()
                 var albumTuples: [String: [String]] = [String: [String]]()
-                let track_task = URLSession.shared.dataTask(with: track_req) { data, _, error in
+                let track_task_medium = URLSession.shared.dataTask(with: track_req_medium) { data, _, error in
                     guard let data = data, error == nil else {
                         return
                     }
                     track_string = String(data: data, encoding: .utf8)!
-                    track_string = track_string.replacingOccurrences(of: "\"", with: "\'")
-                    FirebaseAPI2.EditTrackJson(trackJson: track_string, user_id: myProfileID)
-                    // ADD FUNCTION TO UPLOAD DATA AS RAW JSON STRING
-//                    FirebaseAPI.shared.EditTrackJson(tracksJson: String(data: data, encoding: .utf8), user_id: AuthManager.shared.userID)
+                    FirebaseAPI2.uploadJSON(child: "trackJSON_medium", myJSON: track_string, user_id: myProfileID)
                     do {
                         let tracks = try JSONDecoder().decode(TopTracks.self, from: data)
-                        
-//                        var imageList: [String: String] =
                         for trackItem in tracks.items {
-                            print(trackItem.id)
-                            print(trackItem.name)
-//                            trackList.append(trackItem.name)
-//                            print(String(data: <#T##String.Encoding#>trackItem.album?.images[0].url!, encoding: )
-//                            trackImages[trackItem.name] = trackItem.album?.images[0].url
-                            
-                            print(trackItem.album.images[0].url )
-//                            img = String(data: trackItem.album.images[0].url, encoding: .utf8)
                             trackTuples[trackItem.id] = [trackItem.name, trackItem.album.images[0].url]
                             albumTuples[trackItem.album.id] = [trackItem.album.name, trackItem.album.images[0].url]
                         }
-                        FirebaseAPI2.UploadTrackInfoTuple(artistInfo: trackTuples, user_id: myProfileID)
-                        FirebaseAPI2.UploadAlbumInfoTuple(artistInfo: albumTuples, user_id: myProfileID)
-//                        FirebaseAPI2.UploadTrackInfo(stringArray: trackList, imageArray: trackImages, user_id: "p_gupta")
+                        FirebaseAPI2.UploadGeneralTuple(child: "trackTuplesMedium", artistInfo: trackTuples, user_id: myProfileID)
+                        FirebaseAPI2.UploadGeneralTuple(child: "albumTuplesMedium", artistInfo: albumTuples, user_id: myProfileID)
+//                        FirebaseAPI2.UploadTrackInfoTuple(artistInfo: trackTuples, user_id: myProfileID)
+//                        FirebaseAPI2.UploadAlbumInfoTuple(artistInfo: albumTuples, user_id: myProfileID)
                         print("UPLOADED TRACK INFO")
                         
                     } catch {
                         print(error)
                     }
-                
                 }
-//                track_task.resume()
                 
+                // get top tracks from last month
                 
-                // get top artists
+                var track_req_short = URLRequest(url: URL(string: "https://api.spotify.com/v1/me/top/tracks?time_range=short_term")!)
+                track_req_short.setValue("Bearer \(AuthManager.shared.accessToken!)", forHTTPHeaderField: "Authorization")
+                track_req_short.httpMethod = "GET"
+                track_req_short.timeoutInterval = 30 // seconds
+                track_string = "no value"
+                let track_task_short = URLSession.shared.dataTask(with: track_req_short) { data, _, error in
+                    guard let data = data, error == nil else {
+                        return
+                    }
+                    track_string = String(data: data, encoding: .utf8)!
+                    FirebaseAPI2.uploadJSON(child: "trackJSON_short", myJSON: track_string, user_id: myProfileID)
+                    do {
+                        let tracks = try JSONDecoder().decode(TopTracks.self, from: data)
+                        for trackItem in tracks.items {
+                            trackTuples[trackItem.id] = [trackItem.name, trackItem.album.images[0].url]
+                            albumTuples[trackItem.album.id] = [trackItem.album.name, trackItem.album.images[0].url]
+                        }
+                        FirebaseAPI2.UploadGeneralTuple(child: "trackTuplesShort", artistInfo: trackTuples, user_id: myProfileID)
+                        FirebaseAPI2.UploadGeneralTuple(child: "albumTuplesShort", artistInfo: albumTuples, user_id: myProfileID)
+//                        FirebaseAPI2.UploadTrackInfoTuple(artistInfo: trackTuples, user_id: myProfileID)
+//                        FirebaseAPI2.UploadAlbumInfoTuple(artistInfo: albumTuples, user_id: myProfileID)
+                        print("UPLOADED TRACK INFO")
+                        
+                    } catch {
+                        print(error)
+                    }
+                }
                 
-                var art_req = URLRequest(url: URL(string: "https://api.spotify.com/v1/me/top/artists")!)
+                // get top tracks from lifetime
+                
+                var track_req_long = URLRequest(url: URL(string: "https://api.spotify.com/v1/me/top/tracks?time_range=long_term")!)
+                track_req_long.setValue("Bearer \(AuthManager.shared.accessToken!)", forHTTPHeaderField: "Authorization")
+                track_req_long.httpMethod = "GET"
+                track_req_long.timeoutInterval = 30 // seconds
+                track_string = "no value"
+                let track_task_long = URLSession.shared.dataTask(with: track_req_long) { data, _, error in
+                    guard let data = data, error == nil else {
+                        return
+                    }
+                    track_string = String(data: data, encoding: .utf8)!
+                    FirebaseAPI2.uploadJSON(child: "trackJSON_long", myJSON: track_string, user_id: myProfileID)
+                    do {
+                        let tracks = try JSONDecoder().decode(TopTracks.self, from: data)
+                        for trackItem in tracks.items {
+                            trackTuples[trackItem.id] = [trackItem.name, trackItem.album.images[0].url]
+                            albumTuples[trackItem.album.id] = [trackItem.album.name, trackItem.album.images[0].url]
+                        }
+                        FirebaseAPI2.UploadGeneralTuple(child: "trackTuplesLong", artistInfo: trackTuples, user_id: myProfileID)
+                        FirebaseAPI2.UploadGeneralTuple(child: "albumTuplesLong", artistInfo: albumTuples, user_id: myProfileID)
+//                        FirebaseAPI2.UploadTrackInfoTuple(artistInfo: trackTuples, user_id: myProfileID)
+//                        FirebaseAPI2.UploadAlbumInfoTuple(artistInfo: albumTuples, user_id: myProfileID)
+                        print("UPLOADED TRACK INFO")
+                        
+                    } catch {
+                        print(error)
+                    }
+                }
+                                
+                // get top artists for last six months
+                
+                var art_req = URLRequest(url: URL(string: "https://api.spotify.com/v1/me/top/artists?time_range=medium_term")!)
                 art_req.setValue("Bearer \(AuthManager.shared.accessToken!)", forHTTPHeaderField: "Authorization")
                 art_req.httpMethod = "GET"
                 art_req.timeoutInterval = 30 // seconds
@@ -193,8 +224,8 @@ final class AuthManager {
                         return
                     }
                     art_string = String(data: data, encoding: .utf8)!
-                    art_string = art_string.replacingOccurrences(of: "\"", with: "\'")
-                    FirebaseAPI2.EditArtistJson(artistJson: art_string, user_id: myProfileID)
+//                    art_string = art_string.replacingOccurrences(of: "\"", with: "\'")
+                    FirebaseAPI2.uploadJSON(child: "artistJSON_medium", myJSON: art_string, user_id: myProfileID)
                     do {
                         let artists = try JSONDecoder().decode(TopArtists.self, from: data)
                         
@@ -207,7 +238,8 @@ final class AuthManager {
 //                            artistImages[artistItem.name] = artistItem.images?[0].url
                             artistTuples[artistItem.id] = [artistItem.name, artistItem.images?[0].url ?? "no url"]
                         }
-                        FirebaseAPI2.UploadArtistInfoTuple(artistInfo: artistTuples, user_id: myProfileID)
+                        FirebaseAPI2.UploadGeneralTuple(child: "artistTuplesMedium", artistInfo: artistTuples, user_id: myProfileID)
+//                        FirebaseAPI2.UploadArtistInfoTuple(artistInfo: artistTuples, user_id: myProfileID)
 //                        FirebaseAPI2.UploadArtistInfo(stringArray: artistList, imageArray: artistImages, user_id: "p_gupta")
                         print("UPLOADED ARTIST INFO")
                         
@@ -217,6 +249,82 @@ final class AuthManager {
                     // ADD FUNCTION TO UPLOAD DATA AS RAW JSON STRING
 //                    FirebaseAPI.shared.EditArtistJson(artistJson: String(data: data, encoding: .utf8), user_id: AuthManager.shared.userID)
                 }
+                
+                // get top artists for last month
+                
+                var art_req_short = URLRequest(url: URL(string: "https://api.spotify.com/v1/me/top/artists?time_range=short_term")!)
+                art_req_short.setValue("Bearer \(AuthManager.shared.accessToken!)", forHTTPHeaderField: "Authorization")
+                art_req_short.httpMethod = "GET"
+                art_req_short.timeoutInterval = 30 // seconds
+                let art_task_short = URLSession.shared.dataTask(with: art_req_short) { data, _, error in
+                    guard let data = data, error == nil else {
+                        return
+                    }
+                    art_string = String(data: data, encoding: .utf8)!
+//                    art_string = art_string.replacingOccurrences(of: "\"", with: "\'")
+                    FirebaseAPI2.uploadJSON(child: "artistJSON_short", myJSON: art_string, user_id: myProfileID)
+                    do {
+                        let artists = try JSONDecoder().decode(TopArtists.self, from: data)
+                        
+//                        var imageList: [String: String] =
+                        for artistItem in artists.items {
+                            print(artistItem.id)
+                            print(artistItem.name)
+//                            artistList.append(artistItem.name)
+                            print(artistItem.images?[0].url ?? "no url")
+//                            artistImages[artistItem.name] = artistItem.images?[0].url
+                            artistTuples[artistItem.id] = [artistItem.name, artistItem.images?[0].url ?? "no url"]
+                        }
+                        FirebaseAPI2.UploadGeneralTuple(child: "artistTuplesShort", artistInfo: artistTuples, user_id: myProfileID)
+//                        FirebaseAPI2.UploadArtistInfoTuple(artistInfo: artistTuples, user_id: myProfileID)
+//                        FirebaseAPI2.UploadArtistInfo(stringArray: artistList, imageArray: artistImages, user_id: "p_gupta")
+                        print("UPLOADED ARTIST INFO")
+                        
+                    } catch {
+                        print(error)
+                    }
+                    // ADD FUNCTION TO UPLOAD DATA AS RAW JSON STRING
+//                    FirebaseAPI.shared.EditArtistJson(artistJson: String(data: data, encoding: .utf8), user_id: AuthManager.shared.userID)
+                }
+                
+                // get top artists for lifetime
+                
+                var art_req_long = URLRequest(url: URL(string: "https://api.spotify.com/v1/me/top/artists?time_range=long_term")!)
+                art_req_long.setValue("Bearer \(AuthManager.shared.accessToken!)", forHTTPHeaderField: "Authorization")
+                art_req_long.httpMethod = "GET"
+                art_req_long.timeoutInterval = 30 // seconds
+                let art_task_long = URLSession.shared.dataTask(with: art_req_long) { data, _, error in
+                    guard let data = data, error == nil else {
+                        return
+                    }
+                    art_string = String(data: data, encoding: .utf8)!
+//                    art_string = art_string.replacingOccurrences(of: "\"", with: "\'")
+                    FirebaseAPI2.uploadJSON(child: "artistJSON_long", myJSON: art_string, user_id: myProfileID)
+                    do {
+                        let artists = try JSONDecoder().decode(TopArtists.self, from: data)
+                        
+//                        var imageList: [String: String] =
+                        for artistItem in artists.items {
+                            print(artistItem.id)
+                            print(artistItem.name)
+//                            artistList.append(artistItem.name)
+                            print(artistItem.images?[0].url ?? "no url")
+//                            artistImages[artistItem.name] = artistItem.images?[0].url
+                            artistTuples[artistItem.id] = [artistItem.name, artistItem.images?[0].url ?? "no url"]
+                        }
+                        FirebaseAPI2.UploadGeneralTuple(child: "artistTuplesLong", artistInfo: artistTuples, user_id: myProfileID)
+//                        FirebaseAPI2.UploadArtistInfoTuple(artistInfo: artistTuples, user_id: myProfileID)
+//                        FirebaseAPI2.UploadArtistInfo(stringArray: artistList, imageArray: artistImages, user_id: "p_gupta")
+                        print("UPLOADED ARTIST INFO")
+                        
+                    } catch {
+                        print(error)
+                    }
+                    // ADD FUNCTION TO UPLOAD DATA AS RAW JSON STRING
+//                    FirebaseAPI.shared.EditArtistJson(artistJson: String(data: data, encoding: .utf8), user_id: AuthManager.shared.userID)
+                }
+                
+                
                 
                 // get user ID
                 var profile_req = URLRequest(url: URL(string: "https://api.spotify.com/v1/me")!)
@@ -232,8 +340,12 @@ final class AuthManager {
                         print("USER ID: \(profile.id)")
                         UserDefaults.standard.setValue(profile.id, forKey: "user_id")
                         myProfileID = profile.id.replacingOccurrences(of: ".", with: ",")
-                        track_task.resume()
+                        track_task_medium.resume()
+                        track_task_short.resume()
+                        track_task_long.resume()
                         art_task.resume()
+                        art_task_short.resume()
+                        art_task_long.resume()
                     } catch {
                         print(error)
                     }
@@ -265,16 +377,16 @@ final class AuthManager {
 //                        print(error.localizedDescription)
 //                    }
 //                }
-////
-                print("CHECK POPULATED LISTS BEFORE UPLOAD")
-                print("TRACKS:")
-                for myItem in trackList {
-                    print(myItem)
-                }
-                print("ARTISTS:")
-                for myItem in artistList {
-                    print(myItem)
-                }
+//////
+//                print("CHECK POPULATED LISTS BEFORE UPLOAD")
+//                print("TRACKS:")
+//                for myItem in trackList {
+//                    print(myItem)
+//                }
+//                print("ARTISTS:")
+//                for myItem in artistList {
+//                    print(myItem)
+//                }
                 
                 completion(true)
                 

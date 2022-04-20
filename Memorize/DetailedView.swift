@@ -16,6 +16,11 @@ struct DetailedArtistView: View {
     @Binding var linkToSpot: String
     @Binding var popularity: String
     
+//    init() {
+//        let numberFormatter = NumberFormatter()
+//        numberFormatter.numberStyle = .decimal
+//    }
+    
     var body: some View {
         VStack{
             HStack(spacing: 20) {
@@ -39,11 +44,17 @@ struct DetailedArtistView: View {
             .padding()
         Text("Followers: " + followers)
             .padding()
-        Text("Popularity Score: " + popularity)
+        Text("Popularity Score: " + popularity + "/100")
             .padding()
         Link("Spotify Profile", destination: URL(string: linkToSpot)!)
             .padding()
     }
+    
+//    func addCommas() -> String {
+//        let numberFormatter = NumberFormatter()
+//        numberFormatter.numberStyle = .decimal
+//        return numberFormatter.string(from: NSNumber(value:self))!
+//    }
 }
 
 struct DetailedTrackView: View {

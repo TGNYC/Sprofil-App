@@ -14,16 +14,19 @@ import FirebaseDatabase
 class FirebaseAPI2 {
     init() {}
     
-    static func EditArtistJson(artistJson: String, user_id: String) {
-        let artJson = artistJson.replacingOccurrences(of: "'", with: "`").replacingOccurrences(of: "\"", with: "'");
+    static func uploadJSON(child: String, myJSON: String, user_id: String) {
         Database.database().reference().child("Users").child(String(user_id))
-            .updateChildValues(["ArtistJson": artJson]);
+            .updateChildValues([child: myJSON]);
+    }
+    
+    static func EditArtistJson(child: String, artistJson: String, user_id: String) {
+        Database.database().reference().child("Users").child(String(user_id))
+            .updateChildValues([child: artistJson]);
     }
         
-    static func EditTrackJson(trackJson: String, user_id: String) {
-        let trackJson = trackJson.replacingOccurrences(of: "'", with: "`").replacingOccurrences(of: "\"", with: "'");
+    static func EditTrackJson(child: String, trackJson: String, user_id: String) {
         Database.database().reference().child("Users").child(String(user_id))
-            .updateChildValues(["TracksJson": trackJson]);
+            .updateChildValues([child: trackJson]);
     }
 
     static func CreateNew(artistJson: String, tracksJson: String, user_id: String) {
@@ -52,5 +55,9 @@ class FirebaseAPI2 {
     
     static func UploadAlbumInfoTuple(artistInfo: [String: [String]], user_id: String) {
         Database.database().reference().child("Users").child(String(user_id)).updateChildValues(["albumDB": artistInfo])
+    }
+    
+    static func UploadGeneralTuple(child: String, artistInfo: [String: [String]], user_id: String) {
+        Database.database().reference().child("Users").child(String(user_id)).updateChildValues([child: artistInfo])
     }
 }

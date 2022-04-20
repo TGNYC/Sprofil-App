@@ -85,6 +85,7 @@ struct LoginFormView : View {
     
     var body: some View {
         NavigationView {
+//            OAuthView(isLoggedIn: self.$isLoggedIn)
             AuthView(isLoggedIn: self.$isLoggedIn)
         }
     }
