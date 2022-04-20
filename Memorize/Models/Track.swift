@@ -8,9 +8,9 @@
 import Foundation
 
 struct Track: Codable {
-    let album: Album?
+    let album: Album
     let artists: [Artist]
-//    let available_markets: [String]
+    let available_markets: [String]
     let disc_number: Int
     let duration_ms: Int
     let explicit: Bool

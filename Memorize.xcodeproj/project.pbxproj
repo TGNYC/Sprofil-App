@@ -59,6 +59,10 @@
 		CBB533ED2808CC400081FF6C /* TopArtistsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBB533EC2808CC400081FF6C /* TopArtistsView.swift */; };
 		CBB533F02808CC810081FF6C /* TopTracksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBB533EF2808CC810081FF6C /* TopTracksView.swift */; };
 		CBB533F22808CC970081FF6C /* TopAlbumsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBB533F12808CC970081FF6C /* TopAlbumsView.swift */; };
+		CBC6106628105C5900C62129 /* FirebaseAPI2.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBC6106528105C5900C62129 /* FirebaseAPI2.swift */; };
+		CBC6106828105C7C00C62129 /* RefreshableScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBC6106728105C7C00C62129 /* RefreshableScrollView.swift */; };
+		CBC6106A28105CD100C62129 /* DetailedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBC6106928105CD100C62129 /* DetailedView.swift */; };
+		CBC6106C28105CEB00C62129 /* ExploreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBC6106B28105CEB00C62129 /* ExploreView.swift */; };
 		CBCEC4A727F8C1BE00078C3D /* MemorizeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBCEC4A627F8C1BE00078C3D /* MemorizeApp.swift */; };
 		CBCEC4A927F8C1BE00078C3D /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBCEC4A827F8C1BE00078C3D /* LoginView.swift */; };
 		CBCEC4AB27F8C1C100078C3D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CBCEC4AA27F8C1C100078C3D /* Assets.xcassets */; };
@@ -91,6 +95,10 @@
 		CBB533EC2808CC400081FF6C /* TopArtistsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopArtistsView.swift; sourceTree = "<group>"; };
 		CBB533EF2808CC810081FF6C /* TopTracksView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopTracksView.swift; sourceTree = "<group>"; };
 		CBB533F12808CC970081FF6C /* TopAlbumsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopAlbumsView.swift; sourceTree = "<group>"; };
+		CBC6106528105C5900C62129 /* FirebaseAPI2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseAPI2.swift; sourceTree = "<group>"; };
+		CBC6106728105C7C00C62129 /* RefreshableScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshableScrollView.swift; sourceTree = "<group>"; };
+		CBC6106928105CD100C62129 /* DetailedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailedView.swift; sourceTree = "<group>"; };
+		CBC6106B28105CEB00C62129 /* ExploreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreView.swift; sourceTree = "<group>"; };
 		CBCEC4A327F8C1BE00078C3D /* Memorize.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Memorize.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CBCEC4A627F8C1BE00078C3D /* MemorizeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemorizeApp.swift; sourceTree = "<group>"; };
 		CBCEC4A827F8C1BE00078C3D /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
@@ -150,9 +158,10 @@
 		CBB5338C27FB5C7F0081FF6C /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				CBB5339727FB71250081FF6C /* Album.swift */,
 				CBB5339627FB71250081FF6C /* APIImage.swift */,
+				CBB5339727FB71250081FF6C /* Album.swift */,
 				CBB5339327FB71250081FF6C /* Artist.swift */,
+				CBB5338927FB5C720081FF6C /* AuthResponse.swift */,
 				CBB5339227FB71250081FF6C /* Theme.swift */,
 				CBB5339827FB71250081FF6C /* TopArtists.swift */,
 				CBB5339127FB71250081FF6C /* TopTracks.swift */,
@@ -160,7 +169,6 @@
 				CBB5339527FB71250081FF6C /* User.swift */,
 				CBB5339927FB71250081FF6C /* UserProfile.swift */,
 				CBB5339A27FB71250081FF6C /* Widgets.swift */,
-				CBB5338927FB5C720081FF6C /* AuthResponse.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -176,6 +184,8 @@
 				CBB533E62808CB520081FF6C /* LoadingView.swift */,
 				CBB533EF2808CC810081FF6C /* TopTracksView.swift */,
 				CBB533F12808CC970081FF6C /* TopAlbumsView.swift */,
+				CBC6106928105CD100C62129 /* DetailedView.swift */,
+				CBC6106B28105CEB00C62129 /* ExploreView.swift */,
 			);
 			name = Subviews;
 			sourceTree = "<group>";
@@ -200,6 +210,7 @@
 			isa = PBXGroup;
 			children = (
 				CBB533E22808A48B0081FF6C /* FirebaseAPI.swift */,
+				CBC6106528105C5900C62129 /* FirebaseAPI2.swift */,
 				CBB533A7280880590081FF6C /* GoogleService-Info.plist */,
 				CBB5338827FA76660081FF6C /* Managers */,
 				CBCEC4A627F8C1BE00078C3D /* MemorizeApp.swift */,
@@ -210,6 +221,7 @@
 				CBCEC4AA27F8C1C100078C3D /* Assets.xcassets */,
 				CBCEC4AC27F8C1C100078C3D /* Preview Content */,
 				CBB5338C27FB5C7F0081FF6C /* Models */,
+				CBC6106728105C7C00C62129 /* RefreshableScrollView.swift */,
 			);
 			path = Memorize;
 			sourceTree = "<group>";
@@ -330,10 +342,12 @@
 				CBB5339C27FB71250081FF6C /* Theme.swift in Sources */,
 				CBB533E32808A48B0081FF6C /* FirebaseAPI.swift in Sources */,
 				CBB5339E27FB71250081FF6C /* Track.swift in Sources */,
+				CBC6106C28105CEB00C62129 /* ExploreView.swift in Sources */,
 				CBCEC4A927F8C1BE00078C3D /* LoginView.swift in Sources */,
 				CBB533E72808CB520081FF6C /* LoadingView.swift in Sources */,
 				CBB533A628087EFC0081FF6C /* SettingsView.swift in Sources */,
 				CBB533ED2808CC400081FF6C /* TopArtistsView.swift in Sources */,
+				CBC6106628105C5900C62129 /* FirebaseAPI2.swift in Sources */,
 				CBB533A427FB71250081FF6C /* Widgets.swift in Sources */,
 				CBB5338727FA765A0081FF6C /* AuthManager.swift in Sources */,
 				CBCEC4A727F8C1BE00078C3D /* MemorizeApp.swift in Sources */,
@@ -344,7 +358,9 @@
 				CBB5338E27FB6E770081FF6C /* HomeView.swift in Sources */,
 				CBB5339B27FB71250081FF6C /* TopTracks.swift in Sources */,
 				CBB533E92808CB7F0081FF6C /* OtherProfileView.swift in Sources */,
+				CBC6106828105C7C00C62129 /* RefreshableScrollView.swift in Sources */,
 				CBB5339F27FB71250081FF6C /* User.swift in Sources */,
+				CBC6106A28105CD100C62129 /* DetailedView.swift in Sources */,
 				CBB533EB2808CC340081FF6C /* ProfileView.swift in Sources */,
 				CBB5338A27FB5C720081FF6C /* AuthResponse.swift in Sources */,
 				CBB533A327FB71250081FF6C /* UserProfile.swift in Sources */,

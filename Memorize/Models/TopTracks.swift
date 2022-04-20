@@ -17,5 +17,3 @@ struct TopTracks: Codable {
     let previous: URL?
     let total: Int
 }
-
-

@@ -9,6 +9,7 @@ import SwiftUI
 
 struct TopAlbumsView: View {
     var firebase: FirebaseAPI
+    @State var showDetailed: Bool = false
     var body: some View {
         VStack(alignment: .center) {
             Text("Top Albums").font(.headline)
@@ -19,6 +20,11 @@ struct TopAlbumsView: View {
                     ForEach(firebase.GetTopAlbumInfo(), id: \.self){ info in
                         GeometryReader { geometry in
                         VStack() {
+                            Button(action: {
+                                let impactMed = UIImpactFeedbackGenerator(style: .medium)
+                                impactMed.impactOccurred()
+                                showDetailed = true
+                            }, label: {
                             AsyncImage(url: URL(string: info[1])) { image in
                                 image.resizable()
                             } placeholder: {
@@ -27,6 +33,10 @@ struct TopAlbumsView: View {
                             .aspectRatio(contentMode: .fill)
                             .frame(width: 90, height: 90)
                             .clipShape(RoundedRectangle(cornerSize: CGSize(width: 15,height: 15)))
+                            })
+                                .sheet(isPresented: $showDetailed) {
+                                    //DetailedView()
+                                }
                             Text(info[0]).font(.callout)
                         }
                     }
@@ -46,6 +56,7 @@ struct TopAlbumsView: View {
 struct OtherTopAlbumsView: View {
     var firebase: FirebaseAPI
     var profName: String
+    @State var showDetailed: Bool = false
     var body: some View {
         VStack(alignment: .center) {
             Text("Top Albums").font(.headline)
@@ -56,6 +67,9 @@ struct OtherTopAlbumsView: View {
                     ForEach(firebase.GetOtherTopAlbumInfo(userID: firebase.GetUserID(profName: profName)), id: \.self){ info in
                         GeometryReader { geometry in
                         VStack() {
+                            Button(action: {
+                                showDetailed = true
+                            }, label: {
                             AsyncImage(url: URL(string: info[1])) { image in
                                 image.resizable()
                             } placeholder: {
@@ -64,6 +78,10 @@ struct OtherTopAlbumsView: View {
                             .aspectRatio(contentMode: .fill)
                             .frame(width: 90, height: 90)
                             .clipShape(RoundedRectangle(cornerSize: CGSize(width: 15,height: 15)))
+                            })
+                                .sheet(isPresented: $showDetailed) {
+                                    //DetailedView()
+                                }
                             Text(info[0]).font(.callout)
                         }
                     }
@@ -86,4 +104,3 @@ struct TopAlbumsView_Previews: PreviewProvider {
         TopAlbumsView(firebase: firebase)
     }
 }
-

@@ -44,4 +44,3 @@ extension TopArtist {
     static let sampleData : TopArtist = TopArtist(title : "Ben's Top Artists", artists: ["Katy Perry", "Adele", "Taylor Swift", "Drake", "Ben Shi", "Olivia Rodrigo"], timeListened: [100, 59, 23, 16], artistImages: ["Katy Perry":"KatyPerry", "Adele":"Adele", "Taylor Swift":"TaylorSwift", "Drake":"Drake", "Ben Shi":"BenShi", "Olivia Rodrigo":"OliviaRodrigo"], theme : .lavender
     )
 }
-

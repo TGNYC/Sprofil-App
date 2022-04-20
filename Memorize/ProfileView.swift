@@ -8,46 +8,52 @@
 import SwiftUI
 import Firebase
 
+var titles: [String] = ["Nerd", "Fanatic", "Viber"]
+
 struct ProfileView: View {
     @StateObject var firebase = FirebaseAPI()
+    @State var id = 0
+    @State var showFriends: Bool = false
     let gradient = Gradient(colors: [.orange, .purple])
-    let ref = Database.database().reference()
-    let userID = AuthManager.shared.userID ?? "100000"
-    
-//    func ObserveChanges() {
-//        ref.child("Users").child(String(userID)).child("WIP").observe(.childChanged, with: { (snapshot) in
-//            if snapshot.value as! String == "True" {
-//                topArtistsStatus = true
-//            }
-//            else {
-//                topArtistsStatus = false
-//            }
-//        })
-//    }
+    let userID = AuthManager.shared.userID ?? "p,gupta"
     
     var body: some View {
         if firebase.loading {
             LoadingView()
         }
         else {
-            VStack {
-                ProfTitleView(firebase: firebase)
-                ScrollView {
-                    if firebase.GetWidgetStatus(widgetName: "TopArtists") {
-                        TopArtistsView(firebase: firebase)
+            ZStack {
+                VStack {
+                    ProfTitleView(firebase: firebase)
+                    HStack {
+                        Button(action: {
+                            showFriends = true
+                        }, label: {
+                            Text("Friends")
+                                .foregroundColor(.white)
+                        })
+                            .sheet(isPresented: $showFriends) {
+                                FriendListView(firebase: firebase)
+                        }
+                            .padding()
+                            .padding(.horizontal, 5)
+                            .shadow(color: Color.black.opacity(0.3), radius: 20, x: 0, y: 20)
+                            .background(.ultraThinMaterial)
+                            .cornerRadius(50)
                     }
-                    if firebase.GetWidgetStatus(widgetName: "TopTracks") {
-                        TopTracksView(firebase: firebase)
-                    }
-                    if firebase.GetWidgetStatus(widgetName: "TopAlbums") {
-                        TopAlbumsView(firebase: firebase)
+                    ScrollView
+                    {
+                        if firebase.GetWidgetStatus(widgetName: "TopArtists") {
+                            TopArtistsView(firebase: firebase)
+                        }
+                        if firebase.GetWidgetStatus(widgetName: "TopTracks") {
+                            TopTracksView(firebase: firebase)
+                        }
+                        if firebase.GetWidgetStatus(widgetName: "TopAlbums") {
+                            TopAlbumsView(firebase: firebase)
+                        }
                     }
                 }
-//                .onRefresh(spinningColor: .white, text: "Pull to refresh", textColor: .white, backgroundColor: Color.orange) { refreshControl in
-//                            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-//                                refreshControl.endRefreshing()
-//                            }
-//                        }
             }
             .background(LinearGradient(gradient: gradient, startPoint: .top, endPoint: .bottom))
         }
@@ -55,23 +61,68 @@ struct ProfileView: View {
 }
 
 struct ProfTitleView: View {
-    let firebase : FirebaseAPI
+    @StateObject var firebase : FirebaseAPI
     var body: some View {
         VStack {
-            Image("Drake")
-             .resizable()
-             .aspectRatio(contentMode: .fill)
-             .frame(width: 180, height: 180)
-             .clipShape(RoundedRectangle(cornerSize: CGSize(width: 30,height: 30)))
-             .clipped()
-             .padding(.top, 4)
+            AsyncImage(url: URL(string: firebase.GetProfPic())) { image in
+                image.resizable()
+            } placeholder: {
+                Color.gray
+            }
+                .aspectRatio(contentMode: .fill)
+                .frame(width: 180, height: 180)
+                .clipShape(RoundedRectangle(cornerSize: CGSize(width: 30,height: 30)))
+                .clipped()
+                .padding(.top, 4)
             Text(firebase.GetProfName())
                 .font(.system(size: 20)
                         .bold())
                 .foregroundColor(.white)
                 .padding(.top, 8)
+            Text(firebase.GetBio())
+                .font(.system(size: 10))
+                .foregroundColor(.white)
+                .padding()
         }
     }
+}
+
+struct FriendListView: View {
+    var firebase: FirebaseAPI
+    var body: some View {
+        NavigationView {
+            List {
+                if firebase.GetFriendList().count == 0 {
+                    Text("You have no Friends! Head over to Explore or Search to find some!")
+                        .multilineTextAlignment(.center)
+                }
+                ForEach(firebase.GetFriendList(), id: \.self) { item in
+                    NavigationLink(destination: OtherProfileView(profName: item)) {
+                        HStack(alignment: .top, spacing: 12) {
+                            AsyncImage(url: URL(string: firebase.GetOtherProfPic(profName: item))) { image in
+                                image.resizable()
+                            } placeholder: {
+                                Color.gray
+                            }
+                            .aspectRatio(contentMode: .fill)
+                            .frame(width: 44, height: 44)
+                            .background(Color("Background"))
+                            .mask(Circle())
+                            VStack {
+                                Text(item).bold()
+                                Text("Description")
+                                    .font(.footnote)
+                                    .foregroundColor(.secondary)
+                            }
+                        }
+                        .padding(.vertical, 4)
+                        .listRowSeparator(.hidden)
+                    }
+            }
+        }
+            .navigationBarTitle("Friend List", displayMode: .inline)
+    }
+}
 }
 
 struct ProfileView_Previews: PreviewProvider {
@@ -79,4 +130,5 @@ struct ProfileView_Previews: PreviewProvider {
         ProfileView()
     }
 }
+
 

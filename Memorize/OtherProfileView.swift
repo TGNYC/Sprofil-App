@@ -44,10 +44,21 @@ struct OtherProfileView: View {
 struct OtherProfTitleView: View {
     let firebase : FirebaseAPI
     let profName : String
+    @State var isFriend : Bool
+    
+    init(firebase: FirebaseAPI, profName: String) {
+        self.firebase = firebase
+        self.profName = profName
+        isFriend = firebase.IsFriend(profName: profName)
+    }
+    
     var body: some View {
         VStack {
-            Image("Drake")
-             .resizable()
+            AsyncImage(url: URL(string: firebase.GetOtherProfPic(profName: profName))) { image in
+                image.resizable()
+            } placeholder: {
+                Color.gray
+            }
              .aspectRatio(contentMode: .fill)
              .frame(width: 180, height: 180)
              .clipShape(RoundedRectangle(cornerSize: CGSize(width: 30,height: 30)))
@@ -58,6 +69,32 @@ struct OtherProfTitleView: View {
                         .bold())
                 .foregroundColor(.white)
                 .padding(.top, 8)
+            HStack {
+            Button(action: {
+                firebase.AddFriend(profName: profName)
+                isFriend = true
+            }, label:{
+                Text("Add Friend")
+            })
+                .padding()
+                .padding(.horizontal, 5)
+                .shadow(color: Color.black.opacity(0.3), radius: 20, x: 0, y: 20)
+                .background(.ultraThinMaterial)
+                .cornerRadius(50)
+                .disabled(isFriend)
+            Button(action: {
+                    firebase.RemoveFriend(profName: profName)
+                    isFriend = false
+                }, label:{
+                    Text("Remove Friend")
+                })
+                    .padding()
+                    .padding(.horizontal, 5)
+                    .shadow(color: Color.black.opacity(0.3), radius: 20, x: 0, y: 20)
+                    .background(.ultraThinMaterial)
+                    .cornerRadius(50)
+                    .disabled(!isFriend)
+            }
         }
     }
 }

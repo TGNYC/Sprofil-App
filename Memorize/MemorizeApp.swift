@@ -6,11 +6,14 @@
 //
 
 import SwiftUI
+import Firebase
 
 @main
 struct MemorizeApp: App {
+    init() {
+        FirebaseApp.configure()
+    }
     @State var isLoggedIn: Bool = false
-    
     var body: some Scene {
         WindowGroup {
             if !isLoggedIn { LoginView(isLoggedIn: self.$isLoggedIn) }
@@ -18,3 +21,7 @@ struct MemorizeApp: App {
         }
     }
 }
+//
+//static func main() {
+//    FirebaseApp.configure()
+//}

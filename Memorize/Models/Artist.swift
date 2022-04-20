@@ -19,4 +19,3 @@ struct Artist: Codable {
     let images: [APIImage]?
     let popularity: Int?
 }
-

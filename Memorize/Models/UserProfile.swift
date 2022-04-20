@@ -4,7 +4,6 @@
 //
 //  Created by Tejas Gupta on 4/2/22.
 //
-
 import Foundation
 
 struct UserProfile: Codable {

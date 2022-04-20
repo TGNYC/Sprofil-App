@@ -19,7 +19,3 @@ struct Album: Codable {
     let name: String
     let tracks: [Track]?
 }
-
-//struct TracksResponse: Codable {
-//    let items: [Track]
-//}

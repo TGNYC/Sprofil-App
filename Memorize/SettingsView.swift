@@ -10,10 +10,10 @@ import SwiftUI
 struct SettingsView: View {
     @StateObject var firebase = FirebaseAPI()
     var body: some View {
-//        if firebase.loading {
-//            LoadingView()
-//        }
-//        else {
+        if firebase.loading {
+            LoadingView()
+        }
+        else {
         NavigationView {
             Form {
                 Section(header: Text("Profile Settings")) {
@@ -26,7 +26,7 @@ struct SettingsView: View {
             }
             .navigationTitle("Settings")
         }
-//        }
+        }
     }
 }
 
@@ -71,10 +71,14 @@ struct WidgetsView: View {
 struct UserView: View {
     var firebase : FirebaseAPI
     @State var profName: String
+    @State var bio: String
+    @State var isPrivate: Bool
     
     init(firebase: FirebaseAPI) {
         self.firebase = firebase
         profName = firebase.GetProfName()
+        bio = firebase.GetBio()
+        isPrivate = firebase.GetIsPrivateStatus()
     }
     
     var body: some View {
@@ -88,6 +92,21 @@ struct UserView: View {
                     _profName in
                     firebase.EditProfName(newName: _profName)
                 }
+                }
+                Section(header: Text("Change your Bio Here:")) {
+                TextField(text: $bio) {
+                    Text("Bio")
+                }
+                .onChange(of: bio) {
+                    _bio in
+                    firebase.EditBio(newBio: _bio)
+                }
+                }
+                // NOTE: NEED TO CHANGE IT SO THAT FRIENDS ARE STILL ABLE TO SEE YOU, NEED TO NOT USE THE USERNAMES BRANCH AS ID to USERNAME THING
+                Section(header: Text("Private Mode allows you to be hidden from search results and the explore page, but your Friends will still be able to see you.")) {
+                    Toggle(isOn: $isPrivate, label: { Text("Private Mode")} ).onChange(of: isPrivate) { _isPrivate in
+                        firebase.EditIsPrivateStatus(onOff: _isPrivate)
+                    }
                 }
             }
         }

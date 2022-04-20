@@ -70,7 +70,6 @@ class AuthViewController: NSObject, WKNavigationDelegate {
                 print(AuthManager.shared.accessToken!)
                 
                 print("Before API Call")
-                APICaller.shared
                 print("After API Call")
                 
 //                self?.navigationController?.popToRootViewController(animated: true)

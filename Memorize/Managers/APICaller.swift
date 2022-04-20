@@ -16,55 +16,55 @@ final class APICaller {
         static let baseAPIURL = "https://api.spotify.com/v1"
     }
     
-    public init() {
-        print("ACCESS TOKEN from APICaller")
-        print(AuthManager.shared.accessToken!)
-        
-        getCurrentUserProfile { result in
-            switch result {
-            case .success(let profile):
-                self.setUserID(result: profile)
-                self.myProfile = profile
-                break
-            case .failure(let error):
-                print(error)
-            }
-        }
-        
-        print("FINISH PROFILE GETTING AND SETTING")
-        print(myProfile?.display_name)
-        
-        getTopArtists(timeFrame: 1)  { [weak self] result in
-            DispatchQueue.main.async {
-                switch result {
-                case .success(let artists):
-                    self?.myTopArtists = artists
-                    if artists.items.count > 0 {
-                        self?.artistList = artists.items
-                    } else {
-                        self?.artistList = [Artist]()
-                    }
-                case .failure(let error):
-                    print(error.localizedDescription)
-                }
-            }
-        }
-        
-        getTopTracks(timeFrame: 1) { [weak self] result in
-            DispatchQueue.main.async {
-                switch result {
-                case .success(let tracks):
-                    self?.myTopTracks = tracks
-                    if tracks.items.count > 0 {
-                        self?.trackList = tracks.items
-                    } else {
-                        self?.trackList = [Track]()
-                    }
-                case .failure(let error):
-                    print(error.localizedDescription)
-                }
-            }
-        }
+//    public init() {
+//        print("ACCESS TOKEN from APICaller")
+//        print(AuthManager.shared.accessToken!)
+//
+//        getCurrentUserProfile { result in
+//            switch result {
+//            case .success(let profile):
+//                self.setUserID(result: profile)
+//                self.myProfile = profile
+//                break
+//            case .failure(let error):
+//                print(error)
+//            }
+//        }
+//
+//        print("FINISH PROFILE GETTING AND SETTING")
+//        print(myProfile?.display_name)
+//
+//        getTopArtists(timeFrame: 1)  { [weak self] result in
+//            DispatchQueue.main.async {
+//                switch result {
+//                case .success(let artists):
+//                    self?.myTopArtists = artists
+//                    if artists.items.count > 0 {
+//                        self?.artistList = artists.items
+//                    } else {
+//                        self?.artistList = [Artist]()
+//                    }
+//                case .failure(let error):
+//                    print(error.localizedDescription)
+//                }
+//            }
+//        }
+//
+//        getTopTracks(timeFrame: 1) { [weak self] result in
+//            DispatchQueue.main.async {
+//                switch result {
+//                case .success(let tracks):
+//                    self?.myTopTracks = tracks
+//                    if tracks.items.count > 0 {
+//                        self?.trackList = tracks.items
+//                    } else {
+//                        self?.trackList = [Track]()
+//                    }
+//                case .failure(let error):
+//                    print(error.localizedDescription)
+//                }
+//            }
+//        }
         
 //        getTopArtists { result in
 //            switch result {
@@ -117,7 +117,7 @@ final class APICaller {
 //        artistList.forEach {
 //            print($0.name)
 //        }
-    }
+//    }
     
     /// Spotify User ID
     public var userID: String? {

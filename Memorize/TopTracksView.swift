@@ -7,8 +7,65 @@
 
 import SwiftUI
 
+struct TopTrackInfo: Identifiable {
+    var trackName: String
+    // For Each Artist: [Name, ExternalURL]
+    var artistsInfo: [[String]]
+    // For the Album: [Album Name, AlbumImgURL, ReleaseDate, NumTracks, LinkToSpot]
+    var albumInfo: [String]
+    // For the album artists: [Name, ExternalURL]
+    var albumArtists: [String]
+    var imageURL: String
+    var duration: String
+    var explicit: String
+    var linkToSpot: String
+    var popularity: String
+    var previewURL: String
+    var id: String { trackName }
+    
+    init(info: [Any]) {
+        self.trackName = info[0] as? String ?? "NULL"
+        self.artistsInfo = info[1] as? [[String]] ?? []
+        self.albumInfo = info[2] as? [String] ?? []
+        self.albumArtists = info[3] as? [String] ?? []
+        self.imageURL = info[4] as? String ?? "NULL"
+        print(imageURL)
+        self.duration = info[5] as? String ?? "NULL"
+        self.explicit = info[6] as? String ?? "NULL"
+        self.linkToSpot = info[7] as? String ?? "NULL"
+        self.popularity = info[8] as? String ?? "NULL"
+        self.previewURL = info[9] as? String ?? "NULL"
+    }
+    
+    mutating func FillValues(info: [Any]) {
+        self.trackName = info[0] as? String ?? "NULL"
+        self.artistsInfo = info[1] as? [[String]] ?? []
+        self.albumInfo = info[2] as? [String] ?? []
+        self.albumArtists = info[3] as? [String] ?? []
+        self.imageURL = info[4] as? String ?? "NULL"
+        print(imageURL)
+        self.duration = info[5] as? String ?? "NULL"
+        self.explicit = info[6] as? String ?? "NULL"
+        self.linkToSpot = info[7] as? String ?? "NULL"
+        self.popularity = info[8] as? String ?? "NULL"
+        self.previewURL = info[9] as? String ?? "NULL"
+    }
+}
+
 struct TopTracksView: View {
     var firebase: FirebaseAPI
+    @State var showDetailed: Bool = false
+    var topTracks: [TopTrackInfo] = []
+    @State var infoDisplay: TopTrackInfo = TopTrackInfo(info: ["NULL", "NULL", "NULL", "NULL", "NULL", "NULL", "NULL", "NULL", "NULL", "NULL"])
+    
+    init(firebase: FirebaseAPI) {
+        self.firebase = firebase
+        let info = firebase.GetTopTrackInfo()
+        for obj in info {
+            topTracks.append(TopTrackInfo(info: obj))
+        }
+    }
+    
     var body: some View {
         VStack(alignment: .center) {
             Text("Top Tracks").font(.headline)
@@ -16,10 +73,15 @@ struct TopTracksView: View {
                 .lineLimit(1)
             ScrollView(.horizontal) {
                 HStack(spacing: 20) {
-                    ForEach(firebase.GetTopTrackInfo(), id: \.self){ info in
-                        GeometryReader { geometry in
+                    ForEach(topTracks) { info in
                         VStack() {
-                            AsyncImage(url: URL(string: info[1])) { image in
+                            Button(action: {
+                                let impactMed = UIImpactFeedbackGenerator(style: .heavy)
+                                impactMed.impactOccurred()
+                                infoDisplay = info
+                                showDetailed = true
+                            }, label: {
+                                AsyncImage(url: URL(string: info.imageURL)) { image in
                                 image.resizable()
                             } placeholder: {
                                 Color.gray
@@ -27,13 +89,16 @@ struct TopTracksView: View {
                             .aspectRatio(contentMode: .fill)
                             .frame(width: 90, height: 90)
                             .clipShape(RoundedRectangle(cornerSize: CGSize(width: 15,height: 15)))
-                            Text(info[0]).font(.callout)
+                            })
+                                .sheet(isPresented: $showDetailed) {
+                                    DetailedTrackView(trackName: $infoDisplay.trackName, artistsInfo: $infoDisplay.artistsInfo, albumInfo: $infoDisplay.albumInfo, albumArtists: $infoDisplay.albumArtists, imageURL: $infoDisplay.imageURL, duration: $infoDisplay.duration, explicit: $infoDisplay.explicit, linkToSpot: $infoDisplay.linkToSpot, popularity: $infoDisplay.popularity, previewURL: $infoDisplay.previewURL)
+                                }
+                            Text(info.trackName).font(.callout)
                         }
                     }
                         .frame(width:80, height:125)
                     }
                 }
-            }
         }
         .padding()
         .padding(.horizontal, 5)
@@ -45,7 +110,20 @@ struct TopTracksView: View {
 
 struct OtherTopTracksView: View {
     var firebase: FirebaseAPI
+    @State var showDetailed: Bool = false
+    var topTracks: [TopTrackInfo] = []
+    @State var infoDisplay: TopTrackInfo = TopTrackInfo(info: ["NULL", "NULL", "NULL", "NULL", "NULL", "NULL", "NULL", "NULL", "NULL", "NULL"])
     var profName: String
+    
+    init(firebase: FirebaseAPI, profName: String) {
+        self.firebase = firebase
+        self.profName = profName
+        let info = firebase.GetOtherTopTrackInfo(userID: firebase.GetUserID(profName: profName))
+        for obj in info {
+            topTracks.append(TopTrackInfo(info: obj))
+        }
+    }
+    
     var body: some View {
         VStack(alignment: .center) {
             Text("Top Tracks").font(.headline)
@@ -53,10 +131,16 @@ struct OtherTopTracksView: View {
                 .lineLimit(1)
             ScrollView(.horizontal) {
                 HStack(spacing: 20) {
-                    ForEach(firebase.GetOtherTopTrackInfo(userID: firebase.GetUserID(profName: profName)), id: \.self){ info in
+                    ForEach(topTracks){ info in
                         GeometryReader { geometry in
                         VStack() {
-                            AsyncImage(url: URL(string: info[1])) { image in
+                            Button(action: {
+                                let impactMed = UIImpactFeedbackGenerator(style: .medium)
+                                impactMed.impactOccurred()
+                                infoDisplay = info
+                                showDetailed = true
+                            }, label: {
+                                AsyncImage(url: URL(string: info.imageURL)) { image in
                                 image.resizable()
                             } placeholder: {
                                 Color.gray
@@ -64,7 +148,11 @@ struct OtherTopTracksView: View {
                             .aspectRatio(contentMode: .fill)
                             .frame(width: 90, height: 90)
                             .clipShape(RoundedRectangle(cornerSize: CGSize(width: 15,height: 15)))
-                            Text(info[0]).font(.callout)
+                            })
+                                .sheet(isPresented: $showDetailed) {
+                                    DetailedTrackView(trackName: $infoDisplay.trackName, artistsInfo: $infoDisplay.artistsInfo, albumInfo: $infoDisplay.albumInfo, albumArtists: $infoDisplay.albumArtists, imageURL: $infoDisplay.imageURL, duration: $infoDisplay.duration, explicit: $infoDisplay.explicit, linkToSpot: $infoDisplay.linkToSpot, popularity: $infoDisplay.popularity, previewURL: $infoDisplay.previewURL)
+                                }
+                            Text(info.trackName).font(.callout)
                         }
                     }
                         .frame(width:80, height:125)

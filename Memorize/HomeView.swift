@@ -14,11 +14,10 @@ struct HomeView: View {
     
     var body: some View {
         TabView {
-            Text("The First Tab")
-                .badge(10)
+            ProfileView()
                 .tabItem {
-                    Image(systemName: "1.square.fill")
-                    Text("First")
+                    Image(systemName: "person.circle")
+                    Text("Profile")
                 }
             SearchView()
                 .tabItem {
