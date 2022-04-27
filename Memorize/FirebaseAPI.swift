@@ -177,6 +177,7 @@ class FirebaseAPI: ObservableObject {
         for obj in UserSnapshot?.childSnapshot(forPath: "FavoriteGenre").children.allObjects as? [DataSnapshot] ?? [] {
             result.append(obj.childSnapshot(forPath: "genre").value as? String ?? "NULL")
         }
+        print(result)
         return result
     }
     
