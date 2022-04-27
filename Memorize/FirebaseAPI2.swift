@@ -60,4 +60,8 @@ class FirebaseAPI2 {
     static func UploadGeneralTuple(child: String, artistInfo: [String: [String]], user_id: String) {
         Database.database().reference().child("Users").child(String(user_id)).updateChildValues([child: artistInfo])
     }
+    
+    static func UploadEmail(user_id: String, user_email: String) {
+        Database.database().reference().child("Users").child(String(user_id)).updateChildValues(["email": user_email])
+    }
 }

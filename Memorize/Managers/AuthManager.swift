@@ -17,7 +17,7 @@ final class AuthManager {
 //        let redirectURI = URL(string: "spotify-ios-quick-start://spotify-login-callback")!
         static let tokenAPIURL = "https://accounts.spotify.com/api/token"
         static let redirectURI = "https://cnn.com/"
-        static let scopes = "user-top-read" + "%20" + "user-library-read" + "%20" + "user-read-private" + "%20" + "user-library-read"
+        static let scopes = "user-top-read" + "%20" + "user-library-read" + "%20" + "user-read-private" + "%20" + "user-library-read" + "%20" + "user-read-email"
     }
     
     // lazy var configuration = SPTConfiguration(clientID: Constants.clientID, redirectURL: Constants.redirectURL)
@@ -339,7 +339,9 @@ final class AuthManager {
                         let profile = try JSONDecoder().decode(UserProfile.self, from: data)
                         print("USER ID: \(profile.id)")
                         UserDefaults.standard.setValue(profile.id, forKey: "user_id")
+                        UserDefaults.standard.setValue(profile.email, forKey: "user_email")
                         myProfileID = profile.id.replacingOccurrences(of: ".", with: ",")
+                        FirebaseAPI2.UploadEmail(user_id: myProfileID, user_email: profile.email)
                         track_task_medium.resume()
                         track_task_short.resume()
                         track_task_long.resume()
