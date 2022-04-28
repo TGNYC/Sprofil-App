@@ -8,8 +8,6 @@
 import SwiftUI
 import Firebase
 
-var titles: [String] = ["Nerd", "Fanatic", "Viber"]
-
 struct ProfileView: View {
     @StateObject var firebase = FirebaseAPI()
     @State var id = 0

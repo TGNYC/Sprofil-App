@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import AVKit
 
 struct DetailedArtistView: View {
     // INSERT THINGS TO BE PASSED IN
@@ -57,6 +58,16 @@ struct DetailedArtistView: View {
 //    }
 }
 
+class SoundManager : ObservableObject {
+    var audioPlayer: AVPlayer?
+
+    func playSound(sound: String){
+        if let url = URL(string: sound) {
+            self.audioPlayer = AVPlayer(url: url)
+        }
+    }
+}
+
 struct DetailedTrackView: View {
     // INSERT THINGS TO BE PASSED IN
     @Binding var trackName: String
@@ -72,6 +83,9 @@ struct DetailedTrackView: View {
     @Binding var linkToSpot: String
     @Binding var popularity: String
     @Binding var previewURL: String
+    @State var song = false
+    @StateObject private var soundManager = SoundManager()
+        
     
     var body: some View {
             ScrollView {
@@ -99,6 +113,18 @@ struct DetailedTrackView: View {
                     .padding()
                 Link("Spotify Profile", destination: URL(string: linkToSpot)!)
                     .padding()
+                Image(systemName: song ? "pause.circle.fill": "play.circle.fill")
+                            .font(.system(size: 25))
+                            .padding(.trailing)
+                            .onTapGesture {
+                                soundManager.playSound(sound: previewURL)
+                                song.toggle()
+                                if song{
+                                    soundManager.audioPlayer?.play()
+                                } else {
+                                    soundManager.audioPlayer?.pause()
+                                }
+                        }
                 Group {
                 Text("From Album: " + albumInfo[0])
                     .font(.system(size: 20)

@@ -155,7 +155,12 @@ class FirebaseAPI: ObservableObject {
     func GetProfTitle() -> String {
         let titles: [String] = ["nerd", "fanatic", "king/queen", "scholar", "missionary", "worshipper"]
         let topGenres: [String] = GetTopGenres()
-        return topGenres[0] + " " + titles[Int.random(in: 0...(titles.count-1))]
+        if (topGenres.count > 0) {
+            return topGenres[0] + " " + titles[Int.random(in: 0...(titles.count-1))]
+        }
+        else {
+            return "Pop King"
+        }
     }
     
     func GetOtherProfTitle(userID: String) -> String {
