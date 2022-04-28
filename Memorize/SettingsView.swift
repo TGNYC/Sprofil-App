@@ -57,19 +57,19 @@ struct WidgetsView: View {
         NavigationView {
             Form {
                 Section(header: Text("Widgets")) {
-                    Toggle(isOn: $topArtists, label: { Text("Top Artists - Less Recent")} ).onChange(of: topArtists) { _topArtists in
+                    Toggle(isOn: $topArtists, label: { Text("Top Artists - Last 6 Months")} ).onChange(of: topArtists) { _topArtists in
                         firebase.EditWidgetStatus(onOff: _topArtists, widgetName: "TopArtists")
                     }
-                    Toggle(isOn: $topArtistsShort, label: { Text("Top Artists - Recent")} ).onChange(of: topArtistsShort) { _topArtistsShort in
+                    Toggle(isOn: $topArtistsShort, label: { Text("Top Artists - Last Month")} ).onChange(of: topArtistsShort) { _topArtistsShort in
                         firebase.EditWidgetStatus(onOff: _topArtistsShort, widgetName: "TopArtistsShort")
                     }
                     Toggle(isOn: $topArtistsLong, label: { Text("Top Artists - Lifetime")} ).onChange(of: topArtistsLong) { _topArtistsLong in
                         firebase.EditWidgetStatus(onOff: _topArtistsLong, widgetName: "TopArtistsLong")
                     }
-                    Toggle(isOn: $topTracks, label: { Text("Top Tracks - Less Recent")} ).onChange(of: topTracks) { _topTracks in
+                    Toggle(isOn: $topTracks, label: { Text("Top Tracks - Last 6 Months")} ).onChange(of: topTracks) { _topTracks in
                         firebase.EditWidgetStatus(onOff: _topTracks, widgetName: "TopTracks")
                     }
-                    Toggle(isOn: $topTracksShort, label: { Text("Top Tracks - Recent")} ).onChange(of: topTracksShort) { _topTracksShort in
+                    Toggle(isOn: $topTracksShort, label: { Text("Top Tracks - Last Month")} ).onChange(of: topTracksShort) { _topTracksShort in
                         firebase.EditWidgetStatus(onOff: _topTracksShort, widgetName: "TopTracksShort")
                     }
                     Toggle(isOn: $topTracksLong, label: { Text("Top Tracks - Lifetime")} ).onChange(of: topTracksLong) { _topTracksLong in
@@ -112,28 +112,32 @@ struct UserView: View {
         NavigationView {
             Form {
                 Section(header: Text("Change Your Profile Name Here:")) {
-                TextField(text: $profName) {
-                    Text("ProfName")
+                    TextField(text: $profName) {
+                        Text("ProfName")
+                    }
+                    .onChange(of: profName) {
+                        _profName in
+                        firebase.EditProfName(newName: _profName)
+                    }
                 }
-                .onChange(of: profName) {
-                    _profName in
-                    firebase.EditProfName(newName: _profName)
-                }
-                }
-                Section(header: Text("Change your Bio Here:")) {
-                TextField(text: $bio) {
-                    Text("Bio")
-                }
-                .onChange(of: bio) {
-                    _bio in
-                    firebase.EditBio(newBio: _bio)
-                }
+                Section(header: Text("Change Your Bio Here:")) {
+//                    TextField(text: $bio) {
+//                        Text("Bio").font(.body)
+//                    }
+                    TextEditor(text: $bio)
+                    .font(.body)
+                    .frame(height: 100)
+                    .onChange(of: bio) {
+                        _bio in
+                        firebase.EditBio(newBio: _bio)
+                    }
                 }
                 // NOTE: NEED TO CHANGE IT SO THAT FRIENDS ARE STILL ABLE TO SEE YOU, NEED TO NOT USE THE USERNAMES BRANCH AS ID to USERNAME THING
-                Section(header: Text("Private Mode allows you to be hidden from search results and the explore page, but your Friends will still be able to see you.")) {
+                Section(header: Text("Toggle Privacy Mode:")) {
                     Toggle(isOn: $isPrivate, label: { Text("Private Mode")} ).onChange(of: isPrivate) { _isPrivate in
                         firebase.EditIsPrivateStatus(onOff: _isPrivate)
                     }
+                    Text("Private Mode allows you to be hidden from search results and the explore page, but your friends will still be able to see you.").font(.caption)
                 }
             }
         }

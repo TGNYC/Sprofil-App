@@ -41,7 +41,7 @@ struct SearchView: View {
                         }
                     }
                 }
-                .searchable(text: $text, placement: .navigationBarDrawer(displayMode: .always), prompt: Text("TheEpicWizard17"))
+                .searchable(text: $text, placement: .navigationBarDrawer(displayMode: .always), prompt: Text("Type Username Here"))
                 .navigationTitle("Search")
                 .navigationBarTitleDisplayMode(.inline)
             }

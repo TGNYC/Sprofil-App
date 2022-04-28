@@ -39,7 +39,7 @@ struct TopArtistsView: View {
     
     var body: some View {
         VStack(alignment: .center) {
-            Text("Top Artists - Less Recent").font(.headline)
+            Text("Top Artists - Last 6 Months").font(.headline)
                 .fontWeight(.bold)
                 .lineLimit(1)
             ScrollView(.horizontal) {
@@ -93,7 +93,7 @@ struct TopArtistsViewShort: View {
     
     var body: some View {
         VStack(alignment: .center) {
-            Text("Top Artists - Recent").font(.headline)
+            Text("Top Artists - Last Month").font(.headline)
                 .fontWeight(.bold)
                 .lineLimit(1)
             ScrollView(.horizontal) {
@@ -203,7 +203,7 @@ struct OtherTopArtistsView: View {
     
     var body: some View {
         VStack(alignment: .center) {
-            Text("Top Artists - Less Recent").font(.headline)
+            Text("Top Artists - Last 6 Months").font(.headline)
                 .fontWeight(.bold)
                 .lineLimit(1)
             ScrollView(.horizontal) {
@@ -260,7 +260,7 @@ struct OtherTopArtistsViewShort: View {
     
     var body: some View {
         VStack(alignment: .center) {
-            Text("Top Artists - Recent").font(.headline)
+            Text("Top Artists - Last Month").font(.headline)
                 .fontWeight(.bold)
                 .lineLimit(1)
             ScrollView(.horizontal) {

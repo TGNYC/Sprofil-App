@@ -19,6 +19,22 @@ struct ExploreView: View {
         ScrollView {
             Text("Explore")
                 .font(.title)
+//            HStack() {
+//                Button(action: {
+//                    let impactMed = UIImpactFeedbackGenerator(style: .medium)
+//                    impactMed.impactOccurred()
+//                    showDetailed = true
+//                }, label: {
+//                AsyncImage(url: URL(string: info[1])) { image in
+//                    image.resizable()
+//                } placeholder: {
+//                    Color.gray
+//                }
+//                .aspectRatio(contentMode: .fill)
+//                .frame(width: 90, height: 90)
+//                .clipShape(RoundedRectangle(cornerSize: CGSize(width: 15,height: 15)))
+//                })
+//            }
             LazyVGrid(columns: gridItemLayout, spacing: 20) {
                 ForEach((0...9999), id: \.self) {
                     Image(systemName: symbols[$0 % symbols.count])

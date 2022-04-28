@@ -70,7 +70,7 @@ struct TopTracksView: View {
     
     var body: some View {
         VStack(alignment: .center) {
-            Text("Top Tracks - Less Recent").font(.headline)
+            Text("Top Tracks - Last 6 Month").font(.headline)
                 .fontWeight(.bold)
                 .lineLimit(1)
             ScrollView(.horizontal) {
@@ -126,7 +126,7 @@ struct TopTracksViewShort: View {
     
     var body: some View {
         VStack(alignment: .center) {
-            Text("Top Tracks - Recent").font(.headline)
+            Text("Top Tracks - Last Month").font(.headline)
                 .fontWeight(.bold)
                 .lineLimit(1)
             ScrollView(.horizontal) {
@@ -240,7 +240,7 @@ struct OtherTopTracksView: View {
     
     var body: some View {
         VStack(alignment: .center) {
-            Text("Top Tracks - Less Recent").font(.headline)
+            Text("Top Tracks - Last 6 Months").font(.headline)
                 .fontWeight(.bold)
                 .lineLimit(1)
             ScrollView(.horizontal) {
@@ -300,7 +300,7 @@ struct OtherTopTracksViewShort: View {
     
     var body: some View {
         VStack(alignment: .center) {
-            Text("Top Tracks - Recent").font(.headline)
+            Text("Top Tracks - Last Month").font(.headline)
                 .fontWeight(.bold)
                 .lineLimit(1)
             ScrollView(.horizontal) {
