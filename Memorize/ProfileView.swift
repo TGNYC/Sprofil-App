@@ -59,9 +59,6 @@ struct ProfileView: View {
                         if firebase.GetWidgetStatus(widgetName: "TopTracksLong") {
                             TopTracksViewLong(firebase: firebase)
                         }
-                        if firebase.GetWidgetStatus(widgetName: "TopAlbums") {
-                            TopAlbumsView(firebase: firebase)
-                        }
                         if firebase.GetWidgetStatus(widgetName: "FavoriteGenre") {
                             FavoriteGenreView(firebase: firebase)
                         }
@@ -129,7 +126,7 @@ struct FriendListView: View {
                             .mask(Circle())
                             VStack {
                                 Text(item).bold()
-                                Text("Description")
+                                Text(firebase.GetOtherBio(userID: firebase.GetUserID(profName: item)))
                                     .font(.footnote)
                                     .foregroundColor(.secondary)
                             }

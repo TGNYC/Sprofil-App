@@ -42,8 +42,8 @@ struct OtherProfileView: View {
                     if firebase.GetOtherWidgetStatus(widgetName: "TopTracksLong", userID: firebase.GetUserID(profName: profName)) {
                         OtherTopTracksViewLong(firebase: firebase, profName: profName)
                     }
-                    if firebase.GetOtherWidgetStatus(widgetName: "TopAlbums", userID: firebase.GetUserID(profName: profName)) {
-                        OtherTopAlbumsView(firebase: firebase, profName: profName)
+                    if firebase.GetOtherWidgetStatus(widgetName: "FavoriteGenre", userID: firebase.GetUserID(profName: profName)) {
+                        OtherFavoriteGenreView(firebase: firebase, profName: profName)
                     }
                 }
                 Spacer()
