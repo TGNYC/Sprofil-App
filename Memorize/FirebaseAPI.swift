@@ -20,7 +20,7 @@ class FirebaseAPI: ObservableObject {
     @Published var ref : DatabaseReference!
     @Published var loading = true
     // NEED TO FIGURE OUT HOW TO GET THE SPOTIFY ID:
-    var SPOTIFY_ID = AuthManager.shared.userID?.replacingOccurrences(of: ".", with: ",") ?? "test_values"
+    var SPOTIFY_ID = AuthManager.shared.userID?.replacingOccurrences(of: ".", with: ",") ?? "p,gupta"
     var UserSnapshot: DataSnapshot?
     var AllUserSnapshot: DataSnapshot?
     var UsernameSnapshot: DataSnapshot?
