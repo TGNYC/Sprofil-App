@@ -91,7 +91,14 @@ struct WidgetsView: View {
 struct UserView: View {
     var firebase : FirebaseAPI
     @State var profName: String
-    @State var bio: String
+    @State var bio: String {
+        didSet {
+            if bio.count > 40 {
+                bio = String(bio.prefix(40))
+                firebase.EditBio(newBio: bio)
+            }
+        }
+    }
     @State var isPrivate: Bool
     
     init(firebase: FirebaseAPI) {

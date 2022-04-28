@@ -221,6 +221,7 @@ class FirebaseAPI: ObservableObject {
                 }
             }
         }
+        print(result)
         return result
     }
     
