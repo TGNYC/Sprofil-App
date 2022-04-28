@@ -24,11 +24,23 @@ struct OtherProfileView: View {
             VStack {
                 OtherProfTitleView(firebase: firebase, profName: profName)
                 ScrollView {
+                    if firebase.GetOtherWidgetStatus(widgetName: "TopArtistsShort", userID: firebase.GetUserID(profName: profName)) {
+                    OtherTopArtistsViewShort(firebase: firebase, profName: profName)
+                    }
                     if firebase.GetOtherWidgetStatus(widgetName: "TopArtists", userID: firebase.GetUserID(profName: profName)) {
                     OtherTopArtistsView(firebase: firebase, profName: profName)
                     }
+                    if firebase.GetOtherWidgetStatus(widgetName: "TopArtistsLong", userID: firebase.GetUserID(profName: profName)) {
+                    OtherTopArtistsViewLong(firebase: firebase, profName: profName)
+                    }
+                    if firebase.GetOtherWidgetStatus(widgetName: "TopTracksShort", userID: firebase.GetUserID(profName: profName)) {
+                        OtherTopTracksViewShort(firebase: firebase, profName: profName)
+                    }
                     if firebase.GetOtherWidgetStatus(widgetName: "TopTracks", userID: firebase.GetUserID(profName: profName)) {
                         OtherTopTracksView(firebase: firebase, profName: profName)
+                    }
+                    if firebase.GetOtherWidgetStatus(widgetName: "TopTracksLong", userID: firebase.GetUserID(profName: profName)) {
+                        OtherTopTracksViewLong(firebase: firebase, profName: profName)
                     }
                     if firebase.GetOtherWidgetStatus(widgetName: "TopAlbums", userID: firebase.GetUserID(profName: profName)) {
                         OtherTopAlbumsView(firebase: firebase, profName: profName)

@@ -43,11 +43,23 @@ struct ProfileView: View {
                     }
                     ScrollView
                     {
+                        if firebase.GetWidgetStatus(widgetName: "TopArtistsShort") {
+                            TopArtistsViewShort(firebase: firebase)
+                        }
                         if firebase.GetWidgetStatus(widgetName: "TopArtists") {
                             TopArtistsView(firebase: firebase)
                         }
+                        if firebase.GetWidgetStatus(widgetName: "TopArtistsLong") {
+                            TopArtistsViewLong(firebase: firebase)
+                        }
+                        if firebase.GetWidgetStatus(widgetName: "TopTracksShort") {
+                            TopTracksViewShort(firebase: firebase)
+                        }
                         if firebase.GetWidgetStatus(widgetName: "TopTracks") {
                             TopTracksView(firebase: firebase)
+                        }
+                        if firebase.GetWidgetStatus(widgetName: "TopTracksLong") {
+                            TopTracksViewLong(firebase: firebase)
                         }
                         if firebase.GetWidgetStatus(widgetName: "TopAlbums") {
                             TopAlbumsView(firebase: firebase)

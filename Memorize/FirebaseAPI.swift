@@ -254,9 +254,73 @@ class FirebaseAPI: ObservableObject {
         return actualRes
     }
     
+    func GetTopTrackInfoShort() -> [[Any]] {
+        var result: [DataSnapshot] = []
+        for obj in UserSnapshot?.childSnapshot(forPath: "FavoriteTrackData_short/items").children.allObjects as? [DataSnapshot] ?? [] {
+            result.append(obj)
+        }
+        
+        var actualRes: [[Any]] = []
+        for obj in result {
+            let info = ProcessTrackSnapshot(trackSnapshot: obj)
+            // IN ORDER: trackName, artistsInfo, albumInfo, albumArtists, imageURL,
+            // releaseDate, duration, explicit, linkToSpot, Popularity, previewURL
+            actualRes.append(info)
+        }
+        return actualRes
+    }
+    
+    func GetTopTrackInfoLong() -> [[Any]] {
+        var result: [DataSnapshot] = []
+        for obj in UserSnapshot?.childSnapshot(forPath: "FavoriteTrackData_long/items").children.allObjects as? [DataSnapshot] ?? [] {
+            result.append(obj)
+        }
+        
+        var actualRes: [[Any]] = []
+        for obj in result {
+            let info = ProcessTrackSnapshot(trackSnapshot: obj)
+            // IN ORDER: trackName, artistsInfo, albumInfo, albumArtists, imageURL,
+            // releaseDate, duration, explicit, linkToSpot, Popularity, previewURL
+            actualRes.append(info)
+        }
+        return actualRes
+    }
+    
     func GetOtherTopTrackInfo(userID: String) -> [[Any]] {
         var result: [DataSnapshot] = []
         for obj in AllUserSnapshot?.childSnapshot(forPath: userID).childSnapshot(forPath: "FavoriteTrackData/items").children.allObjects as? [DataSnapshot] ?? [] {
+            result.append(obj)
+        }
+        
+        var actualRes: [[Any]] = []
+        for obj in result {
+            let info = ProcessTrackSnapshot(trackSnapshot: obj)
+            // IN ORDER: trackName, artistsInfo, albumInfo, albumArtists, imageURL,
+            // releaseDate, duration, explicit, linkToSpot, Popularity, previewURL
+            actualRes.append(info)
+        }
+        return actualRes
+    }
+    
+    func GetOtherTopTrackInfoShort(userID: String) -> [[Any]] {
+        var result: [DataSnapshot] = []
+        for obj in AllUserSnapshot?.childSnapshot(forPath: userID).childSnapshot(forPath: "FavoriteTrackData_short/items").children.allObjects as? [DataSnapshot] ?? [] {
+            result.append(obj)
+        }
+        
+        var actualRes: [[Any]] = []
+        for obj in result {
+            let info = ProcessTrackSnapshot(trackSnapshot: obj)
+            // IN ORDER: trackName, artistsInfo, albumInfo, albumArtists, imageURL,
+            // releaseDate, duration, explicit, linkToSpot, Popularity, previewURL
+            actualRes.append(info)
+        }
+        return actualRes
+    }
+    
+    func GetOtherTopTrackInfoLong(userID: String) -> [[Any]] {
+        var result: [DataSnapshot] = []
+        for obj in AllUserSnapshot?.childSnapshot(forPath: userID).childSnapshot(forPath: "FavoriteTrackData_long/items").children.allObjects as? [DataSnapshot] ?? [] {
             result.append(obj)
         }
         
@@ -359,9 +423,9 @@ class FirebaseAPI: ObservableObject {
         return result
     }
     
-    func GetTopArtistInfoMed() -> [[String]] {
+    func GetTopArtistInfoShort() -> [[String]] {
         var result: [DataSnapshot] = []
-        for obj in UserSnapshot?.childSnapshot(forPath: "FavoriteArtistData_med/items").children.allObjects as? [DataSnapshot] ?? [] {
+        for obj in UserSnapshot?.childSnapshot(forPath: "FavoriteArtistData_short/items").children.allObjects as? [DataSnapshot] ?? [] {
             result.append(obj)
         }
         
@@ -413,9 +477,9 @@ class FirebaseAPI: ObservableObject {
         return actualRes
     }
     
-    func GetOtherTopArtistInfoMed(userID: String) -> [[String]] {
+    func GetOtherTopArtistInfoShort(userID: String) -> [[String]] {
         var result: [DataSnapshot] = []
-        for obj in AllUserSnapshot?.childSnapshot(forPath: String(userID) + "/FavoriteArtistData_med/items").children.allObjects as? [DataSnapshot] ?? [] {
+        for obj in AllUserSnapshot?.childSnapshot(forPath: String(userID) + "/FavoriteArtistData_short/items").children.allObjects as? [DataSnapshot] ?? [] {
             result.append(obj)
         }
         

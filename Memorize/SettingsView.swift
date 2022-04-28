@@ -33,33 +33,53 @@ struct SettingsView: View {
 struct WidgetsView: View {
     var firebase : FirebaseAPI
     @State var topArtists : Bool
+    @State var topArtistsShort : Bool
+    @State var topArtistsLong : Bool
     @State var topAlbums : Bool
     @State var topTracks : Bool
-    @State var funFacts : Bool
+    @State var topTracksShort : Bool
+    @State var topTracksLong : Bool
+    @State var favoriteGenre : Bool
     
     init(firebase: FirebaseAPI) {
         self.firebase = firebase
         self.topArtists = firebase.GetWidgetStatus(widgetName: "TopArtists")
+        self.topArtistsShort = firebase.GetWidgetStatus(widgetName: "TopArtistsShort")
+        self.topArtistsLong = firebase.GetWidgetStatus(widgetName: "TopArtistsLong")
         self.topAlbums = firebase.GetWidgetStatus(widgetName: "TopAlbums")
         self.topTracks = firebase.GetWidgetStatus(widgetName: "TopTracks")
-        self.funFacts = firebase.GetWidgetStatus(widgetName: "FunFacts")
+        self.topTracksShort = firebase.GetWidgetStatus(widgetName: "TopTracksShort")
+        self.topTracksLong = firebase.GetWidgetStatus(widgetName: "TopTracksLong")
+        self.favoriteGenre = firebase.GetWidgetStatus(widgetName: "FavoriteGenre")
     }
     
     var body: some View {
         NavigationView {
             Form {
                 Section(header: Text("Widgets")) {
-                    Toggle(isOn: $topArtists, label: { Text("Top Artists")} ).onChange(of: topArtists) { _topArtists in
+                    Toggle(isOn: $topArtists, label: { Text("Top Artists - Less Recent")} ).onChange(of: topArtists) { _topArtists in
                         firebase.EditWidgetStatus(onOff: _topArtists, widgetName: "TopArtists")
+                    }
+                    Toggle(isOn: $topArtistsShort, label: { Text("Top Artists - Recent")} ).onChange(of: topArtistsShort) { _topArtistsShort in
+                        firebase.EditWidgetStatus(onOff: _topArtistsShort, widgetName: "TopArtistsShort")
+                    }
+                    Toggle(isOn: $topArtistsLong, label: { Text("Top Artists - Lifetime")} ).onChange(of: topArtistsLong) { _topArtistsLong in
+                        firebase.EditWidgetStatus(onOff: _topArtistsLong, widgetName: "TopArtistsLong")
+                    }
+                    Toggle(isOn: $topTracks, label: { Text("Top Tracks - Less Recent")} ).onChange(of: topTracks) { _topTracks in
+                        firebase.EditWidgetStatus(onOff: _topTracks, widgetName: "TopTracks")
+                    }
+                    Toggle(isOn: $topTracksShort, label: { Text("Top Tracks - Recent")} ).onChange(of: topTracksShort) { _topTracksShort in
+                        firebase.EditWidgetStatus(onOff: _topTracksShort, widgetName: "TopTracksShort")
+                    }
+                    Toggle(isOn: $topTracksLong, label: { Text("Top Tracks - Lifetime")} ).onChange(of: topTracksLong) { _topTracksLong in
+                        firebase.EditWidgetStatus(onOff: _topTracksLong, widgetName: "TopTracksLong")
+                    }
+                    Toggle(isOn: $favoriteGenre, label: { Text("Favorite Genre")} ).onChange(of: favoriteGenre) { _favoriteGenre in
+                        firebase.EditWidgetStatus(onOff: _favoriteGenre, widgetName: "FavoriteGenre")
                     }
                     Toggle(isOn: $topAlbums, label: { Text("Top Albums")} ).onChange(of: topAlbums) { _topAlbums in
                         firebase.EditWidgetStatus(onOff: _topAlbums, widgetName: "TopAlbums")
-                    }
-                    Toggle(isOn: $topTracks, label: { Text("Top Tracks")} ).onChange(of: topTracks) { _topTracks in
-                        firebase.EditWidgetStatus(onOff: _topTracks, widgetName: "TopTracks")
-                    }
-                    Toggle(isOn: $funFacts, label: { Text("Fun Facts")} ).onChange(of: funFacts) { _funFacts in
-                        firebase.EditWidgetStatus(onOff: _funFacts, widgetName: "FunFacts")
                     }
                 }
             }

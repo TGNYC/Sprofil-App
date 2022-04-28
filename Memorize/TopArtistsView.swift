@@ -39,7 +39,115 @@ struct TopArtistsView: View {
     
     var body: some View {
         VStack(alignment: .center) {
-            Text("Top Artists").font(.headline)
+            Text("Top Artists - Less Recent").font(.headline)
+                .fontWeight(.bold)
+                .lineLimit(1)
+            ScrollView(.horizontal) {
+                HStack(spacing: 20) {
+                    ForEach(topArtists, id: \.self){ info in
+                        VStack() {
+                            Button(action: {
+                                let impactMed = UIImpactFeedbackGenerator(style: .heavy)
+                                impactMed.impactOccurred()
+                                infoDisplay.FillValues(imageURLs: [info[1], info[2], info[3]], detailedTitle: info[0], topGenres: [info[6], info[7]], followers: info[5], linkToSpot: info[4], popularity: info[8])
+                                showDetailed = true
+                            }, label: {
+                            AsyncImage(url: URL(string: info[1])) { image in
+                                image.resizable()
+                            } placeholder: {
+                                Color.gray
+                            }
+                            .aspectRatio(contentMode: .fill)
+                            .frame(width: 90, height: 90)
+                            .clipShape(RoundedRectangle(cornerSize: CGSize(width: 15,height: 15)))
+                            })
+                                .sheet(isPresented: $showDetailed) {
+                                    DetailedArtistView(imageURLs: $infoDisplay.imageURLs, detailedTitle: $infoDisplay.detailedTitle, topGenres: $infoDisplay.topGenres, followers: $infoDisplay.followers, linkToSpot: $infoDisplay.linkToSpot, popularity: $infoDisplay.popularity)
+                                }
+                            Text(info[0]).font(.callout)
+                        }
+                        .frame(width:80, height:125)
+                    }
+                }
+        
+        }
+        }
+        .padding()
+        .padding(.horizontal, 5)
+        .shadow(color: Color.black.opacity(0.3), radius: 20, x: 0, y: 20)
+        .background(.ultraThinMaterial)
+        .cornerRadius(50)
+    }
+}
+
+struct TopArtistsViewShort: View {
+    var firebase: FirebaseAPI
+    @State var showDetailed: Bool = false
+    var topArtists: [[String]] = []
+    @State var infoDisplay: TopArtistInfo = TopArtistInfo(imageURLs: ["NULL"], detailedTitle: "NULL", topGenres: ["NULL"], followers: "NULL", linkToSpot: "NULL", popularity: "NULL")
+    
+    init(firebase: FirebaseAPI) {
+        self.firebase = firebase
+        topArtists = firebase.GetTopArtistInfoShort()
+    }
+    
+    var body: some View {
+        VStack(alignment: .center) {
+            Text("Top Artists - Recent").font(.headline)
+                .fontWeight(.bold)
+                .lineLimit(1)
+            ScrollView(.horizontal) {
+                HStack(spacing: 20) {
+                    ForEach(topArtists, id: \.self){ info in
+                        VStack() {
+                            Button(action: {
+                                let impactMed = UIImpactFeedbackGenerator(style: .heavy)
+                                impactMed.impactOccurred()
+                                infoDisplay.FillValues(imageURLs: [info[1], info[2], info[3]], detailedTitle: info[0], topGenres: [info[6], info[7]], followers: info[5], linkToSpot: info[4], popularity: info[8])
+                                showDetailed = true
+                            }, label: {
+                            AsyncImage(url: URL(string: info[1])) { image in
+                                image.resizable()
+                            } placeholder: {
+                                Color.gray
+                            }
+                            .aspectRatio(contentMode: .fill)
+                            .frame(width: 90, height: 90)
+                            .clipShape(RoundedRectangle(cornerSize: CGSize(width: 15,height: 15)))
+                            })
+                                .sheet(isPresented: $showDetailed) {
+                                    DetailedArtistView(imageURLs: $infoDisplay.imageURLs, detailedTitle: $infoDisplay.detailedTitle, topGenres: $infoDisplay.topGenres, followers: $infoDisplay.followers, linkToSpot: $infoDisplay.linkToSpot, popularity: $infoDisplay.popularity)
+                                }
+                            Text(info[0]).font(.callout)
+                        }
+                        .frame(width:80, height:125)
+                    }
+                }
+        
+        }
+        }
+        .padding()
+        .padding(.horizontal, 5)
+        .shadow(color: Color.black.opacity(0.3), radius: 20, x: 0, y: 20)
+        .background(.ultraThinMaterial)
+        .cornerRadius(50)
+    }
+}
+
+struct TopArtistsViewLong: View {
+    var firebase: FirebaseAPI
+    @State var showDetailed: Bool = false
+    var topArtists: [[String]] = []
+    @State var infoDisplay: TopArtistInfo = TopArtistInfo(imageURLs: ["NULL"], detailedTitle: "NULL", topGenres: ["NULL"], followers: "NULL", linkToSpot: "NULL", popularity: "NULL")
+    
+    init(firebase: FirebaseAPI) {
+        self.firebase = firebase
+        topArtists = firebase.GetTopArtistInfoLong()
+    }
+    
+    var body: some View {
+        VStack(alignment: .center) {
+            Text("Top Artists - Lifetime").font(.headline)
                 .fontWeight(.bold)
                 .lineLimit(1)
             ScrollView(.horizontal) {
@@ -95,7 +203,121 @@ struct OtherTopArtistsView: View {
     
     var body: some View {
         VStack(alignment: .center) {
-            Text("Top Artists").font(.headline)
+            Text("Top Artists - Less Recent").font(.headline)
+                .fontWeight(.bold)
+                .lineLimit(1)
+            ScrollView(.horizontal) {
+                HStack(spacing: 20) {
+                    ForEach(topArtists, id: \.self){ info in
+                        GeometryReader { geometry in
+                        VStack() {
+                            Button(action: {
+                                let impactMed = UIImpactFeedbackGenerator(style: .heavy)
+                                impactMed.impactOccurred()
+                                showDetailed = true
+                            }, label: {
+                                // IN ORDER: NAME, IMAGE1URL, IMAGE2URL, IMAGE3URL, SPOTIFY_LINK, FOLLOWERS, GENRE1, GENRE2, POPULARITY
+                                AsyncImage(url: URL(string: info[1])) { image in
+                                image.resizable()
+                            } placeholder: {
+                                Color.gray
+                            }
+                            .aspectRatio(contentMode: .fill)
+                            .frame(width: 90, height: 90)
+                            .clipShape(RoundedRectangle(cornerSize: CGSize(width: 15,height: 15)))
+                            })
+                                .sheet(isPresented: $showDetailed) {
+                                    DetailedArtistView(imageURLs: $infoDisplay.imageURLs, detailedTitle: $infoDisplay.detailedTitle, topGenres: $infoDisplay.topGenres, followers: $infoDisplay.followers, linkToSpot: $infoDisplay.linkToSpot, popularity: $infoDisplay.popularity)
+                                }
+                            Text(info[0]).font(.callout)
+                        }
+                    }
+                        .frame(width:80, height:125)
+                    }
+                }
+            }
+        }
+        .padding()
+        .padding(.horizontal, 5)
+        .shadow(color: Color.black.opacity(0.3), radius: 20, x: 0, y: 20)
+        .background(.ultraThinMaterial)
+        .cornerRadius(50)
+    }
+}
+
+struct OtherTopArtistsViewShort: View {
+    var firebase: FirebaseAPI
+    @State var showDetailed: Bool = false
+    var topArtists: [[String]] = []
+    @State var infoDisplay: TopArtistInfo = TopArtistInfo(imageURLs: ["NULL"], detailedTitle: "NULL", topGenres: ["NULL"], followers: "NULL", linkToSpot: "NULL", popularity: "NULL")
+    var profName: String
+    
+    init(firebase: FirebaseAPI, profName: String) {
+        self.firebase = firebase
+        self.profName = profName
+        topArtists = firebase.GetOtherTopArtistInfoShort(userID: firebase.GetUserID(profName: profName))
+    }
+    
+    var body: some View {
+        VStack(alignment: .center) {
+            Text("Top Artists - Recent").font(.headline)
+                .fontWeight(.bold)
+                .lineLimit(1)
+            ScrollView(.horizontal) {
+                HStack(spacing: 20) {
+                    ForEach(topArtists, id: \.self){ info in
+                        GeometryReader { geometry in
+                        VStack() {
+                            Button(action: {
+                                let impactMed = UIImpactFeedbackGenerator(style: .heavy)
+                                impactMed.impactOccurred()
+                                showDetailed = true
+                            }, label: {
+                                // IN ORDER: NAME, IMAGE1URL, IMAGE2URL, IMAGE3URL, SPOTIFY_LINK, FOLLOWERS, GENRE1, GENRE2, POPULARITY
+                                AsyncImage(url: URL(string: info[1])) { image in
+                                image.resizable()
+                            } placeholder: {
+                                Color.gray
+                            }
+                            .aspectRatio(contentMode: .fill)
+                            .frame(width: 90, height: 90)
+                            .clipShape(RoundedRectangle(cornerSize: CGSize(width: 15,height: 15)))
+                            })
+                                .sheet(isPresented: $showDetailed) {
+                                    DetailedArtistView(imageURLs: $infoDisplay.imageURLs, detailedTitle: $infoDisplay.detailedTitle, topGenres: $infoDisplay.topGenres, followers: $infoDisplay.followers, linkToSpot: $infoDisplay.linkToSpot, popularity: $infoDisplay.popularity)
+                                }
+                            Text(info[0]).font(.callout)
+                        }
+                    }
+                        .frame(width:80, height:125)
+                    }
+                }
+            }
+        }
+        .padding()
+        .padding(.horizontal, 5)
+        .shadow(color: Color.black.opacity(0.3), radius: 20, x: 0, y: 20)
+        .background(.ultraThinMaterial)
+        .cornerRadius(50)
+    }
+}
+
+struct OtherTopArtistsViewLong: View {
+    var firebase: FirebaseAPI
+    @State var showDetailed: Bool = false
+    var topArtists: [[String]] = []
+    @State var infoDisplay: TopArtistInfo = TopArtistInfo(imageURLs: ["NULL"], detailedTitle: "NULL", topGenres: ["NULL"], followers: "NULL", linkToSpot: "NULL", popularity: "NULL")
+    var profName: String
+    
+    init(firebase: FirebaseAPI, profName: String) {
+        self.firebase = firebase
+        self.profName = profName
+        topArtists = firebase.GetOtherTopArtistInfoLong(userID: firebase.GetUserID(profName: profName))
+    }
+    
+    var body: some View {
+        VStack(alignment: .center) {
+            Text("Top Artists - Lifetime").font(.headline)
                 .fontWeight(.bold)
                 .lineLimit(1)
             ScrollView(.horizontal) {

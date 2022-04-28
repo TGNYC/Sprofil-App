@@ -70,7 +70,119 @@ struct TopTracksView: View {
     
     var body: some View {
         VStack(alignment: .center) {
-            Text("Top Tracks").font(.headline)
+            Text("Top Tracks - Less Recent").font(.headline)
+                .fontWeight(.bold)
+                .lineLimit(1)
+            ScrollView(.horizontal) {
+                HStack(spacing: 20) {
+                    ForEach(topTracks) { info in
+                        VStack() {
+                            Button(action: {
+                                let impactMed = UIImpactFeedbackGenerator(style: .heavy)
+                                impactMed.impactOccurred()
+                                infoDisplay = info
+                                showDetailed = true
+                            }, label: {
+                                AsyncImage(url: URL(string: info.imageURL)) { image in
+                                image.resizable()
+                            } placeholder: {
+                                Color.gray
+                            }
+                            .aspectRatio(contentMode: .fill)
+                            .frame(width: 90, height: 90)
+                            .clipShape(RoundedRectangle(cornerSize: CGSize(width: 15,height: 15)))
+                            })
+                                .sheet(isPresented: $showDetailed) {
+                                    DetailedTrackView(trackName: $infoDisplay.trackName, artistsInfo: $infoDisplay.artistsInfo, albumInfo: $infoDisplay.albumInfo, albumArtists: $infoDisplay.albumArtists, imageURL: $infoDisplay.imageURL, duration: $infoDisplay.duration, explicit: $infoDisplay.explicit, linkToSpot: $infoDisplay.linkToSpot, popularity: $infoDisplay.popularity, previewURL: $infoDisplay.previewURL)
+                                }
+                            Text(info.trackName).font(.callout)
+                        }
+                    }
+                        .frame(width:80, height:125)
+                    }
+                }
+        }
+        .padding()
+        .padding(.horizontal, 5)
+        .shadow(color: Color.black.opacity(0.3), radius: 20, x: 0, y: 20)
+        .background(.ultraThinMaterial)
+        .cornerRadius(50)
+    }
+}
+
+struct TopTracksViewShort: View {
+    var firebase: FirebaseAPI
+    @State var showDetailed: Bool = false
+    var topTracks: [TopTrackInfo] = []
+    @State var infoDisplay: TopTrackInfo = TopTrackInfo(info: ["NULL", "NULL", "NULL", "NULL", "NULL", "NULL", "NULL", "NULL", "NULL", "NULL"])
+    
+    init(firebase: FirebaseAPI) {
+        self.firebase = firebase
+        let info = firebase.GetTopTrackInfoShort()
+        for obj in info {
+            topTracks.append(TopTrackInfo(info: obj))
+        }
+    }
+    
+    var body: some View {
+        VStack(alignment: .center) {
+            Text("Top Tracks - Recent").font(.headline)
+                .fontWeight(.bold)
+                .lineLimit(1)
+            ScrollView(.horizontal) {
+                HStack(spacing: 20) {
+                    ForEach(topTracks) { info in
+                        VStack() {
+                            Button(action: {
+                                let impactMed = UIImpactFeedbackGenerator(style: .heavy)
+                                impactMed.impactOccurred()
+                                infoDisplay = info
+                                showDetailed = true
+                            }, label: {
+                                AsyncImage(url: URL(string: info.imageURL)) { image in
+                                image.resizable()
+                            } placeholder: {
+                                Color.gray
+                            }
+                            .aspectRatio(contentMode: .fill)
+                            .frame(width: 90, height: 90)
+                            .clipShape(RoundedRectangle(cornerSize: CGSize(width: 15,height: 15)))
+                            })
+                                .sheet(isPresented: $showDetailed) {
+                                    DetailedTrackView(trackName: $infoDisplay.trackName, artistsInfo: $infoDisplay.artistsInfo, albumInfo: $infoDisplay.albumInfo, albumArtists: $infoDisplay.albumArtists, imageURL: $infoDisplay.imageURL, duration: $infoDisplay.duration, explicit: $infoDisplay.explicit, linkToSpot: $infoDisplay.linkToSpot, popularity: $infoDisplay.popularity, previewURL: $infoDisplay.previewURL)
+                                }
+                            Text(info.trackName).font(.callout)
+                        }
+                    }
+                        .frame(width:80, height:125)
+                    }
+                }
+        }
+        .padding()
+        .padding(.horizontal, 5)
+        .shadow(color: Color.black.opacity(0.3), radius: 20, x: 0, y: 20)
+        .background(.ultraThinMaterial)
+        .cornerRadius(50)
+    }
+}
+
+struct TopTracksViewLong: View {
+    var firebase: FirebaseAPI
+    @State var showDetailed: Bool = false
+    var topTracks: [TopTrackInfo] = []
+    @State var infoDisplay: TopTrackInfo = TopTrackInfo(info: ["NULL", "NULL", "NULL", "NULL", "NULL", "NULL", "NULL", "NULL", "NULL", "NULL"])
+    
+    init(firebase: FirebaseAPI) {
+        self.firebase = firebase
+        let info = firebase.GetTopTrackInfoLong()
+        for obj in info {
+            topTracks.append(TopTrackInfo(info: obj))
+        }
+    }
+    
+    var body: some View {
+        VStack(alignment: .center) {
+            Text("Top Tracks - Lifetime").font(.headline)
                 .fontWeight(.bold)
                 .lineLimit(1)
             ScrollView(.horizontal) {
@@ -128,7 +240,127 @@ struct OtherTopTracksView: View {
     
     var body: some View {
         VStack(alignment: .center) {
-            Text("Top Tracks").font(.headline)
+            Text("Top Tracks - Less Recent").font(.headline)
+                .fontWeight(.bold)
+                .lineLimit(1)
+            ScrollView(.horizontal) {
+                HStack(spacing: 20) {
+                    ForEach(topTracks){ info in
+                        GeometryReader { geometry in
+                        VStack() {
+                            Button(action: {
+                                let impactMed = UIImpactFeedbackGenerator(style: .medium)
+                                impactMed.impactOccurred()
+                                infoDisplay = info
+                                showDetailed = true
+                            }, label: {
+                                AsyncImage(url: URL(string: info.imageURL)) { image in
+                                image.resizable()
+                            } placeholder: {
+                                Color.gray
+                            }
+                            .aspectRatio(contentMode: .fill)
+                            .frame(width: 90, height: 90)
+                            .clipShape(RoundedRectangle(cornerSize: CGSize(width: 15,height: 15)))
+                            })
+                                .sheet(isPresented: $showDetailed) {
+                                    DetailedTrackView(trackName: $infoDisplay.trackName, artistsInfo: $infoDisplay.artistsInfo, albumInfo: $infoDisplay.albumInfo, albumArtists: $infoDisplay.albumArtists, imageURL: $infoDisplay.imageURL, duration: $infoDisplay.duration, explicit: $infoDisplay.explicit, linkToSpot: $infoDisplay.linkToSpot, popularity: $infoDisplay.popularity, previewURL: $infoDisplay.previewURL)
+                                }
+                            Text(info.trackName).font(.callout)
+                        }
+                    }
+                        .frame(width:80, height:125)
+                    }
+                }
+            }
+        }
+        .padding()
+        .padding(.horizontal, 5)
+        .shadow(color: Color.black.opacity(0.3), radius: 20, x: 0, y: 20)
+        .background(.ultraThinMaterial)
+        .cornerRadius(50)
+    }
+}
+
+struct OtherTopTracksViewShort: View {
+    var firebase: FirebaseAPI
+    @State var showDetailed: Bool = false
+    var topTracks: [TopTrackInfo] = []
+    @State var infoDisplay: TopTrackInfo = TopTrackInfo(info: ["NULL", "NULL", "NULL", "NULL", "NULL", "NULL", "NULL", "NULL", "NULL", "NULL"])
+    var profName: String
+    
+    init(firebase: FirebaseAPI, profName: String) {
+        self.firebase = firebase
+        self.profName = profName
+        let info = firebase.GetOtherTopTrackInfoShort(userID: firebase.GetUserID(profName: profName))
+        for obj in info {
+            topTracks.append(TopTrackInfo(info: obj))
+        }
+    }
+    
+    var body: some View {
+        VStack(alignment: .center) {
+            Text("Top Tracks - Recent").font(.headline)
+                .fontWeight(.bold)
+                .lineLimit(1)
+            ScrollView(.horizontal) {
+                HStack(spacing: 20) {
+                    ForEach(topTracks){ info in
+                        GeometryReader { geometry in
+                        VStack() {
+                            Button(action: {
+                                let impactMed = UIImpactFeedbackGenerator(style: .medium)
+                                impactMed.impactOccurred()
+                                infoDisplay = info
+                                showDetailed = true
+                            }, label: {
+                                AsyncImage(url: URL(string: info.imageURL)) { image in
+                                image.resizable()
+                            } placeholder: {
+                                Color.gray
+                            }
+                            .aspectRatio(contentMode: .fill)
+                            .frame(width: 90, height: 90)
+                            .clipShape(RoundedRectangle(cornerSize: CGSize(width: 15,height: 15)))
+                            })
+                                .sheet(isPresented: $showDetailed) {
+                                    DetailedTrackView(trackName: $infoDisplay.trackName, artistsInfo: $infoDisplay.artistsInfo, albumInfo: $infoDisplay.albumInfo, albumArtists: $infoDisplay.albumArtists, imageURL: $infoDisplay.imageURL, duration: $infoDisplay.duration, explicit: $infoDisplay.explicit, linkToSpot: $infoDisplay.linkToSpot, popularity: $infoDisplay.popularity, previewURL: $infoDisplay.previewURL)
+                                }
+                            Text(info.trackName).font(.callout)
+                        }
+                    }
+                        .frame(width:80, height:125)
+                    }
+                }
+            }
+        }
+        .padding()
+        .padding(.horizontal, 5)
+        .shadow(color: Color.black.opacity(0.3), radius: 20, x: 0, y: 20)
+        .background(.ultraThinMaterial)
+        .cornerRadius(50)
+    }
+}
+
+struct OtherTopTracksViewLong: View {
+    var firebase: FirebaseAPI
+    @State var showDetailed: Bool = false
+    var topTracks: [TopTrackInfo] = []
+    @State var infoDisplay: TopTrackInfo = TopTrackInfo(info: ["NULL", "NULL", "NULL", "NULL", "NULL", "NULL", "NULL", "NULL", "NULL", "NULL"])
+    var profName: String
+    
+    init(firebase: FirebaseAPI, profName: String) {
+        self.firebase = firebase
+        self.profName = profName
+        let info = firebase.GetOtherTopTrackInfoLong(userID: firebase.GetUserID(profName: profName))
+        for obj in info {
+            topTracks.append(TopTrackInfo(info: obj))
+        }
+    }
+    
+    var body: some View {
+        VStack(alignment: .center) {
+            Text("Top Tracks - Lifetime").font(.headline)
                 .fontWeight(.bold)
                 .lineLimit(1)
             ScrollView(.horizontal) {
