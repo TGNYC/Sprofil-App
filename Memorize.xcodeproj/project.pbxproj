@@ -70,6 +70,7 @@
 		CBCEC4AB27F8C1C100078C3D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CBCEC4AA27F8C1C100078C3D /* Assets.xcassets */; };
 		CBCEC4AE27F8C1C100078C3D /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CBCEC4AD27F8C1C100078C3D /* Preview Assets.xcassets */; };
 		CBEE220127FA697C0023E56A /* AuthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBEE220027FA697C0023E56A /* AuthView.swift */; };
+		DCDF5CD8281A3D63004F3E9E /* FavoriteGenreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCDF5CD7281A3D63004F3E9E /* FavoriteGenreView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -108,6 +109,7 @@
 		CBCEC4AA27F8C1C100078C3D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CBCEC4AD27F8C1C100078C3D /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		CBEE220027FA697C0023E56A /* AuthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthView.swift; sourceTree = "<group>"; };
+		DCDF5CD7281A3D63004F3E9E /* FavoriteGenreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteGenreView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -190,6 +192,7 @@
 				CBB533F12808CC970081FF6C /* TopAlbumsView.swift */,
 				CBC6106928105CD100C62129 /* DetailedView.swift */,
 				CBC6106B28105CEB00C62129 /* ExploreView.swift */,
+				DCDF5CD7281A3D63004F3E9E /* FavoriteGenreView.swift */,
 			);
 			name = Subviews;
 			sourceTree = "<group>";
@@ -375,6 +378,7 @@
 				CBC61071281063C600C62129 /* OAuthView.swift in Sources */,
 				CBB5339D27FB71250081FF6C /* Artist.swift in Sources */,
 				CBEE220127FA697C0023E56A /* AuthView.swift in Sources */,
+				DCDF5CD8281A3D63004F3E9E /* FavoriteGenreView.swift in Sources */,
 				CBB533A227FB71250081FF6C /* TopArtists.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

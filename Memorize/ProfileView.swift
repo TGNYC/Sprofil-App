@@ -64,6 +64,9 @@ struct ProfileView: View {
                         if firebase.GetWidgetStatus(widgetName: "TopAlbums") {
                             TopAlbumsView(firebase: firebase)
                         }
+                        if firebase.GetWidgetStatus(widgetName: "FavoriteGenre") {
+                            FavoriteGenreView(firebase: firebase)
+                        }
                     }
                 }
             }
