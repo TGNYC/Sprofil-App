@@ -111,11 +111,13 @@ struct FriendListView: View {
     var body: some View {
         NavigationView {
             List {
-                if firebase.GetFriendList().count == 0 {
+                if firebase.GetFriendList().count == 0 || firebase.GetFriendList().count == 1 {
                     Text("You have no Friends! Head over to Explore or Search to find some!")
                         .multilineTextAlignment(.center)
                 }
+                else {
                 ForEach(firebase.GetFriendList(), id: \.self) { item in
+                    if item != "NULL"{
                     NavigationLink(destination: OtherProfileView(profName: item)) {
                         HStack(alignment: .top, spacing: 12) {
                             AsyncImage(url: URL(string: firebase.GetOtherProfPic(profName: item))) { image in
@@ -137,6 +139,8 @@ struct FriendListView: View {
                         .padding(.vertical, 4)
                         .listRowSeparator(.hidden)
                     }
+                    }
+                }
             }
         }
             .navigationBarTitle("Friend List", displayMode: .inline)
