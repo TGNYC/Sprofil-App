@@ -61,7 +61,7 @@ struct OtherProfTitleView: View {
     init(firebase: FirebaseAPI, profName: String) {
         self.firebase = firebase
         self.profName = profName
-        isFriend = firebase.IsFriend(profName: profName)
+        isFriend = firebase.IsFriend(userID: firebase.GetUserID(profName: profName))
     }
     
     var body: some View {

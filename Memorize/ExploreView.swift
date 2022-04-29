@@ -18,18 +18,9 @@ struct UserInfo: Identifiable {
 struct ExploreView: View {
     @StateObject var firebase: FirebaseAPI = FirebaseAPI()
     var exploreInfo: [UserInfo] = []
+    let gradient = Gradient(colors: [.orange, .purple])
     
-    private var gridItemLayout = [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())]
-    
-    init() {
-        let info = firebase.GetExploreInfo()
-        if (info.count > 0) {
-            for obj in info {
-                let newObj = obj as? [String] ?? []
-                exploreInfo.append(UserInfo(userID: newObj[0] as String, imageURL: newObj[1] as String))
-            }
-        }
-    }
+    private var gridItemLayout = [GridItem(.flexible()), GridItem(.flexible())]
     
     var body: some View {
         if firebase.loading {
@@ -40,21 +31,23 @@ struct ExploreView: View {
                 ScrollView {
                     Text("Explore")
                         .font(.title)
+                        .foregroundColor(.white)
                     LazyVGrid(columns: gridItemLayout, spacing: 20) {
-                        ForEach(exploreInfo) { info in
-                            NavigationLink(destination: OtherProfileView(profName:"ameyav993")) {
+                        ForEach(firebase.GetExploreInfo()) { info in
+                            NavigationLink(destination: OtherProfileView(profName:firebase.GetOtherProfName(userID: info.userID))) {
                                 AsyncImage(url: URL(string: info.imageURL)) { image in
                                     image.resizable()
                                 } placeholder: {
                                     Color.gray
                                 }
                                 .font(.system(size: 30))
-                                .frame(width: 50, height: 50)
+                                .frame(width: 200, height: 200)
                                 .cornerRadius(10)
                             }
                         }
                     }
                 }
+                .background(LinearGradient(gradient: gradient, startPoint: .top, endPoint: .bottom))
             }
         }
     }

@@ -178,7 +178,7 @@ class FirebaseAPI: ObservableObject {
         return result
     }
     
-    func GetExploreInfo() -> [Any] {
+    func GetExploreInfo() -> [UserInfo] {
         var result: [Any] = []
         for obj in ExploreListSnapshot?.children.allObjects as? [DataSnapshot] ?? [] {
             var temp: [String] = []
@@ -186,7 +186,16 @@ class FirebaseAPI: ObservableObject {
             temp.append(obj.value as? String ?? "NULL")
             result.append(temp)
         }
-        return result
+        
+        var actualRes: [UserInfo] = []
+        
+        if (result.count > 0) {
+        for obj in result {
+            let newObj = obj as? [String] ?? []
+            actualRes.append(UserInfo(userID: newObj[0] as String, imageURL: newObj[1] as String))
+        }
+        }
+        return actualRes
     }
 
     func GetTopGenres() -> [String] {
@@ -570,22 +579,23 @@ class FirebaseAPI: ObservableObject {
     
     // ADDS FRIEND
     func AddFriend(profName: String) {
-        if !IsFriend(profName: profName) {
-        let userID = GetUserID(profName: profName)
-        ref.child("Users").child(String(SPOTIFY_ID)).child("Friends").updateChildValues([userID : userID])
+        if !IsFriend(userID: GetUserID(profName: profName)) {
+            let userID = GetUserID(profName: profName)
+            ref.child("Users").child(String(SPOTIFY_ID)).child("Friends").updateChildValues([userID : userID])
         }
     }
     
     // REMOVES FRIEND
     func RemoveFriend(profName: String) {
-        if IsFriend(profName: profName) {
-        ref.child("Users").child(String(SPOTIFY_ID)).child("Friends").child(profName).removeValue()
+        if IsFriend(userID: GetUserID(profName: profName)) {
+            let userID = GetUserID(profName: profName)
+            ref.child("Users").child(String(SPOTIFY_ID)).child("Friends").child(userID).removeValue()
         }
     }
     
     // Determines whether a user is in the current user's friend list:
-    func IsFriend(profName: String) -> Bool {
-        return UserSnapshot?.childSnapshot(forPath: "Friends").hasChild(profName) ?? false
+    func IsFriend(userID: String) -> Bool {
+        return UserSnapshot?.childSnapshot(forPath: "Friends").hasChild(userID) ?? false
     }
     
     // GETTING USER ID FROM PROFNAME:

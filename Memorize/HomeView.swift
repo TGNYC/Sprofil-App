@@ -19,6 +19,11 @@ struct HomeView: View {
                     Image(systemName: "person.circle")
                     Text("Profile")
                 }
+            ExploreView()
+                .tabItem {
+                    Image(systemName: "dot.radiowaves.up.forward")
+                    Text("Explore")
+                }
             SearchView()
                 .tabItem {
                     Image(systemName: "magnifyingglass")
@@ -28,11 +33,6 @@ struct HomeView: View {
                 .tabItem {
                     Image(systemName: "gear")
                     Text("Settings")
-                }
-            ExploreView()
-                .tabItem {
-                    Image(systemName: "dot.radiowaves.up.forward")
-                    Text("Explore")
                 }
         }
         .font(.headline)
