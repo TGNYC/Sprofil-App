@@ -21,9 +21,9 @@ struct OtherProfileView: View {
             LoadingView()
         }
         else {
+            ScrollView {
             VStack {
                 OtherProfTitleView(firebase: firebase, profName: profName)
-                ScrollView {
                     if firebase.GetOtherWidgetStatus(widgetName: "TopArtistsShort", userID: firebase.GetUserID(profName: profName)) {
                     OtherTopArtistsViewShort(firebase: firebase, profName: profName)
                     }

@@ -12,7 +12,7 @@ struct ProfileView: View {
     @StateObject var firebase = FirebaseAPI()
     @State var id = 0
     @State var showFriends: Bool = false
-    let gradient = Gradient(colors: [.orange, .purple])
+    let gradient = Gradient(colors: [.cyan, .blue])
     
     var body: some View {
         if firebase.loading {

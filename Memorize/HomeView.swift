@@ -21,7 +21,7 @@ struct HomeView: View {
                 }
             ExploreView()
                 .tabItem {
-                    Image(systemName: "dot.radiowaves.up.forward")
+                    Image(systemName: "safari")
                     Text("Explore")
                 }
             SearchView()
