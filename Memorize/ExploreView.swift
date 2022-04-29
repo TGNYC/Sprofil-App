@@ -8,43 +8,52 @@
 import Foundation
 import SwiftUI
 
+struct UserInfo: Identifiable {
+    var userID: String
+    var imageURL: String
+    
+    var id: String { imageURL }
+}
+
 struct ExploreView: View {
-    private var symbols = ["keyboard", "hifispeaker.fill", "printer.fill", "tv.fill", "desktopcomputer", "headphones", "tv.music.note", "mic", "plus.bubble", "video"]
-
-    private var colors: [Color] = [.yellow, .purple, .green]
-
+    @StateObject var firebase: FirebaseAPI = FirebaseAPI()
+    var exploreInfo: [UserInfo] = []
+    
     private var gridItemLayout = [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())]
     
+    init() {
+        let info = firebase.GetExploreInfo()
+        if (info.count > 0) {
+            for obj in info {
+                let newObj = obj as? [String] ?? []
+                exploreInfo.append(UserInfo(userID: newObj[0] as String, imageURL: newObj[1] as String))
+            }
+        }
+    }
+    
     var body: some View {
-        ScrollView {
-            Text("Explore")
-                .font(.title)
-//            HStack() {
-//                Button(action: {
-//                    let impactMed = UIImpactFeedbackGenerator(style: .medium)
-//                    impactMed.impactOccurred()
-//                    showDetailed = true
-//                }, label: {
-//                AsyncImage(url: URL(string: info[1])) { image in
-//                    image.resizable()
-//                } placeholder: {
-//                    Color.gray
-//                }
-//                .aspectRatio(contentMode: .fill)
-//                .frame(width: 90, height: 90)
-//                .clipShape(RoundedRectangle(cornerSize: CGSize(width: 15,height: 15)))
-//                })
-//            }
-            LazyVGrid(columns: gridItemLayout, spacing: 20) {
-                ForEach((0...9999), id: \.self) {
-                    Image(systemName: symbols[$0 % symbols.count])
-                        .font(.system(size: 30))
-                        .frame(width: 50, height: 50)
-                        .background(colors[$0 % colors.count])
-                        .cornerRadius(10)
-//                        .onTapGesture {
-//                            NavigationLink("Other Profile View", destination: OtherProfileView(profName: "p,gupta"))
-//                        }
+        if firebase.loading {
+            LoadingView()
+        }
+        else {
+            NavigationView {
+                ScrollView {
+                    Text("Explore")
+                        .font(.title)
+                    LazyVGrid(columns: gridItemLayout, spacing: 20) {
+                        ForEach(exploreInfo) { info in
+                            NavigationLink(destination: OtherProfileView(profName:"ameyav993")) {
+                                AsyncImage(url: URL(string: info.imageURL)) { image in
+                                    image.resizable()
+                                } placeholder: {
+                                    Color.gray
+                                }
+                                .font(.system(size: 30))
+                                .frame(width: 50, height: 50)
+                                .cornerRadius(10)
+                            }
+                        }
+                    }
                 }
             }
         }

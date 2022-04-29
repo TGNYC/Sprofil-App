@@ -25,6 +25,7 @@ class FirebaseAPI: ObservableObject {
     var AllUserSnapshot: DataSnapshot?
     var UsernameSnapshot: DataSnapshot?
     var PrivateUsersSnapshot: DataSnapshot?
+    var ExploreListSnapshot: DataSnapshot?
 
     init() {
         ref = Database.database().reference()
@@ -44,6 +45,7 @@ class FirebaseAPI: ObservableObject {
             self.AllUserSnapshot = snapshot.childSnapshot(forPath: "Users")
             self.UsernameSnapshot = snapshot.childSnapshot(forPath: "Usernames")
             self.PrivateUsersSnapshot = snapshot.childSnapshot(forPath: "PrivateUsers")
+            self.ExploreListSnapshot = snapshot.childSnapshot(forPath: "ExploreList")
             DispatchQueue.main.async { // perform assignments on the main thread
                 self.loading = false // loading finished
             }
@@ -153,20 +155,19 @@ class FirebaseAPI: ObservableObject {
     }
     
     func GetProfTitle() -> String {
-        let titles: [String] = ["nerd", "fanatic", "king/queen", "scholar", "missionary", "worshipper"]
-        let topGenres: [String] = GetTopGenres()
-        if (topGenres.count > 0) {
-            return topGenres[0] + " " + titles[Int.random(in: 0...(titles.count-1))]
+        var topGenres: [String] = GetTopGenres()
+        if topGenres.count == 0 {
+            topGenres.append("Pop")
         }
-        else {
-            return "Pop King"
-        }
+        return topGenres[0] + " " + (UserSnapshot?.childSnapshot(forPath: "FavoriteGenre/Title").value as? String ?? "NULL")
     }
     
     func GetOtherProfTitle(userID: String) -> String {
-        let titles: [String] = ["nerd", "fanatic", "king/queen", "scholar", "missionary", "worshipper"]
-        let topGenres: [String] = GetOtherTopGenres(userID: userID)
-        return topGenres[0] + " " + titles[Int.random(in: 0...(titles.count-1))]
+        var topGenres: [String] = GetOtherTopGenres(userID: userID)
+        if topGenres.count == 0 {
+            topGenres.append("Pop")
+        }
+        return topGenres[0] + " " + (AllUserSnapshot?.childSnapshot(forPath: userID).childSnapshot(forPath: "FavoriteGenre/Title").value as? String ?? "NULL")
     }
     
     func GetOtherTopGenres(userID: String) -> [String] {
@@ -177,6 +178,17 @@ class FirebaseAPI: ObservableObject {
         return result
     }
     
+    func GetExploreInfo() -> [Any] {
+        var result: [Any] = []
+        for obj in ExploreListSnapshot?.children.allObjects as? [DataSnapshot] ?? [] {
+            var temp: [String] = []
+            temp.append(obj.key as String)
+            temp.append(obj.value as? String ?? "NULL")
+            result.append(temp)
+        }
+        return result
+    }
+
     func GetTopGenres() -> [String] {
         var result: [String] = []
         for obj in UserSnapshot?.childSnapshot(forPath: "FavoriteGenre").children.allObjects as? [DataSnapshot] ?? [] {
@@ -200,8 +212,13 @@ class FirebaseAPI: ObservableObject {
 
     // Gets the custom username of the user, returned as a string
     func GetProfName() -> String {
-        let value = UserSnapshot?.childSnapshot(forPath:"/ProfName").value as? String
+        let value = UserSnapshot?.childSnapshot(forPath:"ProfName").value as? String
         return value ?? "No_Name"
+    }
+    
+    func GetOtherProfName(userID: String) -> String {
+        let value = AllUserSnapshot?.childSnapshot(forPath: userID).childSnapshot(forPath: "ProfName").value as? String ?? "No_Name"
+        return value
     }
     
     func IsUserPrivate(profName: String) -> Bool {
@@ -531,12 +548,13 @@ class FirebaseAPI: ObservableObject {
         return result
     }
     
-    // Gets the list of friends (Profile Names) for a particular individual
+    // Gets the list of friends (UserID) for a particular individual
     func GetFriendList() -> [String] {
         var result: [String] = []
         for obj in UserSnapshot?.childSnapshot(forPath: "Friends").children.allObjects as? [DataSnapshot] ?? [] {
             result.append(obj.key as String)
         }
+        print(result)
         return result
     }
     
@@ -554,7 +572,7 @@ class FirebaseAPI: ObservableObject {
     func AddFriend(profName: String) {
         if !IsFriend(profName: profName) {
         let userID = GetUserID(profName: profName)
-        ref.child("Users").child(String(SPOTIFY_ID)).child("Friends").updateChildValues([profName : userID])
+        ref.child("Users").child(String(SPOTIFY_ID)).child("Friends").updateChildValues([userID : userID])
         }
     }
     

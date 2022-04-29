@@ -13,13 +13,13 @@ struct ProfileView: View {
     @State var id = 0
     @State var showFriends: Bool = false
     let gradient = Gradient(colors: [.orange, .purple])
-    let userID = AuthManager.shared.userID ?? "test_values"
     
     var body: some View {
         if firebase.loading {
             LoadingView()
         }
         else {
+            ScrollView {
             ZStack {
                 VStack {
                     ProfTitleView(firebase: firebase)
@@ -39,8 +39,6 @@ struct ProfileView: View {
                             .background(.ultraThinMaterial)
                             .cornerRadius(50)
                     }
-                    ScrollView
-                    {
                         if firebase.GetWidgetStatus(widgetName: "TopArtistsShort") {
                             TopArtistsViewShort(firebase: firebase)
                         }
@@ -96,6 +94,7 @@ struct ProfTitleView: View {
             Text(firebase.GetBio())
                 .font(.system(size: 12))
                 .foregroundColor(.white)
+                .lineLimit(3)
 //                .padding()
         }
     }
@@ -112,8 +111,8 @@ struct FriendListView: View {
                 }
                 else {
                 ForEach(firebase.GetFriendList(), id: \.self) { item in
-                    if item != "NULL"{
-                    NavigationLink(destination: OtherProfileView(profName: item)) {
+                    if item != "NULL" {
+                        NavigationLink(destination: OtherProfileView(profName: firebase.GetOtherProfName(userID: item))) {
                         HStack(alignment: .top, spacing: 12) {
                             AsyncImage(url: URL(string: firebase.GetOtherProfPic(profName: item))) { image in
                                 image.resizable()
@@ -126,9 +125,10 @@ struct FriendListView: View {
                             .mask(Circle())
                             VStack {
                                 Text(item).bold()
-                                Text(firebase.GetOtherBio(userID: firebase.GetUserID(profName: item)))
+                                Text(firebase.GetOtherBio(userID: item))
                                     .font(.footnote)
                                     .foregroundColor(.secondary)
+                                    .lineLimit(2)
                             }
                         }
                         .padding(.vertical, 4)

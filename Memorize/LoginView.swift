@@ -27,13 +27,13 @@ struct LoginView: View {
                     .foregroundColor(Color.green)
                     .font(.system(size: 150))
                 
-                Text("Sprofil")
+                Text("MySpot")
                     .font(.system(size: 80, design: .rounded))
                     .fontWeight(.heavy)
                     .foregroundColor(Color.green)
                     .padding(.bottom)
                 
-                Text("Sprofil allows you to share and view others' tastes in music. Create a Sprofil by logging in below and sharing your top tracks and artists.")
+                Text("MySpot allows you to share and view others' tastes in music. Create a Profile by logging in below and sharing your top tracks and artists.")
                     .font(.title2)
                     .multilineTextAlignment(.center)
                     .padding([.leading, .bottom, .trailing])
