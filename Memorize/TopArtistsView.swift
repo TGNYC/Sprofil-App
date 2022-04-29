@@ -214,6 +214,7 @@ struct OtherTopArtistsView: View {
                             Button(action: {
                                 let impactMed = UIImpactFeedbackGenerator(style: .heavy)
                                 impactMed.impactOccurred()
+                                infoDisplay.FillValues(imageURLs: [info[1], info[2], info[3]], detailedTitle: info[0], topGenres: [info[6], info[7]], followers: info[5], linkToSpot: info[4], popularity: info[8])
                                 showDetailed = true
                             }, label: {
                                 // IN ORDER: NAME, IMAGE1URL, IMAGE2URL, IMAGE3URL, SPOTIFY_LINK, FOLLOWERS, GENRE1, GENRE2, POPULARITY
@@ -271,6 +272,7 @@ struct OtherTopArtistsViewShort: View {
                             Button(action: {
                                 let impactMed = UIImpactFeedbackGenerator(style: .heavy)
                                 impactMed.impactOccurred()
+                                infoDisplay.FillValues(imageURLs: [info[1], info[2], info[3]], detailedTitle: info[0], topGenres: [info[6], info[7]], followers: info[5], linkToSpot: info[4], popularity: info[8])
                                 showDetailed = true
                             }, label: {
                                 // IN ORDER: NAME, IMAGE1URL, IMAGE2URL, IMAGE3URL, SPOTIFY_LINK, FOLLOWERS, GENRE1, GENRE2, POPULARITY
@@ -328,6 +330,7 @@ struct OtherTopArtistsViewLong: View {
                             Button(action: {
                                 let impactMed = UIImpactFeedbackGenerator(style: .heavy)
                                 impactMed.impactOccurred()
+                                infoDisplay.FillValues(imageURLs: [info[1], info[2], info[3]], detailedTitle: info[0], topGenres: [info[6], info[7]], followers: info[5], linkToSpot: info[4], popularity: info[8])
                                 showDetailed = true
                             }, label: {
                                 // IN ORDER: NAME, IMAGE1URL, IMAGE2URL, IMAGE3URL, SPOTIFY_LINK, FOLLOWERS, GENRE1, GENRE2, POPULARITY

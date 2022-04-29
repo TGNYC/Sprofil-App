@@ -20,11 +20,12 @@ class FirebaseAPI: ObservableObject {
     @Published var ref : DatabaseReference!
     @Published var loading = true
     // NEED TO FIGURE OUT HOW TO GET THE SPOTIFY ID:
-    var SPOTIFY_ID = AuthManager.shared.userID?.replacingOccurrences(of: ".", with: ",") ?? "test_values"
+    var SPOTIFY_ID = AuthManager.shared.userID?.replacingOccurrences(of: ".", with: ",") ?? "p,gupta"
     var UserSnapshot: DataSnapshot?
     var AllUserSnapshot: DataSnapshot?
     var UsernameSnapshot: DataSnapshot?
     var PrivateUsersSnapshot: DataSnapshot?
+    var ExploreListSnapshot: DataSnapshot?
 
     init() {
         ref = Database.database().reference()
@@ -44,6 +45,7 @@ class FirebaseAPI: ObservableObject {
             self.AllUserSnapshot = snapshot.childSnapshot(forPath: "Users")
             self.UsernameSnapshot = snapshot.childSnapshot(forPath: "Usernames")
             self.PrivateUsersSnapshot = snapshot.childSnapshot(forPath: "PrivateUsers")
+            self.ExploreListSnapshot = snapshot.childSnapshot(forPath: "ExploreList")
             DispatchQueue.main.async { // perform assignments on the main thread
                 self.loading = false // loading finished
             }
@@ -153,20 +155,19 @@ class FirebaseAPI: ObservableObject {
     }
     
     func GetProfTitle() -> String {
-        let titles: [String] = ["nerd", "fanatic", "king/queen", "scholar", "missionary", "worshipper"]
-        let topGenres: [String] = GetTopGenres()
-        if (topGenres.count > 0) {
-            return topGenres[0] + " " + titles[Int.random(in: 0...(titles.count-1))]
+        var topGenres: [String] = GetTopGenres()
+        if topGenres.count == 0 {
+            topGenres.append("Pop")
         }
-        else {
-            return "Pop King"
-        }
+        return topGenres[0] + " " + (UserSnapshot?.childSnapshot(forPath: "FavoriteGenre/Title").value as? String ?? "NULL")
     }
     
     func GetOtherProfTitle(userID: String) -> String {
-        let titles: [String] = ["nerd", "fanatic", "king/queen", "scholar", "missionary", "worshipper"]
-        let topGenres: [String] = GetOtherTopGenres(userID: userID)
-        return topGenres[0] + " " + titles[Int.random(in: 0...(titles.count-1))]
+        var topGenres: [String] = GetOtherTopGenres(userID: userID)
+        if topGenres.count == 0 {
+            topGenres.append("Pop")
+        }
+        return topGenres[0] + " " + (AllUserSnapshot?.childSnapshot(forPath: userID).childSnapshot(forPath: "FavoriteGenre/Title").value as? String ?? "NULL")
     }
     
     func GetOtherTopGenres(userID: String) -> [String] {
@@ -177,6 +178,26 @@ class FirebaseAPI: ObservableObject {
         return result
     }
     
+    func GetExploreInfo() -> [UserInfo] {
+        var result: [Any] = []
+        for obj in ExploreListSnapshot?.children.allObjects as? [DataSnapshot] ?? [] {
+            var temp: [String] = []
+            temp.append(obj.key as String)
+            temp.append(obj.value as? String ?? "NULL")
+            result.append(temp)
+        }
+        
+        var actualRes: [UserInfo] = []
+        
+        if (result.count > 0) {
+        for obj in result {
+            let newObj = obj as? [String] ?? []
+            actualRes.append(UserInfo(userID: newObj[0] as String, imageURL: newObj[1] as String))
+        }
+        }
+        return actualRes
+    }
+
     func GetTopGenres() -> [String] {
         var result: [String] = []
         for obj in UserSnapshot?.childSnapshot(forPath: "FavoriteGenre").children.allObjects as? [DataSnapshot] ?? [] {
@@ -200,8 +221,13 @@ class FirebaseAPI: ObservableObject {
 
     // Gets the custom username of the user, returned as a string
     func GetProfName() -> String {
-        let value = UserSnapshot?.childSnapshot(forPath:"/ProfName").value as? String
+        let value = UserSnapshot?.childSnapshot(forPath:"ProfName").value as? String
         return value ?? "No_Name"
+    }
+    
+    func GetOtherProfName(userID: String) -> String {
+        let value = AllUserSnapshot?.childSnapshot(forPath: userID).childSnapshot(forPath: "ProfName").value as? String ?? "No_Name"
+        return value
     }
     
     func IsUserPrivate(profName: String) -> Bool {
@@ -374,7 +400,7 @@ class FirebaseAPI: ObservableObject {
     }
     
     func SecToString(milliSeconds: Int) -> String {
-        let seconds = milliSeconds / 60
+        let seconds = milliSeconds / 1000
         let min = seconds / 60
         let leftover = seconds % 60
         return String(min) + ":" + String(leftover)
@@ -531,12 +557,13 @@ class FirebaseAPI: ObservableObject {
         return result
     }
     
-    // Gets the list of friends (Profile Names) for a particular individual
+    // Gets the list of friends (UserID) for a particular individual
     func GetFriendList() -> [String] {
         var result: [String] = []
         for obj in UserSnapshot?.childSnapshot(forPath: "Friends").children.allObjects as? [DataSnapshot] ?? [] {
             result.append(obj.key as String)
         }
+        print(result)
         return result
     }
     
@@ -552,22 +579,23 @@ class FirebaseAPI: ObservableObject {
     
     // ADDS FRIEND
     func AddFriend(profName: String) {
-        if !IsFriend(profName: profName) {
-        let userID = GetUserID(profName: profName)
-        ref.child("Users").child(String(SPOTIFY_ID)).child("Friends").updateChildValues([profName : userID])
+        if !IsFriend(userID: GetUserID(profName: profName)) {
+            let userID = GetUserID(profName: profName)
+            ref.child("Users").child(String(SPOTIFY_ID)).child("Friends").updateChildValues([userID : userID])
         }
     }
     
     // REMOVES FRIEND
     func RemoveFriend(profName: String) {
-        if IsFriend(profName: profName) {
-        ref.child("Users").child(String(SPOTIFY_ID)).child("Friends").child(profName).removeValue()
+        if IsFriend(userID: GetUserID(profName: profName)) {
+            let userID = GetUserID(profName: profName)
+            ref.child("Users").child(String(SPOTIFY_ID)).child("Friends").child(userID).removeValue()
         }
     }
     
     // Determines whether a user is in the current user's friend list:
-    func IsFriend(profName: String) -> Bool {
-        return UserSnapshot?.childSnapshot(forPath: "Friends").hasChild(profName) ?? false
+    func IsFriend(userID: String) -> Bool {
+        return UserSnapshot?.childSnapshot(forPath: "Friends").hasChild(userID) ?? false
     }
     
     // GETTING USER ID FROM PROFNAME:

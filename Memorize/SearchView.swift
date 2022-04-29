@@ -34,6 +34,7 @@ struct SearchView: View {
                                     Text(firebase.GetOtherBio(userID: firebase.GetUserID(profName: item)))
                                         .font(.footnote)
                                         .foregroundColor(.secondary)
+                                        .lineLimit(2)
                                 }
                             }
                             .padding(.vertical, 4)

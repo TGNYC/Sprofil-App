@@ -21,9 +21,9 @@ struct OtherProfileView: View {
             LoadingView()
         }
         else {
+            ScrollView {
             VStack {
                 OtherProfTitleView(firebase: firebase, profName: profName)
-                ScrollView {
                     if firebase.GetOtherWidgetStatus(widgetName: "TopArtistsShort", userID: firebase.GetUserID(profName: profName)) {
                     OtherTopArtistsViewShort(firebase: firebase, profName: profName)
                     }
@@ -42,8 +42,8 @@ struct OtherProfileView: View {
                     if firebase.GetOtherWidgetStatus(widgetName: "TopTracksLong", userID: firebase.GetUserID(profName: profName)) {
                         OtherTopTracksViewLong(firebase: firebase, profName: profName)
                     }
-                    if firebase.GetOtherWidgetStatus(widgetName: "TopAlbums", userID: firebase.GetUserID(profName: profName)) {
-                        OtherTopAlbumsView(firebase: firebase, profName: profName)
+                    if firebase.GetOtherWidgetStatus(widgetName: "FavoriteGenre", userID: firebase.GetUserID(profName: profName)) {
+                        OtherFavoriteGenreView(firebase: firebase, profName: profName)
                     }
                 }
                 Spacer()
@@ -61,7 +61,7 @@ struct OtherProfTitleView: View {
     init(firebase: FirebaseAPI, profName: String) {
         self.firebase = firebase
         self.profName = profName
-        isFriend = firebase.IsFriend(profName: profName)
+        isFriend = firebase.IsFriend(userID: firebase.GetUserID(profName: profName))
     }
     
     var body: some View {

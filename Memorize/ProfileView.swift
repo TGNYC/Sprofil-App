@@ -12,14 +12,14 @@ struct ProfileView: View {
     @StateObject var firebase = FirebaseAPI()
     @State var id = 0
     @State var showFriends: Bool = false
-    let gradient = Gradient(colors: [.orange, .purple])
-    let userID = AuthManager.shared.userID ?? "test_values"
+    let gradient = Gradient(colors: [.cyan, .blue])
     
     var body: some View {
         if firebase.loading {
             LoadingView()
         }
         else {
+            ScrollView {
             ZStack {
                 VStack {
                     ProfTitleView(firebase: firebase)
@@ -39,8 +39,6 @@ struct ProfileView: View {
                             .background(.ultraThinMaterial)
                             .cornerRadius(50)
                     }
-                    ScrollView
-                    {
                         if firebase.GetWidgetStatus(widgetName: "TopArtistsShort") {
                             TopArtistsViewShort(firebase: firebase)
                         }
@@ -58,9 +56,6 @@ struct ProfileView: View {
                         }
                         if firebase.GetWidgetStatus(widgetName: "TopTracksLong") {
                             TopTracksViewLong(firebase: firebase)
-                        }
-                        if firebase.GetWidgetStatus(widgetName: "TopAlbums") {
-                            TopAlbumsView(firebase: firebase)
                         }
                         if firebase.GetWidgetStatus(widgetName: "FavoriteGenre") {
                             FavoriteGenreView(firebase: firebase)
@@ -99,6 +94,7 @@ struct ProfTitleView: View {
             Text(firebase.GetBio())
                 .font(.system(size: 12))
                 .foregroundColor(.white)
+                .lineLimit(3)
 //                .padding()
         }
     }
@@ -115,10 +111,10 @@ struct FriendListView: View {
                 }
                 else {
                 ForEach(firebase.GetFriendList(), id: \.self) { item in
-                    if item != "NULL"{
-                    NavigationLink(destination: OtherProfileView(profName: item)) {
+                    if item != "NULL" {
+                        NavigationLink(destination: OtherProfileView(profName: firebase.GetOtherProfName(userID: item))) {
                         HStack(alignment: .top, spacing: 12) {
-                            AsyncImage(url: URL(string: firebase.GetOtherProfPic(profName: item))) { image in
+                            AsyncImage(url: URL(string: firebase.GetOtherProfPic(profName: firebase.GetOtherProfName(userID: item)))) { image in
                                 image.resizable()
                             } placeholder: {
                                 Color.gray
@@ -128,10 +124,11 @@ struct FriendListView: View {
                             .background(Color("Background"))
                             .mask(Circle())
                             VStack {
-                                Text(item).bold()
-                                Text("Description")
+                                Text(firebase.GetOtherProfName(userID: item)).bold()
+                                Text(firebase.GetOtherBio(userID: item))
                                     .font(.footnote)
                                     .foregroundColor(.secondary)
+                                    .lineLimit(2)
                             }
                         }
                         .padding(.vertical, 4)

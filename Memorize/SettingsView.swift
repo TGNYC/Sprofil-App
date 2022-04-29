@@ -78,9 +78,6 @@ struct WidgetsView: View {
                     Toggle(isOn: $favoriteGenre, label: { Text("Favorite Genre")} ).onChange(of: favoriteGenre) { _favoriteGenre in
                         firebase.EditWidgetStatus(onOff: _favoriteGenre, widgetName: "FavoriteGenre")
                     }
-                    Toggle(isOn: $topAlbums, label: { Text("Top Albums")} ).onChange(of: topAlbums) { _topAlbums in
-                        firebase.EditWidgetStatus(onOff: _topAlbums, widgetName: "TopAlbums")
-                    }
                 }
             }
             .navigationTitle("Widget Settings")
