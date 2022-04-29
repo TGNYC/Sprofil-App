@@ -391,7 +391,7 @@ class FirebaseAPI: ObservableObject {
     }
     
     func SecToString(milliSeconds: Int) -> String {
-        let seconds = milliSeconds / 60
+        let seconds = milliSeconds / 1000
         let min = seconds / 60
         let leftover = seconds % 60
         return String(min) + ":" + String(leftover)

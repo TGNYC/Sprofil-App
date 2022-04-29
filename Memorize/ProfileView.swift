@@ -114,7 +114,7 @@ struct FriendListView: View {
                     if item != "NULL" {
                         NavigationLink(destination: OtherProfileView(profName: firebase.GetOtherProfName(userID: item))) {
                         HStack(alignment: .top, spacing: 12) {
-                            AsyncImage(url: URL(string: firebase.GetOtherProfPic(profName: item))) { image in
+                            AsyncImage(url: URL(string: firebase.GetOtherProfPic(profName: firebase.GetOtherProfName(userID: item)))) { image in
                                 image.resizable()
                             } placeholder: {
                                 Color.gray
@@ -124,7 +124,7 @@ struct FriendListView: View {
                             .background(Color("Background"))
                             .mask(Circle())
                             VStack {
-                                Text(item).bold()
+                                Text(firebase.GetOtherProfName(userID: item)).bold()
                                 Text(firebase.GetOtherBio(userID: item))
                                     .font(.footnote)
                                     .foregroundColor(.secondary)
