@@ -13,7 +13,8 @@ struct MemorizeApp: App {
     init() {
         FirebaseApp.configure()
     }
-    @State var isLoggedIn: Bool = false
+    @State private var isLoggedIn = UserDefaults.standard.bool(forKey: "logged_in")
+//    @State var isLoggedIn: Bool = false
     var body: some Scene {
         WindowGroup {
             if !isLoggedIn { LoginView(isLoggedIn: self.$isLoggedIn) }
