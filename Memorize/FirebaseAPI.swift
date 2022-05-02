@@ -207,6 +207,15 @@ class FirebaseAPI: ObservableObject {
         return result
     }
     
+    func ExistingProfileName(name: String) -> Bool {
+        for obj in UsernameSnapshot?.children.allObjects as? [DataSnapshot] ?? [] {
+            if name == obj.key {
+                return false
+            }
+        }
+        return true
+    }
+    
     func GetTopGenresScores() -> [Int] {
         var result: [Int] = []
         for obj in UserSnapshot?.childSnapshot(forPath: "FavoriteGenre").children.allObjects as? [DataSnapshot] ?? [] {

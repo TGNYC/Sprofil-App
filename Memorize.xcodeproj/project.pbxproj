@@ -70,6 +70,7 @@
 		CBCEC4AB27F8C1C100078C3D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CBCEC4AA27F8C1C100078C3D /* Assets.xcassets */; };
 		CBCEC4AE27F8C1C100078C3D /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CBCEC4AD27F8C1C100078C3D /* Preview Assets.xcassets */; };
 		CBEE220127FA697C0023E56A /* AuthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBEE220027FA697C0023E56A /* AuthView.swift */; };
+		DC6CA10B281F4A7A0056F38E /* TextAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC6CA10A281F4A790056F38E /* TextAlert.swift */; };
 		DCDF5CD8281A3D63004F3E9E /* FavoriteGenreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCDF5CD7281A3D63004F3E9E /* FavoriteGenreView.swift */; };
 /* End PBXBuildFile section */
 
@@ -109,6 +110,7 @@
 		CBCEC4AA27F8C1C100078C3D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CBCEC4AD27F8C1C100078C3D /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		CBEE220027FA697C0023E56A /* AuthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthView.swift; sourceTree = "<group>"; };
+		DC6CA10A281F4A790056F38E /* TextAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextAlert.swift; sourceTree = "<group>"; };
 		DCDF5CD7281A3D63004F3E9E /* FavoriteGenreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteGenreView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -175,6 +177,7 @@
 				CBB5339527FB71250081FF6C /* User.swift */,
 				CBB5339927FB71250081FF6C /* UserProfile.swift */,
 				CBB5339A27FB71250081FF6C /* Widgets.swift */,
+				DC6CA10A281F4A790056F38E /* TextAlert.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -348,6 +351,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DC6CA10B281F4A7A0056F38E /* TextAlert.swift in Sources */,
 				CBB533E52808CA900081FF6C /* SearchView.swift in Sources */,
 				CBB5339C27FB71250081FF6C /* Theme.swift in Sources */,
 				CBB533E32808A48B0081FF6C /* FirebaseAPI.swift in Sources */,
