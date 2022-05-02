@@ -18,7 +18,7 @@ struct UserInfo: Identifiable {
 struct ExploreView: View {
     @StateObject var firebase: FirebaseAPI = FirebaseAPI()
     var exploreInfo: [UserInfo] = []
-    let gradient = Gradient(colors: [Color("Rose"), Color("Anna")])
+    let gradient = Gradient(colors: [.green, .mint])
     
     private var gridItemLayout = [GridItem(.flexible()), GridItem(.flexible())]
     

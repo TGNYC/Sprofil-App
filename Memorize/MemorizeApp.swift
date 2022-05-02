@@ -14,6 +14,7 @@ struct MemorizeApp: App {
         FirebaseApp.configure()
     }
     @State var isLoggedIn: Bool = false
+    
     var body: some Scene {
         WindowGroup {
             if !isLoggedIn { LoginView(isLoggedIn: self.$isLoggedIn) }
