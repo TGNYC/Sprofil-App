@@ -60,18 +60,24 @@ class AuthViewController: NSObject, WKNavigationDelegate {
         
         AuthManager.shared.exchangeCodeForToken(code: code) { [weak self] success in
 //            DispatchQueue.main.async {
-                self?.parent.isLoggedIn = true
-                
-                // TODO: Add Call to Getting userID
-                // TODO: Add Call to Top Tracks
-                // TODO: Add Call to Top Aritsts
-                // TODO: Store data in database
-                print("ACCESS TOKEN from AuthView")
-                print(AuthManager.shared.accessToken!)
-                
-                print("Before API Call")
-                print("After API Call")
-                
+            UserDefaults.standard.set(true, forKey: "logged_in")
+            self?.parent.isLoggedIn = true
+            print("IS LOGGED IN " + String(UserDefaults.standard.bool(forKey: "logged_in")))
+            
+            // TODO: Add Call to Getting userID
+            // TODO: Add Call to Top Tracks
+            // TODO: Add Call to Top Aritsts
+            // TODO: Store data in database
+            print("ACCESS TOKEN from AuthView")
+            print(AuthManager.shared.accessToken!)
+            
+            print("Before API Call")
+            print("After API Call")
+        
+//            NavigationLink(destination: HomeView(), isActive: self?.mainViewActive) {
+//                  EmptyView()     // << just hide
+//            }
+            
 //                self?.navigationController?.popToRootViewController(animated: true)
 //                self?.completionHandler?(success)
 //            }

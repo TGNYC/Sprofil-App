@@ -13,29 +13,33 @@ struct HomeView: View {
     var tracks = APICaller.shared.trackList
     
     var body: some View {
-        TabView {
-            ProfileView()
-                .tabItem {
-                    Image(systemName: "person.circle")
-                    Text("Profile")
-                }
-            ExploreView()
-                .tabItem {
-                    Image(systemName: "safari")
-                    Text("Explore")
-                }
-            SearchView()
-                .tabItem {
-                    Image(systemName: "magnifyingglass")
-                    Text("Search")
-                }
-            SettingsView()
-                .tabItem {
-                    Image(systemName: "gear")
-                    Text("Settings")
-                }
+        if isLoggedIn {
+            TabView {
+                ProfileView()
+                    .tabItem {
+                        Image(systemName: "person.circle")
+                        Text("Profile")
+                    }
+                ExploreView()
+                    .tabItem {
+                        Image(systemName: "safari")
+                        Text("Explore")
+                    }
+                SearchView()
+                    .tabItem {
+                        Image(systemName: "magnifyingglass")
+                        Text("Search")
+                    }
+                SettingsView(isLoggedIn: self.$isLoggedIn)
+                    .tabItem {
+                        Image(systemName: "gear")
+                        Text("Settings")
+                    }
+            }
+            .font(.headline)
+        } else {
+            LoginView(isLoggedIn: self.$isLoggedIn)
         }
-        .font(.headline)
         
 //
 //        VStack {

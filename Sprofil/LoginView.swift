@@ -38,7 +38,8 @@ struct LoginView: View {
                     .multilineTextAlignment(.center)
                     .padding([.leading, .bottom, .trailing])
                 
-                NavigationLink(destination: LoginFormView(isLoggedIn: $isLoggedIn)) {
+//                NavigationLink(destination: LoginFormView(isLoggedIn: $isLoggedIn)) {
+                NavigationLink(destination: AuthView(isLoggedIn: $isLoggedIn)) {
 //                    EmptyView()
                     Text("Login With Spotify")
                         .fontWeight(.bold)
@@ -80,15 +81,16 @@ struct LoginView: View {
 
 
 
-struct LoginFormView : View {
-    @Binding var isLoggedIn: Bool
-    
-    var body: some View {
-        NavigationView {
-//            OAuthView(isLoggedIn: self.$isLoggedIn)
-            AuthView(isLoggedIn: self.$isLoggedIn)
-        }
-    }
+//struct LoginFormView : View {
+////    @Binding var isLoggedIn: Bool
+//    
+//    var body: some View {
+//        NavigationView {
+////            OAuthView(isLoggedIn: self.$isLoggedIn)
+////            AuthView(isLoggedIn: self.$isLoggedIn)
+//            AuthView(isLoggedIn: $isLoggedIn)
+//        }
+//    }
 //
 //    var body: some View {
 //        if !isLoggedIn {
@@ -111,7 +113,7 @@ struct LoginFormView : View {
 //        .navigationBarTitle("Sign In", displayMode: .inline)
         
 //    }
-}
+//}
 //
 ///// Code for Live Preview (ignore)
 //struct LoginView_Previews: PreviewProvider {

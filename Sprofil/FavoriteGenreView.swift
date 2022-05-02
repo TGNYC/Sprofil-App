@@ -80,7 +80,7 @@ struct OtherFavoriteGenreView: View {
                 .fontWeight(.bold)
                 .lineLimit(1)
             HStack {
-                if (topGenres.count >= 3) {
+                if (topGenres.count >= 3 && topGenreScores.count >= 3) {
                     VStack {
                     Text(topGenres[0])
                         Text("Score: " + topGenreScores[0])

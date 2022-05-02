@@ -9,6 +9,9 @@ import SwiftUI
 
 struct SettingsView: View {
     @StateObject var firebase = FirebaseAPI()
+    
+    @Binding var isLoggedIn : Bool
+    
     var body: some View {
         if firebase.loading {
             LoadingView()
@@ -18,10 +21,28 @@ struct SettingsView: View {
             Form {
                 Section(header: Text("Profile Settings")) {
                     NavigationLink(destination: WidgetsView(firebase: firebase)) {
-                        FormRowStaticView(icon: "pencil", text: "Widget Settings", ifDetailed: true) }
-                    NavigationLink(destination: UserView(firebase: firebase)) {
-                    FormRowStaticView(icon: "person.fill", text: "User Settings", ifDetailed: true)
+                        FormRowStaticView(icon: "pencil", text: "Widget Settings", ifDetailed: true)
                     }
+                    NavigationLink(destination: UserView(firebase: firebase)) {
+                        FormRowStaticView(icon: "person.fill", text: "User Settings", ifDetailed: true)
+                    }
+                }
+                Section(header: Text("App Settings")) {
+                    NavigationLink(destination: LoginView(isLoggedIn: self.$isLoggedIn) ) {
+                        FormRowStaticView(icon: "rectangle.portrait.and.arrow.right", text: "Log Out", ifDetailed: false)
+                    }.simultaneousGesture(
+                        TapGesture().onEnded {
+                            UserDefaults.standard.removeObject(forKey: "user_id")
+                            UserDefaults.standard.removeObject(forKey: "user_email")
+                            UserDefaults.standard.removeObject(forKey: "refresh_token")
+                            UserDefaults.standard.removeObject(forKey: "expirationDate")
+                            UserDefaults.standard.removeObject(forKey: "access_token")
+                            UserDefaults.standard.set(false, forKey: "logged_in")
+                            self.isLoggedIn = false
+                            print("Set Login View False")
+                        }
+                    )
+                    // add force refresh profile
                 }
             }
             .navigationTitle("Settings")
@@ -165,9 +186,9 @@ struct FormRowStaticView: View {
             }
     }
 }
-
-struct SettingsView_Previews: PreviewProvider {
-    static var previews: some View {
-        SettingsView()
-    }
-}
+//
+//struct SettingsView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        SettingsView()
+//    }
+//}

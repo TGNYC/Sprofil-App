@@ -70,6 +70,7 @@ final class AuthManager {
         code: String,
         completion: @escaping ((Bool) -> Void)
     ) {
+        print("START AUTHENTICATION AND UPLOAD")
         // Get Token
         guard let url = URL(string: Constants.tokenAPIURL) else {
             return
@@ -343,11 +344,18 @@ final class AuthManager {
                         myProfileID = profile.id.replacingOccurrences(of: ".", with: ",")
                         FirebaseAPI2.UploadEmail(user_id: myProfileID, user_email: profile.email)
                         track_task_medium.resume()
+                        print("Track 1 Uploaded")
                         track_task_short.resume()
+                        print("Track 2 Uploaded")
                         track_task_long.resume()
+                        print("Track 3 Uploaded")
                         art_task.resume()
+                        print("Art 1 Uploaded")
                         art_task_short.resume()
+                        print("Art 2 Uploaded")
                         art_task_long.resume()
+                        print("Art 3 Uploaded")
+                        print("All uploaded successfully.")
                     } catch {
                         print(error)
                     }

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CB7669F9281F6AD200C47AF1 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CBB533A7280880590081FF6C /* GoogleService-Info.plist */; };
 		CBB5338727FA765A0081FF6C /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBB5338627FA765A0081FF6C /* AuthManager.swift */; };
 		CBB5338A27FB5C720081FF6C /* AuthResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBB5338927FB5C720081FF6C /* AuthResponse.swift */; };
 		CBB5338E27FB6E770081FF6C /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBB5338D27FB6E770081FF6C /* HomeView.swift */; };
@@ -22,7 +23,6 @@
 		CBB533A327FB71250081FF6C /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBB5339927FB71250081FF6C /* UserProfile.swift */; };
 		CBB533A427FB71250081FF6C /* Widgets.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBB5339A27FB71250081FF6C /* Widgets.swift */; };
 		CBB533A628087EFC0081FF6C /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBB533A528087EFC0081FF6C /* SettingsView.swift */; };
-		CBB533A8280880590081FF6C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CBB533A7280880590081FF6C /* GoogleService-Info.plist */; };
 		CBB533AB28089D600081FF6C /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = CBB533AA28089D600081FF6C /* FirebaseAnalytics */; };
 		CBB533AD28089D610081FF6C /* FirebaseAnalyticsSwift-Beta in Frameworks */ = {isa = PBXBuildFile; productRef = CBB533AC28089D610081FF6C /* FirebaseAnalyticsSwift-Beta */; };
 		CBB533AF28089D610081FF6C /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */ = {isa = PBXBuildFile; productRef = CBB533AE28089D610081FF6C /* FirebaseAnalyticsWithoutAdIdSupport */; };
@@ -335,9 +335,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CB7669F9281F6AD200C47AF1 /* GoogleService-Info.plist in Resources */,
 				CBCEC4AE27F8C1C100078C3D /* Preview Assets.xcassets in Resources */,
 				CBCEC4AB27F8C1C100078C3D /* Assets.xcassets in Resources */,
-				CBB533A8280880590081FF6C /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
