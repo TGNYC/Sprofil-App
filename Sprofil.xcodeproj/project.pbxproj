@@ -311,7 +311,7 @@
 					};
 				};
 			};
-			buildConfigurationList = CBCEC49E27F8C1BE00078C3D /* Build configuration list for PBXProject "Memorize" */;
+			buildConfigurationList = CBCEC49E27F8C1BE00078C3D /* Build configuration list for PBXProject "Sprofil" */;
 			compatibilityVersion = "Xcode 13.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -515,7 +515,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Memorize/Preview Content\"";
-				DEVELOPMENT_TEAM = RALTMN97YJ;
+				DEVELOPMENT_TEAM = 8R725563LN;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -529,7 +529,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.tejasgupta.Sprofil;
+				PRODUCT_BUNDLE_IDENTIFIER = com.benshi.Sprofil;
 				PRODUCT_NAME = Sprofil;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -546,7 +546,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Memorize/Preview Content\"";
-				DEVELOPMENT_TEAM = RALTMN97YJ;
+				DEVELOPMENT_TEAM = 8R725563LN;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -560,7 +560,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.tejasgupta.Sprofil;
+				PRODUCT_BUNDLE_IDENTIFIER = com.benshi.Sprofil;
 				PRODUCT_NAME = Sprofil;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -571,7 +571,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		CBCEC49E27F8C1BE00078C3D /* Build configuration list for PBXProject "Memorize" */ = {
+		CBCEC49E27F8C1BE00078C3D /* Build configuration list for PBXProject "Sprofil" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				CBCEC4AF27F8C1C100078C3D /* Debug */,
