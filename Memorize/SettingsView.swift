@@ -90,6 +90,7 @@ struct UserView: View {
     @State var profName: String
     @State private var showProfChange = false
     @State private var showInvalidName = false
+    @State private var showInvalidBio = false
     @State var bio: String {
         didSet {
             if bio.count > 40 {
@@ -124,6 +125,17 @@ struct UserView: View {
         print("ILLEGAL CHAR VAL IS " + String(illegalCharValidation))
         
         if lengthValidation && existingValidation && illegalCharValidation {
+            return true
+        }
+        else {
+            return false
+        }
+    }
+    
+    func validateBio(bio: String) -> Bool {
+        let lengthValidation: Bool = bio.count < 200
+        
+        if lengthValidation {
             return true
         }
         else {

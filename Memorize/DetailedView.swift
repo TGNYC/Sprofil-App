@@ -68,7 +68,12 @@ struct DetailedArtistView: View {
                         HStack() {
                             Text("Top Genres:").bold()
                             ForEach(topGenres, id: \.self){ genre in
-                                Text(genre)
+                                if genre != "NULL" {
+                                    Text(genre)
+                                }
+                                else {
+                                    Text("N/A")
+                                }
                             }
                         }   .font(.body)
                             .foregroundColor(Color.white)
