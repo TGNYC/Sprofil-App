@@ -33,29 +33,29 @@ struct FavoriteGenreView: View {
                 if (topGenres.count >= 3 && topGenreScores.count >= 3) {
                     VStack {
                         Text(topGenres[0])
-                        Text("Score: " + topGenreScores[0])
+                        Text("Score: " + topGenreScores[0] + "/300")
                     }
                     VStack {
                         Text(topGenres[1])
-                        Text("Score: " + topGenreScores[1])
+                        Text("Score: " + topGenreScores[1] + "/300")
                     }
                     VStack {
                         Text(topGenres[2])
-                        Text("Score: " + topGenreScores[2])
+                        Text("Score: " + topGenreScores[2] + "/300")
                     }
                 } else if (topGenres.count >= 2 && topGenreScores.count >= 2) {
                     VStack {
                         Text(topGenres[0])
-                        Text("Score: " + topGenreScores[0])
+                        Text("Score: " + topGenreScores[0] + "/300")
                     }
                     VStack {
                         Text(topGenres[1])
-                        Text("Score: " + topGenreScores[1])
+                        Text("Score: " + topGenreScores[1] + "/300")
                     }
                 } else if (topGenres.count >= 1 && topGenreScores.count >= 1) {
                     VStack {
                         Text(topGenres[0])
-                        Text("Score: " + topGenreScores[0])
+                        Text("Score: " + topGenreScores[0] + "/300")
                     }
                 } else {
                     Text("You have no top genres.")
