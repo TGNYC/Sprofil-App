@@ -9,7 +9,7 @@ import SwiftUI
 import WebKit
 
 struct AuthView: UIViewRepresentable {
-    @Binding var isLoggedIn : Bool
+    @EnvironmentObject var appState: AppState
     
     func makeUIView(context: Context) -> WKWebView {
         let prefs = WKWebpagePreferences()
@@ -66,8 +66,9 @@ class AuthViewController: NSObject, WKNavigationDelegate {
                 print("USER ID UPLOADED: \(UserDefaults.standard.string(forKey: "user_id") ?? "DID NOT WORK")")
                 DataRetrieval.getData() {_ in
                     print("DATA RETRIEVED")
-                    self?.parent.isLoggedIn = true
-                    UserDefaults.standard.set(true, forKey: "logged_in")
+                    self?.parent.appState.rootViewId = UUID()
+//                    self?.parent.isLoggedIn = true
+//                    UserDefaults.standard.set(true, forKey: "logged_in")
                 }
 //            }
 //                self?.parent.isLoggedIn = true

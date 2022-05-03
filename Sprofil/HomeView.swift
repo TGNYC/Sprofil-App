@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct HomeView: View {
-    @Binding var isLoggedIn : Bool
+    @EnvironmentObject var appState: AppState
     
     var tracks = APICaller.shared.trackList
     
@@ -29,7 +29,7 @@ struct HomeView: View {
                     Image(systemName: "magnifyingglass")
                     Text("Search")
                 }
-            SettingsView()
+            SettingsView().id(appState.rootViewId)
                 .tabItem {
                     Image(systemName: "gear")
                     Text("Settings")

@@ -34,8 +34,10 @@ final class AuthManager {
     }
     
     var isSignedIn: Bool {
-        return accessToken != nil
-    }
+    //        return accessToken != nil
+            return userID != nil
+        }
+
     
     public var code: String? {
         return UserDefaults.standard.string(forKey: "auth_code")

@@ -9,6 +9,8 @@ import SwiftUI
 
 struct SettingsView: View {
     @StateObject var firebase = FirebaseAPI()
+    @EnvironmentObject var appState: AppState
+    
     var body: some View {
         if firebase.loading {
             LoadingView()
@@ -23,6 +25,17 @@ struct SettingsView: View {
                     FormRowStaticView(icon: "person.fill", text: "User Settings", ifDetailed: true)
                     }
                 }
+                
+                Button(action: {
+                        UserDefaults.standard.set(nil, forKey: "user_id")
+                        UserDefaults.standard.set(nil, forKey: "user_email")
+                        UserDefaults.standard.set(nil, forKey: "refresh_token")
+                        UserDefaults.standard.set(nil, forKey: "expirationDate")
+                        UserDefaults.standard.set(nil, forKey: "access_token")
+                        print("Log out tapped")
+                        print("Sign in state: " + String(AuthManager.shared.isSignedIn))
+                        appState.rootViewId = UUID()
+                }) { Label("Log Out", systemImage: "rectangle.portrait.and.arrow.right") }
             }
             .navigationTitle("Settings")
         }
@@ -79,6 +92,9 @@ struct WidgetsView: View {
                         firebase.EditWidgetStatus(onOff: _favoriteGenre, widgetName: "FavoriteGenre")
                     }
                 }
+                
+                
+                .navigationTitle("Settings")
             }
             .navigationTitle("Widget Settings")
         }

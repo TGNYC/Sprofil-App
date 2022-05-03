@@ -13,12 +13,11 @@ struct MemorizeApp: App {
     init() {
         FirebaseApp.configure()
     }
-    @State private var isLoggedIn = UserDefaults.standard.bool(forKey: "logged_in")
-//    @State var isLoggedIn: Bool = false
-    var body: some Scene {
-        WindowGroup {
-            if !isLoggedIn { LoginView(isLoggedIn: self.$isLoggedIn) }
-            else { HomeView(isLoggedIn: self.$isLoggedIn) }
+    @ObservedObject var appState = AppState()
+        var body: some Scene {
+            WindowGroup {
+                if (!AuthManager.shared.isSignedIn) { LoginView().environmentObject(appState) }
+                else { HomeView().environmentObject(appState) }
         }
     }
 }
