@@ -69,6 +69,7 @@
 		CBCEC4A927F8C1BE00078C3D /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBCEC4A827F8C1BE00078C3D /* LoginView.swift */; };
 		CBCEC4AB27F8C1C100078C3D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CBCEC4AA27F8C1C100078C3D /* Assets.xcassets */; };
 		CBCEC4AE27F8C1C100078C3D /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CBCEC4AD27F8C1C100078C3D /* Preview Assets.xcassets */; };
+		CBE24F552820B96700B7E0A5 /* DataRetrieval.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBE24F542820B96700B7E0A5 /* DataRetrieval.swift */; };
 		CBEE220127FA697C0023E56A /* AuthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBEE220027FA697C0023E56A /* AuthView.swift */; };
 		DCDF5CD8281A3D63004F3E9E /* FavoriteGenreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCDF5CD7281A3D63004F3E9E /* FavoriteGenreView.swift */; };
 /* End PBXBuildFile section */
@@ -108,6 +109,7 @@
 		CBCEC4A827F8C1BE00078C3D /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		CBCEC4AA27F8C1C100078C3D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CBCEC4AD27F8C1C100078C3D /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		CBE24F542820B96700B7E0A5 /* DataRetrieval.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataRetrieval.swift; sourceTree = "<group>"; };
 		CBEE220027FA697C0023E56A /* AuthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthView.swift; sourceTree = "<group>"; };
 		DCDF5CD7281A3D63004F3E9E /* FavoriteGenreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteGenreView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -157,6 +159,7 @@
 			children = (
 				CBB5338627FA765A0081FF6C /* AuthManager.swift */,
 				CBB5338F27FB70780081FF6C /* APICaller.swift */,
+				CBE24F542820B96700B7E0A5 /* DataRetrieval.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -348,6 +351,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CBE24F552820B96700B7E0A5 /* DataRetrieval.swift in Sources */,
 				CBB533E52808CA900081FF6C /* SearchView.swift in Sources */,
 				CBB5339C27FB71250081FF6C /* Theme.swift in Sources */,
 				CBB533E32808A48B0081FF6C /* FirebaseAPI.swift in Sources */,

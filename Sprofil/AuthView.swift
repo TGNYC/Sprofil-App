@@ -57,24 +57,39 @@ class AuthViewController: NSObject, WKNavigationDelegate {
         webView.isHidden = true
         
         print("Code: \(code)")
+        UserDefaults.standard.set(code, forKey: "auth_code")
         
         AuthManager.shared.exchangeCodeForToken(code: code) { [weak self] success in
 //            DispatchQueue.main.async {
-                self?.parent.isLoggedIn = true
-                
-                // TODO: Add Call to Getting userID
-                // TODO: Add Call to Top Tracks
-                // TODO: Add Call to Top Aritsts
-                // TODO: Store data in database
-                print("ACCESS TOKEN from AuthView")
-                print(AuthManager.shared.accessToken!)
-                
-                print("Before API Call")
-                print("After API Call")
-                
-//                self?.navigationController?.popToRootViewController(animated: true)
-//                self?.completionHandler?(success)
+            print("ACCESS TOKEN: \(AuthManager.shared.accessToken)")
+            DataRetrieval.getUserID() {_ in
+                print("USER ID UPLOADED: \(UserDefaults.standard.string(forKey: "user_id") ?? "DID NOT WORK")")
+                DataRetrieval.getData() {_ in
+                    print("DATA RETRIEVED")
+                    self?.parent.isLoggedIn = true
+                    UserDefaults.standard.set(true, forKey: "logged_in")
+                }
 //            }
+//                self?.parent.isLoggedIn = true
+            }
+//
+//
+////            DispatchQueue.main.async {
+//                self?.parent.isLoggedIn = true
+//
+//                // TODO: Add Call to Getting userID
+//                // TODO: Add Call to Top Tracks
+//                // TODO: Add Call to Top Aritsts
+//                // TODO: Store data in database
+//                print("ACCESS TOKEN from AuthView")
+//                print(AuthManager.shared.accessToken!)
+//
+//                print("Before API Call")
+//                print("After API Call")
+//
+////                self?.navigationController?.popToRootViewController(animated: true)
+////                self?.completionHandler?(success)
+////            }
         }
         
     }

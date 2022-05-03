@@ -37,6 +37,10 @@ final class AuthManager {
         return accessToken != nil
     }
     
+    public var code: String? {
+        return UserDefaults.standard.string(forKey: "auth_code")
+    }
+    
     public var userID: String? {
         return UserDefaults.standard.string(forKey: "user_id")
     }
@@ -67,9 +71,68 @@ final class AuthManager {
     }
 
     public func exchangeCodeForToken(
+            code: String,
+            completion: @escaping ((Bool) -> Void)
+        ) {
+        // Get Token
+        guard let url = URL(string: Constants.tokenAPIURL) else {
+            return
+        }
+
+        var components = URLComponents()
+        components.queryItems = [
+            URLQueryItem(name: "grant_type",
+                         value: "authorization_code"),
+            URLQueryItem(name: "code",
+                         value: code),
+            URLQueryItem(name: "redirect_uri",
+                         value: Constants.redirectURI),
+        ]
+
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.setValue("application/x-www-form-urlencoded ",
+                         forHTTPHeaderField: "Content-Type")
+        request.httpBody = components.query?.data(using: .utf8)
+
+        let basicToken = Constants.clientID+":"+Constants.clientSecret
+        let data = basicToken.data(using: .utf8)
+        guard let base64String = data?.base64EncodedString() else {
+            print("Failure to get base64")
+            completion(false)
+            return
+        }
+
+        request.setValue("Basic \(base64String)",
+                         forHTTPHeaderField: "Authorization")
+
+        let task = URLSession.shared.dataTask(with: request) { [weak self] data, _, error in
+            guard let data = data,
+                  error == nil else {
+                completion(false)
+                return
+            }
+
+            do {
+                let result = try JSONDecoder().decode(AuthResponse.self, from: data)
+                self?.cacheToken(result: result)
+                completion(true)
+            }
+            catch {
+                print(error.localizedDescription)
+                completion(false)
+            }
+        }
+        task.resume()
+    }
+    
+    
+    public func unusedFunction(
         code: String,
         completion: @escaping ((Bool) -> Void)
     ) {
+        let group = DispatchGroup()
+        
         // Get Token
         guard let url = URL(string: Constants.tokenAPIURL) else {
             return
@@ -107,7 +170,6 @@ final class AuthManager {
                       completion(false)
                       return
                   }
-                        
             do {
                 let result = try JSONDecoder().decode(AuthResponse.self, from: data)
                 self?.onRefreshBlocks.forEach { $0(result.access_token) }
@@ -143,7 +205,7 @@ final class AuthManager {
 //                        FirebaseAPI2.UploadTrackInfoTuple(artistInfo: trackTuples, user_id: myProfileID)
 //                        FirebaseAPI2.UploadAlbumInfoTuple(artistInfo: albumTuples, user_id: myProfileID)
                         print("UPLOADED TRACK INFO")
-                        
+                        group.leave()
                     } catch {
                         print(error)
                     }
@@ -173,7 +235,7 @@ final class AuthManager {
 //                        FirebaseAPI2.UploadTrackInfoTuple(artistInfo: trackTuples, user_id: myProfileID)
 //                        FirebaseAPI2.UploadAlbumInfoTuple(artistInfo: albumTuples, user_id: myProfileID)
                         print("UPLOADED TRACK INFO")
-                        
+                        group.leave()
                     } catch {
                         print(error)
                     }
@@ -203,7 +265,7 @@ final class AuthManager {
 //                        FirebaseAPI2.UploadTrackInfoTuple(artistInfo: trackTuples, user_id: myProfileID)
 //                        FirebaseAPI2.UploadAlbumInfoTuple(artistInfo: albumTuples, user_id: myProfileID)
                         print("UPLOADED TRACK INFO")
-                        
+                        group.leave()
                     } catch {
                         print(error)
                     }
@@ -242,7 +304,7 @@ final class AuthManager {
 //                        FirebaseAPI2.UploadArtistInfoTuple(artistInfo: artistTuples, user_id: myProfileID)
 //                        FirebaseAPI2.UploadArtistInfo(stringArray: artistList, imageArray: artistImages, user_id: "p_gupta")
                         print("UPLOADED ARTIST INFO")
-                        
+                        group.leave()
                     } catch {
                         print(error)
                     }
@@ -279,7 +341,7 @@ final class AuthManager {
 //                        FirebaseAPI2.UploadArtistInfoTuple(artistInfo: artistTuples, user_id: myProfileID)
 //                        FirebaseAPI2.UploadArtistInfo(stringArray: artistList, imageArray: artistImages, user_id: "p_gupta")
                         print("UPLOADED ARTIST INFO")
-                        
+                        group.leave()
                     } catch {
                         print(error)
                     }
@@ -316,7 +378,7 @@ final class AuthManager {
 //                        FirebaseAPI2.UploadArtistInfoTuple(artistInfo: artistTuples, user_id: myProfileID)
 //                        FirebaseAPI2.UploadArtistInfo(stringArray: artistList, imageArray: artistImages, user_id: "p_gupta")
                         print("UPLOADED ARTIST INFO")
-                        
+                        group.leave()
                     } catch {
                         print(error)
                     }
@@ -342,11 +404,17 @@ final class AuthManager {
                         UserDefaults.standard.setValue(profile.email, forKey: "user_email")
                         myProfileID = profile.id.replacingOccurrences(of: ".", with: ",")
                         FirebaseAPI2.UploadEmail(user_id: myProfileID, user_email: profile.email)
+                        group.enter()
                         track_task_medium.resume()
+                        group.enter()
                         track_task_short.resume()
+                        group.enter()
                         track_task_long.resume()
+                        group.enter()
                         art_task.resume()
+                        group.enter()
                         art_task_short.resume()
+                        group.enter()
                         art_task_long.resume()
                     } catch {
                         print(error)
@@ -389,8 +457,11 @@ final class AuthManager {
 //                for myItem in artistList {
 //                    print(myItem)
 //                }
+                group.notify(queue: DispatchQueue.main) {
+                    print("ALL TASKS COMPLETED")
+                    completion(true)
+                }
                 
-                completion(true)
                 
 //                self?.cacheToken(result: result)
 //
