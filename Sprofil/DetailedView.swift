@@ -47,11 +47,10 @@ struct DetailedArtistView: View {
         HStack(spacing: 20) {
             AsyncImage(url: URL(string: imageURLs[0])) { image in
                 image.resizable()
-                    .aspectRatio(contentMode: .fill)
             } placeholder: {
                 Color.gray
             }
-            .aspectRatio(contentMode: .fill)
+            .aspectRatio(1, contentMode: .fill)
         }
         Text(detailedTitle)
             .font(.title)
@@ -171,11 +170,10 @@ struct DetailedTrackView: View {
         HStack(spacing: 20) {
             AsyncImage(url: URL(string: imageURL)) { image in
                 image.resizable()
-                    .aspectRatio(contentMode: .fill)
             } placeholder: {
                 Color.gray
             }
-            .aspectRatio(contentMode: .fill)
+            .aspectRatio(1, contentMode: .fill)
             //                    .frame(width: 180, height: 180)
             //                    .clipShape(RoundedRectangle(cornerSize: CGSize(width: 30,height: 30)))
             //                    .clipped()

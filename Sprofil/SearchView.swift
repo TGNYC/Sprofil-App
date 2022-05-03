@@ -43,6 +43,7 @@ struct SearchView: View {
                     }
                 }
                 .searchable(text: $text, placement: .navigationBarDrawer(displayMode: .always), prompt: Text("Type Username Here"))
+                .frame(maxWidth: .infinity, alignment: .leading)
                 .navigationTitle("Search")
                 .navigationBarTitleDisplayMode(.inline)
             }

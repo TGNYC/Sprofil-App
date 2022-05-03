@@ -142,6 +142,7 @@ struct FriendListView: View {
             }
         }
             .navigationBarTitle("Friend List", displayMode: .inline)
+            .frame(maxWidth: .infinity, alignment: .leading)
     }
 }
 }
