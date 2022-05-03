@@ -103,7 +103,7 @@ final class DataRetrieval {
             "artistJSON_long":"https://api.spotify.com/v1/me/top/artists?time_range=long_term"
         ]
         
-        var counter = 6
+        var counter = 50
         
         print(branches)
         
@@ -111,7 +111,7 @@ final class DataRetrieval {
         
         let lock = NSLock()
         
-        while true {
+        while (counter > 0) {
 //            print("Test")
             for (branch, myURL) in branches {
                 if (currentThreads.contains(branch)) {
@@ -127,7 +127,6 @@ final class DataRetrieval {
                         lock.lock()
                         branches.removeValue(forKey: branch)
                         lock.unlock()
-                        counter = counter - 1
                         let index = currentThreads.firstIndex(of: branch)
                         currentThreads.remove(at: index!)
                     }
@@ -143,6 +142,8 @@ final class DataRetrieval {
                 print(branches)
             }
             lock.unlock()
+            
+            counter = counter - 1
         }
         
         print("finished uploadData loop")

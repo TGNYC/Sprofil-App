@@ -26,16 +26,18 @@ struct SettingsView: View {
                     }
                 }
                 
-                Button(action: {
-                        UserDefaults.standard.set(nil, forKey: "user_id")
-                        UserDefaults.standard.set(nil, forKey: "user_email")
-                        UserDefaults.standard.set(nil, forKey: "refresh_token")
-                        UserDefaults.standard.set(nil, forKey: "expirationDate")
-                        UserDefaults.standard.set(nil, forKey: "access_token")
-                        print("Log out tapped")
-                        print("Sign in state: " + String(AuthManager.shared.isSignedIn))
-                        appState.rootViewId = UUID()
-                }) { Label("Log Out", systemImage: "rectangle.portrait.and.arrow.right") }
+                Section(header: Text("App Settings")) {
+                    Button(action: {
+                            UserDefaults.standard.set(nil, forKey: "user_id")
+                            UserDefaults.standard.set(nil, forKey: "user_email")
+                            UserDefaults.standard.set(nil, forKey: "refresh_token")
+                            UserDefaults.standard.set(nil, forKey: "expirationDate")
+                            UserDefaults.standard.set(nil, forKey: "access_token")
+                            print("Log out tapped")
+                            print("Sign in state: " + String(AuthManager.shared.isSignedIn))
+                            appState.rootViewId = UUID()
+                    }) { Label("Log Out", systemImage: "rectangle.portrait.and.arrow.right") }
+                }
             }
             .navigationTitle("Settings")
         }
