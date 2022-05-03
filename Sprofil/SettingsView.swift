@@ -88,14 +88,9 @@ struct WidgetsView: View {
 struct UserView: View {
     var firebase : FirebaseAPI
     @State var profName: String
-    @State var bio: String {
-        didSet {
-            if bio.count > 40 {
-                bio = String(bio.prefix(40))
-                firebase.EditBio(newBio: bio)
-            }
-        }
-    }
+    @State private var showProfChange = false
+    @State private var showInvalidName = false
+    @State var bio: String
     @State var isPrivate: Bool
     
     init(firebase: FirebaseAPI) {
@@ -105,29 +100,60 @@ struct UserView: View {
         isPrivate = firebase.GetIsPrivateStatus()
     }
     
+    func validateName(name: String, firebase: FirebaseAPI) -> Bool {
+        let lengthValidation: Bool = name.count < 15
+        let existingValidation: Bool = firebase.ExistingProfileName(name: name)
+        let charset = CharacterSet(charactersIn: ".#$[]/")
+        let illegalCharValidation: Bool
+        if name.rangeOfCharacter(from: charset) == nil {
+            illegalCharValidation = true
+        }
+        else {
+            illegalCharValidation = false
+        }
+        
+        print("LENGTH VALIDATION IS " + String(lengthValidation))
+        print("EXISTING VALIDATION IS " + String(existingValidation))
+        print("ILLEGAL CHAR VAL IS " + String(illegalCharValidation))
+        
+        if lengthValidation && existingValidation && illegalCharValidation {
+            return true
+        }
+        else {
+            return false
+        }
+    }
+    
+    
     var body: some View {
         NavigationView {
             Form {
                 Section(header: Text("Change Your Profile Name Here:")) {
-                    TextField(text: $profName) {
-                        Text("ProfName")
-                    }
-                    .onChange(of: profName) {
-                        _profName in
-                        firebase.EditProfName(newName: _profName)
-                    }
+                    Button("Press To Change", action: {
+                        showProfChange = true
+                    })
+                        .alert(isPresented: $showProfChange, TextAlert(title: "Name Change", message: "Enter your new profile name:") { result in
+                            if validateName(name: result ?? "/", firebase: firebase) {
+                                firebase.EditProfName(newName: result ?? "NULL")
+                            }
+                            else {
+                                showInvalidName = true
+                            }
+                        })
                 }
                 Section(header: Text("Change Your Bio Here:")) {
-//                    TextField(text: $bio) {
-//                        Text("Bio").font(.body)
-//                    }
+                    //                    TextField(text: $bio) {
+                    //                        Text("Bio").font(.body)
+                    //                    }
                     TextEditor(text: $bio)
-                    .font(.body)
-                    .frame(height: 100)
-                    .onChange(of: bio) {
-                        _bio in
-                        firebase.EditBio(newBio: _bio)
-                    }
+                        .font(.body)
+                        .frame(height: 100)
+                        .onChange(of: bio) {
+                            _bio in
+                            firebase.EditBio(newBio: _bio)
+                        }.alert(isPresented: $showInvalidName) {
+                            Alert(title: Text("Invalid Profile Name"), message: Text("Profile Name either contains invalid characters, or already exists. Please choose a different one!"))
+                        }
                 }
                 // NOTE: NEED TO CHANGE IT SO THAT FRIENDS ARE STILL ABLE TO SEE YOU, NEED TO NOT USE THE USERNAMES BRANCH AS ID to USERNAME THING
                 Section(header: Text("Toggle Privacy Mode:")) {

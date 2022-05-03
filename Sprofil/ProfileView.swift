@@ -60,6 +60,9 @@ struct ProfileView: View {
                         if firebase.GetWidgetStatus(widgetName: "FavoriteGenre") {
                             FavoriteGenreView(firebase: firebase)
                         }
+                        HStack {
+                            Spacer()
+                        }
                     }
                 }
             }

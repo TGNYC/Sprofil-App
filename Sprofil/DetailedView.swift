@@ -24,6 +24,25 @@ struct DetailedArtistView: View {
         return formattedNumber ?? "0"
     }
     
+    func DetermineColor() -> Color {
+        let num = Int(popularity) ?? 0
+        if num >= 90 {
+            return Color.green
+        }
+        else if num >= 80 {
+            return Color.yellow
+        }
+        else if num >= 60 {
+            return Color.orange
+        }
+        else if num >= 40 {
+            return Color.red
+        }
+        else {
+            return Color.gray
+        }
+    }
+    
     var body: some View {
         HStack(spacing: 20) {
             AsyncImage(url: URL(string: imageURLs[0])) { image in
@@ -45,7 +64,7 @@ struct DetailedArtistView: View {
         VStack() {
             Group {
                 RoundedRectangle(cornerRadius: 25, style: .continuous)
-                    .fill(Color.gray)
+                    .fill(DetermineColor())
                     .overlay(
                         HStack() {
                             Text("Followers:").bold()
@@ -54,7 +73,7 @@ struct DetailedArtistView: View {
                             .foregroundColor(Color.white)
                     )
                 RoundedRectangle(cornerRadius: 25, style: .continuous)
-                    .fill(Color.gray)
+                    .fill(DetermineColor())
                     .overlay(
                         HStack() {
                             Text("Popularity:").bold()
@@ -63,12 +82,17 @@ struct DetailedArtistView: View {
                             .foregroundColor(Color.white)
                     )
                 RoundedRectangle(cornerRadius: 25, style: .continuous)
-                    .fill(Color.gray)
+                    .fill(DetermineColor())
                     .overlay(
                         HStack() {
                             Text("Top Genres:").bold()
                             ForEach(topGenres, id: \.self){ genre in
-                                Text(genre)
+                                if genre != "NULL" {
+                                    Text(genre)
+                                }
+                                else {
+                                    Text("N/A")
+                                }
                             }
                         }   .font(.body)
                             .foregroundColor(Color.white)
@@ -123,6 +147,25 @@ struct DetailedTrackView: View {
     @Binding var previewURL: String
     @State var song = false
     @StateObject private var soundManager = SoundManager()
+    
+    func DetermineColor() -> Color {
+        let num = Int(popularity) ?? 0
+        if num >= 85 {
+            return Color.green
+        }
+        else if num >= 70 {
+            return Color.yellow
+        }
+        else if num >= 55 {
+            return Color.orange
+        }
+        else if num >= 40 {
+            return Color.red
+        }
+        else {
+            return Color.gray
+        }
+    }
     
     var body: some View {
         HStack(spacing: 20) {
@@ -186,7 +229,7 @@ struct DetailedTrackView: View {
         HStack() {
             Group {
                 RoundedRectangle(cornerRadius: 25, style: .continuous)
-                    .fill(Color.gray)
+                    .fill(DetermineColor())
                     .overlay(
                         VStack() {
                             Text("Duration:").bold()
@@ -195,7 +238,7 @@ struct DetailedTrackView: View {
                             .foregroundColor(Color.white)
                     )
                 RoundedRectangle(cornerRadius: 25, style: .continuous)
-                    .fill(Color.gray)
+                    .fill(DetermineColor())
                     .overlay(
                         VStack() {
                             Text("Popularity:").bold()
@@ -204,7 +247,7 @@ struct DetailedTrackView: View {
                             .foregroundColor(Color.white)
                     )
                 RoundedRectangle(cornerRadius: 25, style: .continuous)
-                    .fill(Color.gray)
+                    .fill(DetermineColor())
                     .overlay(
                         VStack() {
                             Text("Release Date:").bold()

@@ -218,6 +218,16 @@ class FirebaseAPI: ObservableObject {
     func EditBio(newBio: String) {
         ref.child("Users").child(String(SPOTIFY_ID)).updateChildValues(["Bio" : newBio])
     }
+    
+    func ExistingProfileName(name: String) -> Bool {
+             for obj in UsernameSnapshot?.children.allObjects as? [DataSnapshot] ?? [] {
+                 if name == obj.key {
+                     return false
+                 }
+             }
+             return true
+         }
+
 
     // Gets the custom username of the user, returned as a string
     func GetProfName() -> String {

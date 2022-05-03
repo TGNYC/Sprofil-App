@@ -71,6 +71,7 @@
 		CBCEC4AE27F8C1C100078C3D /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CBCEC4AD27F8C1C100078C3D /* Preview Assets.xcassets */; };
 		CBE24F552820B96700B7E0A5 /* DataRetrieval.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBE24F542820B96700B7E0A5 /* DataRetrieval.swift */; };
 		CBEE220127FA697C0023E56A /* AuthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBEE220027FA697C0023E56A /* AuthView.swift */; };
+		DC205BEA2821A5C300D2BAAE /* TextAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC205BE92821A5C300D2BAAE /* TextAlert.swift */; };
 		DCDF5CD8281A3D63004F3E9E /* FavoriteGenreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCDF5CD7281A3D63004F3E9E /* FavoriteGenreView.swift */; };
 /* End PBXBuildFile section */
 
@@ -111,6 +112,7 @@
 		CBCEC4AD27F8C1C100078C3D /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		CBE24F542820B96700B7E0A5 /* DataRetrieval.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataRetrieval.swift; sourceTree = "<group>"; };
 		CBEE220027FA697C0023E56A /* AuthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthView.swift; sourceTree = "<group>"; };
+		DC205BE92821A5C300D2BAAE /* TextAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextAlert.swift; sourceTree = "<group>"; };
 		DCDF5CD7281A3D63004F3E9E /* FavoriteGenreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteGenreView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -178,6 +180,7 @@
 				CBB5339527FB71250081FF6C /* User.swift */,
 				CBB5339927FB71250081FF6C /* UserProfile.swift */,
 				CBB5339A27FB71250081FF6C /* Widgets.swift */,
+				DC205BE92821A5C300D2BAAE /* TextAlert.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -372,6 +375,7 @@
 				CBB5338E27FB6E770081FF6C /* HomeView.swift in Sources */,
 				CBB5339B27FB71250081FF6C /* TopTracks.swift in Sources */,
 				CBB533E92808CB7F0081FF6C /* OtherProfileView.swift in Sources */,
+				DC205BEA2821A5C300D2BAAE /* TextAlert.swift in Sources */,
 				CBC6106828105C7C00C62129 /* RefreshableScrollView.swift in Sources */,
 				CBB5339F27FB71250081FF6C /* User.swift in Sources */,
 				CBC6106A28105CD100C62129 /* DetailedView.swift in Sources */,

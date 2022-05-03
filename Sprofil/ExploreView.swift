@@ -32,6 +32,9 @@ struct ExploreView: View {
                     Text("Explore")
                         .font(.title)
                         .foregroundColor(.white)
+                    Text("Each of the images below represents a Sprofil User obsessed with that Artist. Click on the image to find out who!")
+                        .padding()
+                        .foregroundColor(.white)
                     LazyVGrid(columns: gridItemLayout, spacing: 20) {
                         ForEach(firebase.GetExploreInfo()) { info in
                             NavigationLink(destination: OtherProfileView(profName:firebase.GetOtherProfName(userID: info.userID))) {
@@ -43,6 +46,7 @@ struct ExploreView: View {
                                 .font(.system(size: 30))
                                 .frame(width: 200, height: 200)
                                 .cornerRadius(10)
+                                .shadow(color: Color.black.opacity(0.3), radius: 20, x: 0, y: 20)
                             }
                         }
                     }
