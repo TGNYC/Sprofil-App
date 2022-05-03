@@ -17,7 +17,7 @@ struct SearchView: View {
         else {
             NavigationView {
                 List {
-                    ForEach(firebase.GetNameList().filter { $0.contains(text)}, id: \.self) { item in
+                    ForEach(firebase.GetNameList().filter { $0.localizedCaseInsensitiveContains(text)}, id: \.self) { item in
                         NavigationLink(destination: OtherProfileView(profName: item)) {
                             HStack(alignment: .top, spacing: 12) {
                                 AsyncImage(url: URL(string: firebase.GetOtherProfPic(profName: item))) { image in

@@ -131,6 +131,7 @@ struct TopTracksViewShort: View {
                 .lineLimit(1)
             ScrollView(.horizontal) {
                 HStack(spacing: 20) {
+                    if topTracks.count != 0 {
                     ForEach(topTracks) { info in
                         VStack() {
                             Button(action: {
@@ -155,6 +156,12 @@ struct TopTracksViewShort: View {
                         }
                     }
                         .frame(width:80, height:125)
+                    }
+                    else {
+                        Text("Unable to retrieve data from Spotify. Please Try Again Later!")
+                            .frame(width:80, height:125)
+                            .padding()
+                    }
                     }
                 }
         }

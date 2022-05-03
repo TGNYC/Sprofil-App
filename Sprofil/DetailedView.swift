@@ -26,13 +26,13 @@ struct DetailedArtistView: View {
     
     func DetermineColor() -> Color {
         let num = Int(popularity) ?? 0
-        if num >= 90 {
+        if num >= 85 {
             return Color.green
         }
-        else if num >= 80 {
+        else if num >= 70 {
             return Color.yellow
         }
-        else if num >= 60 {
+        else if num >= 55 {
             return Color.orange
         }
         else if num >= 40 {

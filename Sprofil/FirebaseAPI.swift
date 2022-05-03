@@ -413,7 +413,11 @@ class FirebaseAPI: ObservableObject {
         let seconds = milliSeconds / 1000
         let min = seconds / 60
         let leftover = seconds % 60
-        return String(min) + ":" + String(leftover)
+        var leftoverString = String(leftover)
+        if leftoverString.count == 1 {
+            leftoverString = "0" + leftoverString
+        }
+        return String(min) + ":" + leftoverString
     }
     
     func BoolToString(bool: Bool) -> String {
