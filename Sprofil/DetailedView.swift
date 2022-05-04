@@ -94,14 +94,14 @@ struct DetailedArtistView: View {
                                 }
                             }
                             else {
-                            ForEach(topGenres, id: \.self){ genre in
-                                if genre != "NULL" {
-                                    Text(genre)
+                                ForEach(topGenres, id: \.self) { genre in
+                                    if genre != "NULL" {
+                                        Text(genre)
+                                    }
+                                    else {
+                                        Text("N/A")
+                                    }
                                 }
-                                else {
-                                    Text("N/A")
-                                }
-                            }
                             }
                         }   .font(.body)
                             .foregroundColor(Color.white)

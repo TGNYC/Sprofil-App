@@ -31,8 +31,10 @@ struct SearchView: View {
                                 .mask(Circle())
                                 VStack {
                                     Text(item).bold()
+                                        .frame(maxWidth: .infinity, alignment: .leading)
                                     Text(firebase.GetOtherBio(userID: firebase.GetUserID(profName: item)))
                                         .font(.footnote)
+                                        .frame(maxWidth: .infinity, alignment: .leading)
                                         .foregroundColor(.secondary)
                                         .lineLimit(2)
                                 }
@@ -43,7 +45,6 @@ struct SearchView: View {
                     }
                 }
                 .searchable(text: $text, placement: .navigationBarDrawer(displayMode: .always), prompt: Text("Type Username Here"))
-                .frame(maxWidth: .infinity, alignment: .leading)
                 .navigationTitle("Search")
                 .navigationBarTitleDisplayMode(.inline)
             }
