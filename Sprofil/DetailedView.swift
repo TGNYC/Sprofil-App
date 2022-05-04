@@ -85,6 +85,15 @@ struct DetailedArtistView: View {
                     .overlay(
                         HStack() {
                             Text("Top Genres:").bold()
+                            if topGenres.count == 2 && topGenres[1] == "NULL" {
+                                if topGenres[0] == "NULL" {
+                                    Text("N/A")
+                                }
+                                else {
+                                    Text(topGenres[0])
+                                }
+                            }
+                            else {
                             ForEach(topGenres, id: \.self){ genre in
                                 if genre != "NULL" {
                                     Text(genre)
@@ -92,6 +101,7 @@ struct DetailedArtistView: View {
                                 else {
                                     Text("N/A")
                                 }
+                            }
                             }
                         }   .font(.body)
                             .foregroundColor(Color.white)
